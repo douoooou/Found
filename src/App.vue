@@ -1,17 +1,19 @@
 <template>
   <div id="app">
+    <div id="main">
+      <Header></Header>
+    </div>
     <!-- <img src="./assets/logo.png">SSSS -->
-    <home></home>
     <!-- <router-view/> -->
   </div>
 </template>
 
 <script>
-import Home from './components/Home/Home'
+import Header from './components/Home/Header'
 export default {
   name: 'App',
   components: {
-    Home
+    Header
   }
 }
 </script>
@@ -23,6 +25,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+}
+#main{
+  min-height: calc(100% - 290px);
+  padding-bottom: 290px;
+  background-color: #f6f6f6;
 }
 </style>
