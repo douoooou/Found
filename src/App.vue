@@ -2,18 +2,24 @@
   <div id="app">
     <div id="main">
       <Header></Header>
+      <Carousel></carousel>
     </div>
-    <!-- <img src="./assets/logo.png">SSSS -->
-    <!-- <router-view/> -->
+    <div id="footer"><Footer></Footer></div>
   </div>
 </template>
 
 <script>
 import Header from './components/Home/Header'
+import Carousel from './components/Home/Carousel'
+import Footer from './components/Home/Footer'
+// import Content from './components/Home/Content'
+
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    Carousel,
+    Footer
   }
 }
 </script>
@@ -30,6 +36,13 @@ export default {
 #main{
   min-height: calc(100% - 290px);
   padding-bottom: 290px;
-  background-color: #f6f6f6;
+  /* background-color: #FFFF66; */
+}
+#footer{
+  height: 100px;
+  /* margin-top: 800px; */
+  position: relative;
+  margin-bottom: 290px;
+  clear: both;
 }
 </style>

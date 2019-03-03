@@ -2,15 +2,50 @@
   <div class="header">
     <div class="header-container">
       <el-row>
-        <el-col :span="11"><span class="title">Lost and Found 寻</span></el-col>
-        <el-col :span="9" class="s-con">
+        <el-col :span="6"><span class="title">找物招领</span></el-col>
+        <el-col :span="12">
+          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">首页</el-menu-item>
+            <el-menu-item index="2">找人</el-menu-item>
+            <el-submenu index="3">
+              <template slot="title">找物</template>
+                <el-menu-item index="3-1">选项1</el-menu-item>
+                <el-menu-item index="3-2">选项2</el-menu-item>
+                <el-submenu index="3-3">
+                  <template slot="title">选项4</template>
+                    <el-menu-item index="3-3-1">选项1</el-menu-item>
+                    <el-menu-item index="3-3-2">选项2</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-submenu index="4">
+              <template slot="title">招领</template>
+                <el-menu-item index="4-1">选项1</el-menu-item>
+                <el-menu-item index="4-2">选项2</el-menu-item>
+                <el-submenu index="4-3">
+                  <template slot="title">选项4</template>
+                    <el-menu-item index="4-3-1">选项1</el-menu-item>
+                    <el-menu-item index="4-3-2">选项2</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-submenu index="5">
+              <template slot="title">找宠物</template>
+                <el-menu-item index="5-1">狗</el-menu-item>
+                <el-menu-item index="5-2">猫</el-menu-item>
+                <el-menu-item index="5-3">其他</el-menu-item>
+            </el-submenu>
+          </el-menu>
+          <div class="line"></div>
+        </el-col>
+        <el-col :span="4" class="logintxtbox"><span class="logintxt" @click="showLogin">登录</span></el-col>
+      </el-row>
+      <el-row class="search">
+        <el-col :span="17" class="s-con">
           <div class="seach-wrapper">
-            <el-input placeholder="请输入内容" v-model="seachData">
+            <el-input placeholder="输入丢失物品关键字" v-model="seachData" class="search-input">
               <el-button slot="append" icon="el-icon-search" @click="seach">搜索</el-button>
             </el-input>
           </div>
         </el-col>
-        <el-col :span="4"><span class="logintxt" @click="showLogin">登录</span></el-col>
       </el-row>
       <!-- 登录框 -->
       <div class="account-login"></div>
@@ -86,6 +121,8 @@ export default {
     return {
       // 登录dialog
       dialogLoginVisible: false,
+      activeIndex: '1',
+      activeIndex2: '1',
       seachData: '',
       username: '',
       password: '',
@@ -97,6 +134,9 @@ export default {
     }
   },
   methods: {
+    handleSelect (key, keyPath) {
+      console.log(key, keyPath)
+    },
     showLogin () {
     //   显示登录框
     // console.log("a")
@@ -111,7 +151,6 @@ export default {
         .catch(_ => {})
     },
     seach () {
-
     },
     // 登录
     login () {
@@ -128,7 +167,9 @@ export default {
 </script>
 <style>
   .header{
-      background-color: white;
+    height:350px;
+    /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
+    background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
   }
   .header-container{
     padding-top: 35px;
@@ -136,12 +177,21 @@ export default {
     margin: 0 auto;
   }
   .title{
+    color:white;
     font-weight: bolder;
     font-size: 30px;
     margin-right: 20px;
   }
+  .el-menu-demo{
+   border-radius: 20px;
+   padding-left: 180px;
+  }
+  .logintxtbox{
+    margin-top: 15px;
+  }
   .logintxt{
     font-size: 20px;
+    color:white;
     margin-right: 20px;
   }
   .account-login{
@@ -179,5 +229,12 @@ export default {
   .submitbtn{
     width:150px;
     margin-left: 130px;
+  }
+  .search{
+    margin-top: 150px;
+    margin-left: 380px;
+  }
+  .search-input{
+    border-radius: 10px;
   }
 </style>
