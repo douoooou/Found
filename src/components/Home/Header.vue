@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-container">
       <el-row>
-        <el-col :span="6"><span class="title">找物招领</span></el-col>
+        <el-col :span="6"><span class="title">寻</span></el-col>
         <el-col :span="12">
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
             <el-menu-item index="1">首页</el-menu-item>
@@ -179,7 +179,8 @@ export default {
   .title{
     color:white;
     font-weight: bolder;
-    font-size: 30px;
+    font-family: cursive;
+    font-size: 80px;
     margin-right: 20px;
   }
   .el-menu-demo{
