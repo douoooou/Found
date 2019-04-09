@@ -2,13 +2,13 @@
   <div class="header">
     <div class="header-container">
       <el-row>
-        <el-col :span="6"><span class="title">寻</span></el-col>
+        <el-col :span="6"><img class="logo" src="../../assets/flogo.png"></el-col>
         <el-col :span="12">
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1">首页</el-menu-item>
-            <el-menu-item index="2">找人</el-menu-item>
+            <el-menu-item class="el-menu-txt" index="1">网站首页</el-menu-item>
+            <el-menu-item index="2">寻人启事</el-menu-item>
             <el-submenu index="3">
-              <template slot="title">找物</template>
+              <template slot="title">寻物启事</template>
                 <el-menu-item index="3-1">选项1</el-menu-item>
                 <el-menu-item index="3-2">选项2</el-menu-item>
                 <el-submenu index="3-3">
@@ -18,7 +18,7 @@
                 </el-submenu>
             </el-submenu>
             <el-submenu index="4">
-              <template slot="title">招领</template>
+              <template slot="title">招领启事</template>
                 <el-menu-item index="4-1">选项1</el-menu-item>
                 <el-menu-item index="4-2">选项2</el-menu-item>
                 <el-submenu index="4-3">
@@ -28,7 +28,7 @@
                 </el-submenu>
             </el-submenu>
             <el-submenu index="5">
-              <template slot="title">找宠物</template>
+              <template slot="title">找宠物启事</template>
                 <el-menu-item index="5-1">狗</el-menu-item>
                 <el-menu-item index="5-2">猫</el-menu-item>
                 <el-menu-item index="5-3">其他</el-menu-item>
@@ -36,7 +36,7 @@
           </el-menu>
           <div class="line"></div>
         </el-col>
-        <el-col :span="4" class="logintxtbox"><span class="logintxt" @click="showLogin">登录</span></el-col>
+        <el-col :span="4" class="logintxtbox"><span class="logintxt" @click="showLogin">登录/注册</span></el-col>
       </el-row>
       <el-row class="search">
         <el-col :span="17" class="s-con">
@@ -167,30 +167,29 @@ export default {
 </script>
 <style>
   .header{
-    height:350px;
-    /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
-    background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
+    height:300px;
+    background-image: linear-gradient(to top, #a3bded 0%, #346ab1 100%);
   }
   .header-container{
     padding-top: 35px;
     padding-bottom: 30px;
     margin: 0 auto;
   }
-  .title{
-    color:white;
-    font-weight: bolder;
-    font-family: cursive;
-    font-size: 80px;
-    margin-right: 20px;
+  .logo{
+    width:70px;
   }
   .el-menu-demo{
-   border-radius: 20px;
-   padding-left: 180px;
+    border-radius: 20px;
+    padding-left: 130px;
+  }
+  .el-menu-txt{
+    font-size: 18px;
   }
   .logintxtbox{
     margin-top: 15px;
   }
   .logintxt{
+    font-weight: 600;
     font-size: 20px;
     color:white;
     margin-right: 20px;
@@ -232,10 +231,11 @@ export default {
     margin-left: 130px;
   }
   .search{
-    margin-top: 150px;
+    margin-top: 100px;
     margin-left: 380px;
   }
   .search-input{
+    width: 600px;
     border-radius: 10px;
   }
 </style>
