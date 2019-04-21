@@ -1,17 +1,17 @@
 <template>
-  <div class="content">
+  <div class="contentpage">
     <div class="content-one">
-      <div class="slide1"><span>找人</span></div>
-      <div class="slide1"><span>找物</span></div>
-      <div class="slide1"><span>招领</span></div>
-      <div class="slide1"><span>找宠物</span></div>
+      <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div class="slides slide1">找人</div></router-link>
+      <router-link :to="{path:'/LostPage',name:'LostPage'}"><div class="slides slide2"><span>找物</span></div></router-link>
+      <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><div class="slides slide3"><span>招领</span></div></router-link>
+      <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div class="slides slide4"><span>找宠物</span></div></router-link>
     </div>
     <hr/>
-    <div class="content-two">
+    <!-- <div class="content-two">
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
           <span style="font-weight:bolder; margin-left:-530px;">寻物启事</span>
-          <el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
+           <router-link :to="{path:'/LostPage',name:'LostPage'}"><el-button style="float: right; padding: 3px 0" type="text">更多</el-button></router-link>
         </div>
         <div class="xunwu-item">
           <img class="content-image" :src="image">
@@ -40,7 +40,7 @@
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
           <span style="font-weight:bolder; margin-left:-530px;">招领启事</span>
-          <el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
+          <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><el-button style="float: right; padding: 3px 0" type="text">更多</el-button></router-link>
         </div>
         <div class="zhaoling-item">
           <img class="content-image" :src="image2">
@@ -64,7 +64,7 @@
       <el-row>
         <el-col></el-col>
       </el-row>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -72,16 +72,16 @@ export default {
   name: 'content',
   data () {
     return {
-      image: "../../static/images/pretermit.png",
-      image2: "../../static/images/timg.jpg",
-      image3: "../../static/images/shenfenzheng.jpeg",
-      image4: "../../static/images/wal.jpg"
+      // image: "../../static/images/pretermit.png",
+      // image2: "../../static/images/timg.jpg",
+      // image3: "../../static/images/shenfenzheng.jpeg",
+      // image4: "../../static/images/wal.jpg"
     }
   }
 }
 </script>
 <style>
-.slide1{
+.slides{
   float: left;
   font-weight: bolder;
   margin-top: 50px;
@@ -92,7 +92,23 @@ export default {
   background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
   border-radius: 50%;
 }
-.content{
+.slide1:hover{
+  background: url(../../../static/images/findpeople.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.slide2:hover{
+  background: url(../../../static/images/lost.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.slide3:hover{
+  background: url(../../../static/images/found.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.slide4:hover{
+  background: url(../../../static/images/findpet.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.contentpage{
   margin-bottom: 500px;
 }
 .content-one{

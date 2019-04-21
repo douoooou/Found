@@ -1,28 +1,20 @@
 <template>
   <div id="app">
     <div id="main">
-      <Header></Header>
-      <Carousel></Carousel>
-      <Content></Content>
+     <router-view></router-view>
     </div>
     <br/>
-    <div id="footer"><Footer></Footer></div>
+    <div id="footer"><TheFooter></TheFooter></div>
   </div>
 </template>
 
 <script>
-import Header from './components/Home/Header'
-import Carousel from './components/Home/Carousel'
-import Footer from './components/Home/Footer'
-import Content from './components/Home/Content'
+import TheFooter from './components/Common/TheFooter'
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Carousel,
-    Footer,
-    Content
+    TheFooter
   }
 }
 </script>

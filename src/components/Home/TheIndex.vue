@@ -1,0 +1,30 @@
+<template>
+<div class="main">
+  <HomeHeader></HomeHeader>
+  <Carousel></Carousel>
+  <TheContent></TheContent>
+</div>
+</template>
+
+<script type="text/javascript">
+import HomeHeader from '../Common/HomeHeader.vue'
+import Carousel from './Carousel.vue'
+import TheContent from './TheContent.vue'
+
+export default{
+  name: 'TheIndex',
+  components: {
+    HomeHeader,
+    Carousel,
+    TheContent
+  },
+  data () {
+    return {
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

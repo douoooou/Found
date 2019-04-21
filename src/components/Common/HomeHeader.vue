@@ -4,35 +4,12 @@
       <el-row>
         <el-col :span="6"><img class="logo" src="../../assets/flogo.png"></el-col>
         <el-col :span="12">
-          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item class="el-menu-txt" index="1">网站首页</el-menu-item>
-            <el-menu-item index="2">寻人启事</el-menu-item>
-            <el-submenu index="3">
-              <template slot="title">寻物启事</template>
-                <el-menu-item index="3-1">选项1</el-menu-item>
-                <el-menu-item index="3-2">选项2</el-menu-item>
-                <el-submenu index="3-3">
-                  <template slot="title">选项4</template>
-                    <el-menu-item index="3-3-1">选项1</el-menu-item>
-                    <el-menu-item index="3-3-2">选项2</el-menu-item>
-                </el-submenu>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">招领启事</template>
-                <el-menu-item index="4-1">选项1</el-menu-item>
-                <el-menu-item index="4-2">选项2</el-menu-item>
-                <el-submenu index="4-3">
-                  <template slot="title">选项4</template>
-                    <el-menu-item index="4-3-1">选项1</el-menu-item>
-                    <el-menu-item index="4-3-2">选项2</el-menu-item>
-                </el-submenu>
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">找宠物启事</template>
-                <el-menu-item index="5-1">狗</el-menu-item>
-                <el-menu-item index="5-2">猫</el-menu-item>
-                <el-menu-item index="5-3">其他</el-menu-item>
-            </el-submenu>
+          <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" :router="true" text-color="#333" :default-active="this.$route.path">
+            <el-menu-item class="el-menu-txt" index="/">网站首页</el-menu-item>
+            <el-menu-item index="/FindpeoplePage">寻人启事</el-menu-item>
+            <el-menu-item index="/LostPage">寻物启事</el-menu-item>
+            <el-menu-item index="/FoundPage">招领启事</el-menu-item>
+            <el-menu-item index="/FindpetPage">找宠物启事</el-menu-item>
           </el-menu>
           <div class="line"></div>
         </el-col>
@@ -53,7 +30,7 @@
           <el-form>
             <!-- 账户 -->
             <el-form-item>
-              <el-input auto-complete="off" prefix-icon="el-icon-mobile-phone" placeholder="手机号/邮箱/学号" v-model="username"></el-input>
+              <el-input auto-complete="off" prefix-icon="el-icon-mobile-phone" placeholder="请输入手机号" v-model="username"></el-input>
               <!-- <div class="el-form-item__error">{{UsererrorMsg}}</div> -->
             </el-form-item>
             <!-- 密码 -->
