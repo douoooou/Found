@@ -13,7 +13,8 @@
           </el-menu>
           <div class="line"></div>
         </el-col>
-        <el-col :span="4" class="logintxtbox"><span class="logintxt" @click="showLogin">登录/注册</span></el-col>
+        <el-col :span="2" class="logintxtbox"><span class="logintxt" @click="showLogin">登录/注册</span></el-col>
+        <el-col :span="2"><router-link :to="{path:'/MinePage',name:'MinePage'}"><div><img class="logo" src="../../../static/images/timg.jpg"></div></router-link></el-col>
       </el-row>
       <!-- 登录框 -->
       <div class="account-login"></div>
@@ -84,7 +85,7 @@
 </template>
 <script>
 export default {
-  name: 'Header',
+  name: 'TheHeader',
   data () {
     return {
       // 登录dialog
@@ -147,7 +148,7 @@ export default {
     width:70px;
   }
   .el-menu-demo{
-    border-radius: 20px;
+    border-radius: 30px;
     padding-left: 130px;
   }
   .header-bar{

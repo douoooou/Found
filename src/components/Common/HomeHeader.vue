@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="homeheader">
     <div class="header-container">
       <el-row>
         <el-col :span="6"><img class="logo" src="../../assets/flogo.png"></el-col>
@@ -13,7 +13,8 @@
           </el-menu>
           <div class="line"></div>
         </el-col>
-        <el-col :span="4" class="logintxtbox"><span class="logintxt" @click="showLogin">登录/注册</span></el-col>
+        <el-col :span="2" class="logintxtbox"><span class="logintxt" @click="showLogin">登录/注册</span></el-col>
+        <el-col :span="2"><router-link :to="{path:'/MinePage',name:'MinePage'}"><div><img class="logo" src="../../../static/images/timg.jpg"></div></router-link></el-col>
       </el-row>
       <el-row class="search">
         <el-col :span="17" class="s-con">
@@ -93,7 +94,7 @@
 </template>
 <script>
 export default {
-  name: 'Header',
+  name: 'HomeHeader',
   data () {
     return {
       // 登录dialog
@@ -143,7 +144,7 @@ export default {
 }
 </script>
 <style>
-  .header{
+  .homeheader{
     height:300px;
     background-image: linear-gradient(to top, #a3bded 0%, #346ab1 100%);
   }
@@ -156,7 +157,7 @@ export default {
     width:70px;
   }
   .el-menu-demo{
-    border-radius: 20px;
+    border-radius: 30px;
     padding-left: 130px;
   }
   .el-menu-txt{
@@ -170,8 +171,6 @@ export default {
     font-size: 20px;
     color:white;
     margin-right: 20px;
-  }
-  .account-login{
   }
   .loginbtn{
     width: 400px;

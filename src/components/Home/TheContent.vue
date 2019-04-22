@@ -7,7 +7,7 @@
       <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div class="slides slide4"><span>找宠物</span></div></router-link>
     </div>
     <hr/>
-    <!-- <div class="content-two">
+    <div class="content-two">
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
           <span style="font-weight:bolder; margin-left:-530px;">寻物启事</span>
@@ -32,9 +32,6 @@
           <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
         </div>
       </el-card>
-      <el-row>
-        <el-col></el-col>
-      </el-row>
     </div>
     <div class="content-two">
       <el-card class="box-card1">
@@ -61,21 +58,18 @@
           <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
         </div>
       </el-card>
-      <el-row>
-        <el-col></el-col>
-      </el-row>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'content',
+  name: 'thecontent',
   data () {
     return {
-      // image: "../../static/images/pretermit.png",
-      // image2: "../../static/images/timg.jpg",
-      // image3: "../../static/images/shenfenzheng.jpeg",
-      // image4: "../../static/images/wal.jpg"
+      image: '../../static/images/pretermit.png',
+      image2: '../../static/images/timg.jpg',
+      image3: '../../static/images/shenfenzheng.jpeg',
+      image4: '../../static/images/wal.jpg'
     }
   }
 }
