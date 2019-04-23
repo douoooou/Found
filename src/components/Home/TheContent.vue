@@ -103,7 +103,7 @@ export default {
   background-size: 100% 100%;
 }
 .contentpage{
-  margin-bottom: 500px;
+  margin-bottom: 400px;
 }
 .content-one{
   height: 200px;

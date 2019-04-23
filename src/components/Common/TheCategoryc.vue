@@ -19,7 +19,7 @@
 <script>
 
 export default {
-  name: 'TheCategory',
+  name: 'TheCategoryc',
   created () {
     // this.getData()
   },
@@ -66,15 +66,15 @@ export default {
         id: '0'
       },
       {
-        title: '身份证',
+        title: '狗',
         id: '1'
       },
       {
-        title: '钱包',
+        title: '猫',
         id: '2'
       },
       {
-        title: '文件',
+        title: '猪',
         id: '3'
       },
       {

@@ -5,11 +5,6 @@
       <el-col :span="2" v-for="item in sort" :key="item.id" :value="item.id">{{item.title}}</el-col>
     </div>
   </el-row>
-  <el-row class="category">
-    <div class="categorybox">
-      <el-col :span="2" v-for="item in sort2" :key="item.id" :value="item.id">{{item.title}}</el-col>
-    </div>
-  </el-row>
   <el-row class="category2">
     <el-col :span="2" v-for="item in sort3" :key="item.id">{{item.title}}</el-col>
   </el-row>
@@ -19,7 +14,7 @@
 <script>
 
 export default {
-  name: 'TheCategory',
+  name: 'TheCategoryr',
   created () {
     // this.getData()
   },
@@ -60,26 +55,6 @@ export default {
       {
         title: '河北',
         id: '7'
-      }],
-      sort2: [{
-        title: '全部',
-        id: '0'
-      },
-      {
-        title: '身份证',
-        id: '1'
-      },
-      {
-        title: '钱包',
-        id: '2'
-      },
-      {
-        title: '文件',
-        id: '3'
-      },
-      {
-        title: '其他',
-        id: '4'
       }],
       sort3: [{
         title: '全部',

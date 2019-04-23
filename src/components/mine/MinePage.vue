@@ -42,42 +42,53 @@
       </el-breadcrumb>
       <hr/>
       <div class="mine-two">
-        <el-row class="mine-bar">
-          <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-          <el-col :span="15">
-              <el-row :span="24">
-                  <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                  <el-col :span="9"><p> 2019年2月14日</p></el-col>
-              </el-row>
-              <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
-          </el-col>
-          <el-col :span="5"><el-button class="mine-btn">已招领</el-button></el-col>
-        </el-row>
-        <hr/>
-        <el-row class="mine-bar">
-          <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-          <el-col :span="15">
-              <el-row :span="24">
-                  <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                  <el-col :span="9"><p> 2019年2月14日</p></el-col>
-              </el-row>
-              <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
-          </el-col>
-          <el-col :span="5"><el-button class="mine-btn">已招领</el-button></el-col>
-        </el-row>
-        <hr/>
-        <el-row class="mine-bar">
-          <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-          <el-col :span="15">
-              <el-row :span="24">
-                  <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                  <el-col :span="9"><p> 2019年2月14日</p></el-col>
-              </el-row>
-              <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
-          </el-col>
-          <el-col :span="5"><el-button class="mine-btnn">未招领</el-button></el-col>
-        </el-row>
-        <hr/>
+        <el-timeline >
+            <el-timeline-item timestamp="2018/4/12" placement="top">
+              <el-card>
+                <el-row class="mine-bar">
+                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="15">
+                <el-row :span="24">
+                    <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
+                    <el-col :span="9"><p> 2019年2月14日</p></el-col>
+                </el-row>
+                <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
+                    </el-col>
+                    <el-col :span="5"><el-button class="mine-btn">已招领</el-button></el-col>
+                </el-row>
+              </el-card>
+            </el-timeline-item>
+            <el-timeline-item timestamp="2018/4/12" placement="top">
+              <el-card>
+                <el-row class="mine-bar">
+                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="15">
+                <el-row :span="24">
+                    <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
+                    <el-col :span="9"><p> 2019年2月14日</p></el-col>
+                </el-row>
+                <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
+                    </el-col>
+                    <el-col :span="5"><el-button class="mine-btn">已招领</el-button></el-col>
+                </el-row>
+              </el-card>
+            </el-timeline-item>
+            <el-timeline-item timestamp="2018/4/12" placement="top">
+              <el-card>
+                <el-row class="mine-bar">
+                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="15">
+                <el-row :span="24">
+                    <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
+                    <el-col :span="9"><p> 2019年2月14日</p></el-col>
+                </el-row>
+                <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
+                    </el-col>
+                    <el-col :span="5"><el-button class="mine-btnn">未招领</el-button></el-col>
+                </el-row>
+              </el-card>
+            </el-timeline-item>
+        </el-timeline>
         <br/>
         <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
     </div>
@@ -139,9 +150,9 @@ export default {
     font-size: 18px;
     color: white;
 }
- .label{
-   line-height: 60px;
- }
+.label{
+line-height: 60px;
+}
 .change-msg-btn{
     margin-top: 300px;
     background-color: #6991c7;
@@ -151,6 +162,7 @@ export default {
     margin-left: 120px;
     margin-right: 120px;
     margin-top: 20px;
+    margin-bottom: 100px;
     height: 450px;
 }
 .mine-bar{
