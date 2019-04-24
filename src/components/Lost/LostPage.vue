@@ -61,8 +61,9 @@
       </el-dialog>
       <div><TheCategory></TheCategory></div>
       <div class="lost-three">
-        <el-row class="lost-row">
+        <el-row>
           <el-col :span="4" v-for="(o, index) in 8" :key="o" :offset="index = 0 && index ==5? 2 : 1">
+            <!-- <p class="collabel">未招领</p> -->
             <el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
                 <span>丢了一只小狗狗</span>
@@ -94,7 +95,8 @@ export default {
       region: '',
       dialogImageUrl: '',
       picdialogVisible: false,
-      currentDate: new Date()
+      currentDate: new Date(),
+      status: 1
     }
   },
   methods: {

@@ -28,20 +28,24 @@
                 </el-col>
             </el-row>
             <el-row class="detail-class">
+                <el-col :span="2"><h4>状态：</h4></el-col>
+                <el-col :span="5" class="detail-txt"><p>未招领</p></el-col>
+            </el-row>
+            <el-row class="detail-class">
                 <el-col :span="2"><h4>分类：</h4></el-col>
-                <el-col :span="2" class="detail-txt"><p>其他</p></el-col>
+                <el-col :span="5" class="detail-txt"><p>其他</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡地点：</h4></el-col>
-                <el-col :span="2" class="detail-txt"><p>故宫售票处</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>故宫售票处</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡时间：</h4></el-col>
-                <el-col :span="3" class="detail-txt"><p>2019年2月13日</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>2019年2月13日</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>联系方式：</h4></el-col>
-                <el-col :span="3" class="detail-txt"><p>134920299000</p></el-col>
+                <el-col :span="5" class="detail-txt"><p>134920299000</p></el-col>
             </el-row>
         </el-card>
       </div>
@@ -93,7 +97,7 @@ export default {
 }
 .intro-div{
     width: 700px;
-    margin-left: 30px;
+    margin-left: 10px;
 }
 .intro-div h4{
     text-align: left;
@@ -110,5 +114,6 @@ export default {
 }
 .detail-txt{
     margin-top: 6px;
+    /* margin-left: -100px; */
 }
 </style>

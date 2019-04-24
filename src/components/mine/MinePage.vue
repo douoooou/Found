@@ -86,7 +86,7 @@
                     <el-col :span="15">
                 <el-row :span="24">
                     <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                    <el-col :span="9"><p> 2019年2月14日</p></el-col>
+                    <el-col :span="9"><p class="mine-date"> 2019年2月14日</p></el-col>
                 </el-row>
                 <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
                     </el-col>
@@ -101,7 +101,7 @@
                     <el-col :span="15">
                 <el-row :span="24">
                     <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                    <el-col :span="9"><p> 2019年2月14日</p></el-col>
+                    <el-col :span="9"><p class="mine-date"> 2019年2月14日</p></el-col>
                 </el-row>
                 <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
                     </el-col>
@@ -116,7 +116,7 @@
                     <el-col :span="15">
                 <el-row :span="24">
                     <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                    <el-col :span="9"><p> 2019年2月14日</p></el-col>
+                    <el-col :span="9"><p class="mine-date"> 2019年2月14日</p></el-col>
                 </el-row>
                 <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
                     </el-col>
@@ -200,7 +200,7 @@ export default {
     color: white;
 }
 .label{
-line-height: 60px;
+    line-height: 60px;
 }
 .change-msg-btn{
     margin-top: 300px;
@@ -224,7 +224,7 @@ line-height: 60px;
     height: 80px;
     margin-top: 10px;
 }
-p{
+.mine-date{
     margin-left: 50px;
     padding-left: 100px;
     margin-top: 22px;
