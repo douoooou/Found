@@ -11,7 +11,7 @@
           <el-col :span="8"><el-button class="lost-btn" @click="lsdialogVisible = true">填写失物信息</el-button></el-col>
         </el-row>
       </div>
-      <el-dialog title="发布寻物启事" :visible.sync="lsdialogVisible" width="40%" :before-close="handleClose">
+      <el-dialog title="发布寻物启事" :visible.sync="lsdialogVisible" width="40%">
         <el-form label-width="100px">
           <el-form-item label="标题：" prop="name">
             <el-input></el-input>

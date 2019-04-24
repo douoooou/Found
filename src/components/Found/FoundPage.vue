@@ -8,9 +8,57 @@
               <el-breadcrumb-item>>>招领信息</el-breadcrumb-item>
             </el-breadcrumb>
           </el-col>
-          <el-col :span="8"><el-button class="lost-btn">填写招领信息</el-button></el-col>
+          <el-col :span="8"><el-button class="lost-btn" @click="fddialogVisible = true">填写招领信息</el-button></el-col>
         </el-row>
       </div>
+      <el-dialog title="发布招领启事" :visible.sync="fddialogVisible" width="40%" :before-close="handleClose">
+        <el-form label-width="100px">
+          <el-form-item label="标题：" prop="name">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="类别：">
+            <el-col :span="10">
+              <el-select  v-model="region" placeholder="请选择种类">
+                <el-option label="身份证" value="1"></el-option>
+                <el-option label="钱包" value="q"></el-option>
+                <el-option label="文件" value="w"></el-option>
+                <el-option label="钥匙" value="y"></el-option>
+                <el-option label="其他" value="e"></el-option>
+              </el-select>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="详细介绍：">
+            <el-input type="textarea"></el-input>
+          </el-form-item>
+          <el-form-item label="上传照片：">
+            <el-upload
+              action="https://jsonplaceholder.typicode.com/posts/"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              limit="2"
+              :on-remove="handleRemove">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="picdialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </el-form-item>
+          <el-form-item label="地点：" prop="name">
+            <el-input :span="4"></el-input>
+          </el-form-item>
+          <el-form-item label="丢失时间：" required>
+            <el-col :span="11">
+              <el-form-item prop="date1">
+                <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="fddialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="fpdialogVisible = false">提  交</el-button>
+        </span>
+      </el-dialog>
       <div><TheCategory></TheCategory></div>
       <div class="lost-three">
         <el-row class="lost-row">
@@ -42,6 +90,7 @@ export default {
   name: 'Foundpage',
   data () {
     return {
+      fddialogVisible: false,
       currentDate: new Date()
     }
   },

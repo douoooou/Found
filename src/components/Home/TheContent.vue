@@ -17,7 +17,7 @@
           <img class="content-image" :src="image">
           <span>本人的一摞文件貌似忘在了火车站的候车室，请...</span>
           <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.14</span>
-          <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
+          <router-link :to="{path:'/LostDetail',name:'LostDetail'}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
         </div>
         <div class="xunwu-item">
           <img class="content-image" :src="image">

@@ -4,7 +4,7 @@
       <div class="mine-one">
         <el-row>
           <el-col :span="3"><img class="headimage" :src="headimage"></el-col>
-          <el-col :span="2"><div class="mine-username">知世</div></el-col>
+          <el-col :span="2"><div class="mine-username">{{username}}</div></el-col>
           <el-col :span="11">
             <div class="mine-msg">
                 <el-row>
@@ -33,8 +33,44 @@
                 </el-row>
             </div>
           </el-col>
-          <el-col :span="3"><el-button class="change-msg-btn">修改个人信息</el-button></el-col>
+          <el-col :span="3"><el-button class="change-msg-btn" @click="msgdialogVisible = true">修改个人信息</el-button></el-col>
         </el-row>
+      <el-dialog title="修改个人信息" :visible.sync="msgdialogVisible" width="40%" :before-close="handleClose">
+        <el-form label-width="100px">
+          <el-form-item label="用户名：" prop="name">
+            <el-input v-model="username"></el-input>
+          </el-form-item>
+          <el-form-item label="头像：">
+            <el-upload
+              action="https://jsonplaceholder.typicode.com/posts/"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              limit="1"
+              :on-remove="handleRemove">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="picdialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </el-form-item>
+          <el-form-item label="区域：" prop="name">
+            <el-input v-model="area"></el-input>
+          </el-form-item>
+          <el-form-item label="联系电话：" prop="name">
+            <el-input v-model="telephone"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱：" prop="name">
+            <el-input :span="4" v-model="email"></el-input>
+          </el-form-item>
+          <el-form-item label="QQ：" prop="name">
+            <el-input :span="4" v-model="qq"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="fddialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="fpetdialogVisible = false">提  交</el-button>
+        </span>
+      </el-dialog>
     </div>
         <!--面包屑导航-->
       <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
@@ -105,12 +141,25 @@ export default {
   },
   data () {
     return {
+      msgdialogVisible: false,
+      username: '知世',
       area: '北京',
       telephone: '13913211902',
       email: '1182819111@qq.com',
       qq: '1182819111',
       image: '../../static/images/pretermit.png',
-      headimage: '../../static/images/timg.jpg'
+      headimage: '../../static/images/timg.jpg',
+      dialogImageUrl: '',
+      picdialogVisible: false
+    }
+  },
+  methods: {
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     }
   }
 }
