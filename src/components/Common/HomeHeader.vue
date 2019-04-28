@@ -41,12 +41,28 @@
             </el-form-item>
             <!-- 自动登录 -->
             <el-form-item>
-              <el-checkbox class="autologin">自动登录</el-checkbox>
+              <p class="forgetpsd" @click="register">注册用户</p>
               <p class="forgetpsd" @click="forgetpsd">忘记密码?</p>
             </el-form-item>
             <!-- 底部按钮 -->
             <el-form-item>
               <el-button type="primary" class="loginbtn" @click="login">登录</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
+        <el-dialog title='注册用户' :visible.sync="registerdialogVisible" width="460px" center :before-close="handleClose">
+          <el-form>
+            <!-- 账户 -->
+            <el-form-item>
+              <el-input auto-complete="off" prefix-icon="el-icon-mobile-phone" placeholder="请输入手机号" v-model="username"></el-input>
+            </el-form-item>
+            <!-- 密码 -->
+            <el-form-item>
+              <el-input auto-complete="off" prefix-icon="el-icon-view" placeholder="登录密码" v-model="password" type="password"></el-input>
+            </el-form-item>
+            <!-- 底部按钮 -->
+            <el-form-item>
+              <el-button type="primary" class="loginbtn" @click="registermsg">注册</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -93,17 +109,22 @@
   </div>
 </template>
 <script>
+// import axios from 'axios'
+import apiPath from '@/api/apiUrl'
+
 export default {
   name: 'HomeHeader',
   data () {
     return {
       // 登录dialog
       dialogLoginVisible: false,
+      registerdialogVisible: false,
       activeIndex: '1',
       activeIndex2: '1',
       seachData: '',
       username: '',
       password: '',
+      wzb: 'wzb',
       dialogForpsdVisible: false,
       form: {
         verification: 'one'
@@ -129,6 +150,28 @@ export default {
         .catch(_ => {})
     },
     seach () {
+    },
+    register () {
+      this.registerdialogVisible = true
+    },
+    registermsg () {
+      // this.$axios.post('http://192.168.1.106:3306',{username:this.username,password:this.password}).then(res => {
+      //   console.log(response)
+      // }).catch(error => {
+      //   axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+      //   console.log(error)
+      //   // if (error.response.status === 400) {
+      //   //   this.errorMsg = '密码错误，请重新登录'
+      //   //   this.password = ''
+      //   // }
+      //   // if (error.response.status === 401) {
+      //   //   this.errorMsg = '您没有权限登录此系统'
+      //   // }
+      // })
+      this.$axios.get(apiPath.login).then((res) => {
+        // console.log(response)
+        // console.log(response.data)
+      })
     },
     // 登录
     login () {
