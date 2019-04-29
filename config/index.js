@@ -10,10 +10,21 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {            
+        target: 'http://192.168.1.106:3000',
+        //要访问的后端接口            
+        changeOrigin: true,            
+        pathRewrite: {
+              '^/api': '/'  
+            //这里的配置是正则表达式，以/api开头的将会被用用‘/api'替换掉，假如后台文档的接口是 /api/list/xxx    
+            //前端api接口写：axios.get('/api/list/xxx') ， 被处理之后实际访问的是：http://news.baidu.com/api/list/xxx             
+        }
+        }     
+    },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

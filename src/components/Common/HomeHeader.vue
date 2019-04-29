@@ -13,6 +13,7 @@
           </el-menu>
           <div class="line"></div>
         </el-col>
+        <span @click="registermsg">hhhhhh</span>
         <el-col :span="2" class="logintxtbox"><span class="logintxt" @click="showLogin">登录/注册</span></el-col>
         <el-col :span="2"><router-link :to="{path:'/MinePage',name:'MinePage'}"><div><img class="logo" src="../../../static/images/timg.jpg"></div></router-link></el-col>
       </el-row>
@@ -31,12 +32,12 @@
           <el-form>
             <!-- 账户 -->
             <el-form-item>
-              <el-input auto-complete="off" prefix-icon="el-icon-mobile-phone" placeholder="请输入手机号" v-model="username"></el-input>
+              <el-input auto-complete="off" prefix-icon="el-icon-mobile-phone" placeholder="请输入手机号"></el-input>
               <!-- <div class="el-form-item__error">{{UsererrorMsg}}</div> -->
             </el-form-item>
             <!-- 密码 -->
             <el-form-item>
-              <el-input auto-complete="off" prefix-icon="el-icon-view" placeholder="登录密码" v-model="password" type="password"></el-input>
+              <el-input auto-complete="off" prefix-icon="el-icon-view" placeholder="登录密码" type="password"></el-input>
               <!-- <div v-if="errorMsg != null" class="el-form-item__error">{{errorMsg}}</div> -->
             </el-form-item>
             <!-- 自动登录 -->
@@ -52,13 +53,21 @@
         </el-dialog>
         <el-dialog title='注册用户' :visible.sync="registerdialogVisible" width="460px" center :before-close="handleClose">
           <el-form>
-            <!-- 账户 -->
             <el-form-item>
-              <el-input auto-complete="off" prefix-icon="el-icon-mobile-phone" placeholder="请输入手机号" v-model="username"></el-input>
+              <el-input auto-complete="off" placeholder="请输入用户名" v-model="username"></el-input>
+              <div class="el-form-item__error">{{namemsg}}</div>
             </el-form-item>
-            <!-- 密码 -->
             <el-form-item>
-              <el-input auto-complete="off" prefix-icon="el-icon-view" placeholder="登录密码" v-model="password" type="password"></el-input>
+              <el-input auto-complete="off" placeholder="请输入手机号" type="repassword" v-model="telephone"></el-input>
+              <div class="el-form-item__error">{{phonemsg}}</div>
+            </el-form-item>
+            <el-form-item>
+              <el-input auto-complete="off" placeholder="请输入密码" type="password" v-model="password"></el-input>
+              <div class="el-form-item__error">{{psdmsg}}</div>
+            </el-form-item>
+            <el-form-item>
+              <el-input auto-complete="off" placeholder="请再次输入密码" type="repassword" v-model="repassword"></el-input>
+              <div class="el-form-item__error">{{repsdmsg}}</div>
             </el-form-item>
             <!-- 底部按钮 -->
             <el-form-item>
@@ -110,6 +119,8 @@
 </template>
 <script>
 
+// import axios from 'axios'
+// import qs from 'qs'
 export default {
   name: 'HomeHeader',
   data () {
@@ -117,12 +128,17 @@ export default {
       // 登录dialog
       dialogLoginVisible: false,
       registerdialogVisible: false,
+      seachData: '',
       activeIndex: '1',
       activeIndex2: '1',
-      seachData: '',
       username: '',
       password: '',
-      wzb: 'wzb',
+      repassword: '',
+      telephone: '',
+      namemsg: '',
+      phonemsg: '',
+      psdmsg: '',
+      repsdmsg: '',
       dialogForpsdVisible: false,
       form: {
         verification: 'one'
@@ -153,7 +169,30 @@ export default {
       this.registerdialogVisible = true
     },
     registermsg () {
-      console.log('a')
+      if (this.username === '') {
+        console.log('用户名为空')
+        this.namemsg = '用户名不能为空'
+      } else if (this.telephone === '') {
+        this.namemsg = ' '
+        this.phonemsg = '电话不能为空'
+      } else if (this.password === '') {
+        this.phonemsg = ' '
+        this.psdmsg = '密码不能为空'
+      } else if (this.repassword === '') {
+        this.psdmsg = ''
+        this.repsdmsg = '密码不能为空'
+      } else if (this.password !== this.repassword) {
+        this.repsdmsg = '两次密码不一致'
+        console.log('aaaa')
+      } else {
+        this.namemsg = ''
+        this.phonemsg = ''
+        this.psdmsg = ''
+        this.repsdmsg = ''
+        console.log(this.username)
+        console.log(this.password)
+        console.log(this.telephone)
+      }
     },
     // 登录
     login () {

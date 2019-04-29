@@ -1,21 +1,25 @@
 <template>
 <div class="main">
   <HomeHeader></HomeHeader>
-  <Carousel></Carousel>
+  <Test></Test>
+  <!-- <Carousel></Carousel> -->
   <TheContent></TheContent>
 </div>
 </template>
 
 <script type="text/javascript">
 import HomeHeader from '../Common/HomeHeader.vue'
-import Carousel from './Carousel.vue'
+import Test from '../Common/Test.vue'
+
+// import Carousel from './Carousel.vue'
 import TheContent from './TheContent.vue'
 
 export default{
   name: 'TheIndex',
   components: {
     HomeHeader,
-    Carousel,
+    Test,
+    // Carousel,
     TheContent
   },
   data () {

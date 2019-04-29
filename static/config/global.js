@@ -1,4 +1,4 @@
-const baseURL = 'http://127.0.0.1:3306'
+const baseURL = 'http://127.0.0.1:3000'
 
 export default ({
   BASE_URL: baseURL
