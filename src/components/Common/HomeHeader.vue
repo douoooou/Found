@@ -109,8 +109,6 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
-import apiPath from '@/api/apiUrl'
 
 export default {
   name: 'HomeHeader',
@@ -155,23 +153,7 @@ export default {
       this.registerdialogVisible = true
     },
     registermsg () {
-      // this.$axios.post('http://192.168.1.106:3306',{username:this.username,password:this.password}).then(res => {
-      //   console.log(response)
-      // }).catch(error => {
-      //   axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-      //   console.log(error)
-      //   // if (error.response.status === 400) {
-      //   //   this.errorMsg = '密码错误，请重新登录'
-      //   //   this.password = ''
-      //   // }
-      //   // if (error.response.status === 401) {
-      //   //   this.errorMsg = '您没有权限登录此系统'
-      //   // }
-      // })
-      this.$axios.get(apiPath.login).then((res) => {
-        // console.log(response)
-        // console.log(response.data)
-      })
+      console.log('a')
     },
     // 登录
     login () {
