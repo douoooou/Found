@@ -36,7 +36,7 @@
           <el-col :span="2"><el-button class="change-msg-btn" @click="msgdialogVisible = true">修改个人信息</el-button></el-col>
           <el-col :span="3"><el-button class="change-msg-btn" @click="exitlogin">退出当前用户登录</el-button></el-col>
         </el-row>
-      <el-dialog title="修改个人信息" :visible.sync="msgdialogVisible" width="40%" :before-close="handleClose">
+      <el-dialog title="修改个人信息" :visible.sync="msgdialogVisible" width="40%">
         <el-form label-width="100px">
           <el-form-item label="用户名：" prop="name">
             <el-input v-model="username"></el-input>
@@ -80,18 +80,19 @@
       <hr/>
       <div class="mine-two">
         <el-timeline >
-            <el-timeline-item timestamp="2018/4/12" placement="top">
-              <el-card>
+            <el-timeline-item placement="top" v-for="(mypostmsg,index) in mypostarr" :key="index">
+              <el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-                    <el-col :span="15">
-                <el-row :span="24">
-                    <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                    <el-col :span="9"><p class="mine-date"> 2019年2月14日</p></el-col>
-                </el-row>
-                <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
+                    <el-col :span="13">
+                        <el-row>
+                            <el-col :span="8" class="mypost-hiddenn"><h4>{{mypostmsg.title}}</h4></el-col>
+                            <el-col :span="9"><p class="mine-date">{{mypostmsg.pubtime | formatDate}}</p></el-col>
+                        </el-row>
+                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{mypostmsg.sthcont}}</span></el-row>
                     </el-col>
-                    <el-col :span="5"><el-button class="mine-btn">已招领</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
@@ -106,22 +107,8 @@
                 </el-row>
                 <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
                     </el-col>
-                    <el-col :span="5"><el-button class="mine-btn">已招领</el-button></el-col>
-                </el-row>
-              </el-card>
-            </el-timeline-item>
-            <el-timeline-item timestamp="2018/4/12" placement="top">
-              <el-card>
-                <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-                    <el-col :span="15">
-                <el-row :span="24">
-                    <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                    <el-col :span="9"><p class="mine-date"> 2019年2月14日</p></el-col>
-                </el-row>
-                <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
-                    </el-col>
-                    <el-col :span="5"><el-button class="mine-btnn">未招领</el-button></el-col>
+                    <el-col :span="2"><el-button class="mine-btnn">未招领</el-button></el-col>
+                    <el-col :span="2"><el-button class="mine-btn">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
@@ -134,16 +121,37 @@
 
 <script>
 import MineHeader from '../Common/MineHeader'
+import {formatDate} from '@/assets/js/date'
 
 export default {
   name: 'Minepage',
   components: {
     MineHeader
   },
+  filters: {
+    formatDate: (time) => {
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
+      // 此处formatDate是一个函数，将其封装在common/js/date.js里面，便于全局使用
+    }
+  },
+  created () {
+    var aa = this
+    this.$axios.get('http://192.168.1.106:3000/mypost?username=' + this.localusername)
+      .then(function (response) {
+        console.log(response)
+        aa.mypostarr = response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
   data () {
     return {
+      username: '',
       msgdialogVisible: false,
       localusername: JSON.parse(localStorage.getItem('localusername')),
+      mypostarr: '',
       area: '北京',
       telephone: '13913211902',
       email: '1182819111@qq.com',
@@ -170,6 +178,23 @@ export default {
 </script>
 
 <style>
+ul li{
+  list-style: none;
+}
+.mypost-hidden{
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+}
+.mypost-hiddenn{
+  width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+}
 .breadcrumb{
     margin-left: 50px;
     margin-top: 40px;
@@ -223,7 +248,7 @@ export default {
     text-align: left;
 }
 .mine-image{
-    margin-left: 80px;
+    margin-left: 20px;
     width: 120px;
     height: 80px;
     margin-top: 10px;

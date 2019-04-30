@@ -78,7 +78,7 @@
         <br/>
         <el-pagination background layout="prev, pager, next" :total="800" :page-size="8"></el-pagination>
 <!-- <el-pagination class="page" @current-change="handleCurrentChange" :current-page="currentPage" :total="totalPages" :page-size="10" v-if="totalPages > 10"> -->
-      <!-- </el-pagination>         -->
+      <!-- </el-pagination>-->
       </div>
   </div>
 </template>
