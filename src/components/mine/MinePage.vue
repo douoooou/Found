@@ -1,10 +1,10 @@
 <template>
   <div id="minepage">
-      <TheHeader></TheHeader>
+      <MineHeader></MineHeader>
       <div class="mine-one">
         <el-row>
           <el-col :span="3"><img class="headimage" :src="headimage"></el-col>
-          <el-col :span="2"><div class="mine-username">{{username}}</div></el-col>
+          <el-col :span="2"><div class="mine-username">{{localusername}}</div></el-col>
           <el-col :span="11">
             <div class="mine-msg">
                 <el-row>
@@ -33,7 +33,8 @@
                 </el-row>
             </div>
           </el-col>
-          <el-col :span="3"><el-button class="change-msg-btn" @click="msgdialogVisible = true">修改个人信息</el-button></el-col>
+          <el-col :span="2"><el-button class="change-msg-btn" @click="msgdialogVisible = true">修改个人信息</el-button></el-col>
+          <el-col :span="3"><el-button class="change-msg-btn" @click="exitlogin">退出当前用户登录</el-button></el-col>
         </el-row>
       <el-dialog title="修改个人信息" :visible.sync="msgdialogVisible" width="40%" :before-close="handleClose">
         <el-form label-width="100px">
@@ -132,17 +133,17 @@
 </template>
 
 <script>
-import TheHeader from '../Common/TheHeader'
+import MineHeader from '../Common/MineHeader'
 
 export default {
   name: 'Minepage',
   components: {
-    TheHeader
+    MineHeader
   },
   data () {
     return {
       msgdialogVisible: false,
-      username: '知世',
+      localusername: JSON.parse(localStorage.getItem('localusername')),
       area: '北京',
       telephone: '13913211902',
       email: '1182819111@qq.com',
@@ -160,6 +161,9 @@ export default {
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+    },
+    exitlogin () {
+      localStorage.removeItem('localusername')
     }
   }
 }

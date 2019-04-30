@@ -7,6 +7,11 @@
 import qs from 'qs'
 
 export default {
+  data () {
+    return {
+      namemsg: ''
+    }
+  },
   created () {
     console.log('a')
     this.$axios.get('http://192.168.1.106:3000/list')
@@ -28,16 +33,24 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.post('http://192.168.1.106:3000/register',
-      qs.stringify({
-        'username': '今天张娜走丢了',
-        'password': '111123'}))
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    // this.$axios.post('http://192.168.1.106:3000/register',
+    //   qs.stringify({
+    //     'username': '今天张娜走丢了',
+    //     'password': '111123'}))
+    //   .then(function (response) {
+    //     console.log(response)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
+    // this.$axios.post('http://192.168.1.106:3000/register',qs.stringify({
+    //     'username': 'wzb',
+    //     'password': 'this.password'})).then(function (response) {
+    //     console.log(response)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
   }
 }
 </script>

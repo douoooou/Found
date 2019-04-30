@@ -13,24 +13,16 @@
           <span style="font-weight:bolder; margin-left:-530px;">寻物启事</span>
            <router-link :to="{path:'/LostPage',name:'LostPage'}"><el-button style="float: right; padding: 3px 0" type="text">更多</el-button></router-link>
         </div>
-        <div class="xunwu-item">
-          <img class="content-image" :src="image">
-          <span>本人的一摞文件貌似忘在了火车站的候车室，请...</span>
-          <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.14</span>
-          <router-link :to="{path:'/LostDetail',name:'LostDetail'}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
-        </div>
-        <div class="xunwu-item">
-          <img class="content-image" :src="image">
-          <span>找东西！！！身份证不见了，可能是丢在了哪里...</span>
-          <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.13</span>
-          <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
-        </div>
-        <div class="xunwu-item">
-          <img class="content-image" :src="image">
-          <span>丢了一个纸袋，纸袋里面几张纸，是我的文件，...</span>
-          <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.13</span>
-          <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
-        </div>
+        <ul>
+          <li v-for="(lostmsg,index) in lostthingarr" :key="index" v-if='index< 6'>
+            <el-row class="xunwu-item">
+              <el-col :span="3"><img class="content-image" :src="image"></el-col>
+              <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{lostmsg.sthcont}}</span></el-col>
+              <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{lostmsg.pubtime | formatDate}}</span></el-col>
+              <router-link :to="{path:'/LostDetail',name:'LostDetail',name:'LostDetail',query:{id:lostmsg.id}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
+            </el-row>
+          </li>
+        </ul>
       </el-card>
     </div>
     <div class="content-two">
@@ -62,15 +54,38 @@
   </div>
 </template>
 <script>
+import {formatDate} from '@/assets/js/date'
+
 export default {
   name: 'thecontent',
+  filters: {
+    formatDate: (time) => {
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
+      // 此处formatDate是一个函数，将其封装在common/js/date.js里面，便于全局使用
+    }
+  },
   data () {
     return {
+      lostthingarr: '',
       image: '../../static/images/pretermit.png',
       image2: '../../static/images/timg.jpg',
       image3: '../../static/images/shenfenzheng.jpeg',
       image4: '../../static/images/wal.jpg'
     }
+  },
+  created () {
+    var zz = this
+    this.$axios.get('http://192.168.1.106:3000/lostthing')
+      .then(function (response) {
+        console.log(response)
+        console.log(response.data)
+        zz.lostthingarr = response.data
+        console.log(zz.lostthingarr)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 </script>
@@ -112,10 +127,29 @@ export default {
 .content-two{
   float: left;
 }
+ul li{
+  list-style: none;
+}
 .box-card1{
   margin-left: 50px;
   margin-top: 50px;
+  margin-bottom: 50px;
   width: 700px;
+}
+.xunwu-item{
+  line-height: 50px;
+}
+.xunwu-item-txt{
+  text-align: left;
+  margin-left: 20px;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 20px;
+  font-size: 0.9rem;
+  line-height: 1.5rem;
+  margin-top: 10px;
 }
 .content-image{
   width: 70px;

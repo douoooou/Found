@@ -16,15 +16,6 @@
         <el-col :span="2" class="logintxtbox"><span class="logintxt" v-if="localusername == null" @click="showLogin">登录/注册</span></el-col>
         <el-col :span="2"><router-link :to="{path:'/MinePage',name:'MinePage'}"><div><h4 class="localusername">{{localusername}}</h4></div></router-link></el-col>
       </el-row>
-      <el-row class="search">
-        <el-col :span="17" class="s-con">
-          <div class="seach-wrapper">
-            <el-input placeholder="输入丢失物品关键字" v-model="seachData" class="search-input">
-              <el-button slot="append" icon="el-icon-search" @click="seach">搜索</el-button>
-            </el-input>
-          </div>
-        </el-col>
-      </el-row>
       <!-- 登录框 -->
       <div class="account-login"></div>
         <el-dialog title='账号密码登录' :visible.sync="dialogLoginVisible" width="460px" center :before-close="handleClose">
@@ -142,7 +133,6 @@ export default {
       lnamemsg: '',
       lpsdmsg: '',
       localusername: JSON.parse(localStorage.getItem('localusername')),
-      // localusernamee: localusername.replace("\"", ""),
       dialogForpsdVisible: false,
       form: {
         verification: 'one'
@@ -151,9 +141,6 @@ export default {
     }
   },
   methods: {
-    created () {
-      console.log(this.localusername)
-    },
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
     },
@@ -246,7 +233,7 @@ export default {
               alert('登录成功')
               console.log('登录')
               cc.dialogLoginVisible = false
-              localStorage.setItem('localusername', bb.username)
+              localStorage.setItem('localusername', JSON.stringify(bb.username))
             }
           })
           .catch(function (error) {
@@ -266,16 +253,13 @@ export default {
 </script>
 <style>
   .homeheader{
-    height:300px;
+    height:120px;
     background-image: linear-gradient(to top, #a3bded 0%, #346ab1 100%);
   }
   .header-container{
     padding-top: 35px;
     padding-bottom: 30px;
     margin: 0 auto;
-  }
-  .logo{
-    width:70px;
   }
   a{
     text-decoration: none;
@@ -287,6 +271,9 @@ export default {
     margin-top: 15px;
     color:white;
     font-size: 25px;
+  }
+  .logo{
+    width:70px;
   }
   .el-menu-demo{
     border-radius: 30px;

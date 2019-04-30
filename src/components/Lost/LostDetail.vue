@@ -8,7 +8,6 @@
             <el-row>
                 <el-col :span="11">
                     <div class="block">
-                        <!-- <span class="demonstration">默认 Hover 指示器触发</span> -->
                         <el-carousel height="250px">
                         <el-carousel-item v-for="item in 4" :key="item">
                             <h3>{{ item }}</h3>
@@ -37,7 +36,7 @@
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡地点：</h4></el-col>
-                <el-col :span="7" class="detail-txt"><p>故宫售票处</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>{{area}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡时间：</h4></el-col>
@@ -57,14 +56,33 @@
 import TheHeader from '../Common/TheHeader'
 
 export default {
-  name: 'lostdetail',
+  name: 'Lostdetail',
   components: {
     TheHeader
   },
   data () {
     return {
+      title: '',
+      area: '',
+      name: 'aaa',
+      routeID: this.$route.query.id,
       image: '../../static/images/pretermit.png'
     }
+  },
+  created () {
+    // var zz = this
+    this.$axios.get('http://192.168.1.106:3000/lostthing?id=' + this.routeID)
+      .then(function (response) {
+        console.log(response)
+        console.log(response.data)
+        // zz.lostthingarr = response.data
+        // console.log(zz.area)
+        // console.log(response.data[zz.routeID].lookforplace)
+        // zz.area = response.data[zz.routeID].lookforplace
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 </script>
