@@ -65,16 +65,18 @@ export default {
       title: '',
       area: '',
       name: 'aaa',
+      id: '',
       routeID: this.$route.query.id,
       image: '../../static/images/pretermit.png'
     }
   },
   created () {
-    // var zz = this
+    var zz = this
     this.$axios.get('http://192.168.1.106:3000/lostthing?id=' + this.routeID)
       .then(function (response) {
         console.log(response)
         console.log(response.data)
+        console.log(zz.routeID)
         // zz.lostthingarr = response.data
         // console.log(zz.area)
         // console.log(response.data[zz.routeID].lookforplace)

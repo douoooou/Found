@@ -19,7 +19,7 @@
           <el-form-item label="类别：">
             <el-col :span="10">
               <el-select  v-model="lostclassify" placeholder="请选择种类">
-                <el-option label="身份证" value="s"></el-option>
+                <el-option label="ID卡" value="s"></el-option>
                 <el-option label="钱包" value="q"></el-option>
                 <el-option label="文件" value="w"></el-option>
                 <el-option label="钥匙" value="y"></el-option>

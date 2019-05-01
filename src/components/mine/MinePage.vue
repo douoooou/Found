@@ -92,7 +92,7 @@
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{mypostmsg.sthcont}}</span></el-row>
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn">删除信息</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(mypostmsg,index)">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
@@ -151,7 +151,8 @@ export default {
       username: '',
       msgdialogVisible: false,
       localusername: JSON.parse(localStorage.getItem('localusername')),
-      mypostarr: '',
+      title: '',
+      mypostarr: [],
       area: '北京',
       telephone: '13913211902',
       email: '1182819111@qq.com',
@@ -172,6 +173,19 @@ export default {
     },
     exitlogin () {
       localStorage.removeItem('localusername')
+    },
+    delmsg (mypostmsg, index) {
+      this.title = mypostmsg.title
+      console.log(this.title)
+      let yy = this
+      this.$axios.get('http://192.168.1.106:3000/mypost/del?title=' + this.title)
+        .then(function (response) {
+          console.log(response)
+          yy.mypostarr.splice(index, 1)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }

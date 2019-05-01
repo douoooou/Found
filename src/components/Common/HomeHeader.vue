@@ -16,61 +16,55 @@
         <el-col :span="2" class="logintxtbox"><span class="logintxt" v-if="localusername == null" @click="showLogin">登录/注册</span></el-col>
         <el-col :span="2"><router-link :to="{path:'/MinePage',name:'MinePage'}"><div><h4 class="localusername">{{localusername}}</h4></div></router-link></el-col>
       </el-row>
-      <el-row class="search">
-        <el-col :span="17" class="s-con">
-          <div class="seach-wrapper">
-            <el-input placeholder="输入丢失物品关键字" v-model="seachData" class="search-input">
-              <el-button slot="append" icon="el-icon-search" @click="seach">搜索</el-button>
-            </el-input>
-          </div>
-        </el-col>
-      </el-row>
       <!-- 登录框 -->
       <div class="account-login"></div>
-        <el-dialog title='账号密码登录' :visible.sync="dialogLoginVisible" width="460px" center :before-close="handleClose">
-          <el-form>
+        <el-dialog title='账号密码登录' :visible.sync="dialogLoginVisible" width="500px" center :before-close="handleClose">
+          <el-form label-width="100px">
             <!-- 账户 -->
-            <el-form-item>
+            <el-form-item label="用户名：">
               <el-input auto-complete="off" placeholder="请输入用户名" v-model="username"></el-input>
               <div class="el-form-item__error">{{lnamemsg}}</div>
             </el-form-item>
             <!-- 密码 -->
-            <el-form-item>
+            <el-form-item label="密码：">
               <el-input auto-complete="off" placeholder="登录密码" type="password" v-model="password"></el-input>
               <div class="el-form-item__error">{{lpsdmsg}}</div>
             </el-form-item>
-            <!-- 自动登录 -->
             <el-form-item>
               <p class="forgetpsd" @click="register">注册用户</p>
               <p class="forgetpsd" @click="forgetpsd">忘记密码?</p>
             </el-form-item>
             <!-- 底部按钮 -->
             <el-form-item>
-              <el-button type="primary" class="loginbtn" @click="login">登录</el-button>
+              <el-button type="primary" @click="login" style="width:120px; margin-left:50px">登录</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
         <el-dialog title='注册用户' :visible.sync="registerdialogVisible" width="460px" center :before-close="handleClose">
-          <el-form>
-            <el-form-item>
-              <el-input auto-complete="off" placeholder="请输入用户名" v-model="username"></el-input>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="用户名：" prop="name">
+              <el-input v-model="ruleForm.name" placeholder="请输入用户名"></el-input>
               <div class="el-form-item__error">{{namemsg}}</div>
             </el-form-item>
-            <el-form-item>
-              <el-input auto-complete="off" placeholder="请输入手机号" type="repassword" v-model="telephone"></el-input>
-              <div class="el-form-item__error">{{phonemsg}}</div>
+            <el-form-item label="手机号码：" prop="tel">
+              <el-input auto-complete="off" placeholder="请输入手机号" v-model="ruleForm.tel"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱：">
+              <el-input auto-complete="off" placeholder="请输入邮箱" v-model="ruleForm.email"></el-input>
+            </el-form-item>
+            <el-form-item label="Q Q：">
+              <el-input auto-complete="off" placeholder="请输入QQ" v-model="qq"></el-input>
+            </el-form-item>
+            <el-form-item label="密码：" prop="psd">
+              <el-input auto-complete="off" placeholder="请输入密码" type="password" v-model="ruleForm.psd"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码：" prop="repsd">
+              <el-input auto-complete="off" placeholder="请再次输入密码" type="repassword" v-model="ruleForm.repsd"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-input auto-complete="off" placeholder="请输入密码" type="password" v-model="password"></el-input>
-              <div class="el-form-item__error">{{psdmsg}}</div>
-            </el-form-item>
-            <el-form-item>
-              <el-input auto-complete="off" placeholder="请再次输入密码" type="repassword" v-model="repassword"></el-input>
-              <div class="el-form-item__error">{{repsdmsg}}</div>
-            </el-form-item>
-            <!-- 底部按钮 -->
-            <el-form-item>
-              <el-button type="primary" class="loginbtn" @click="registermsg">注册</el-button>
+              <!-- <el-button type="primary" class="loginbtn" @click="registermsg">注册</el-button> -->
+              <el-button type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -118,13 +112,74 @@
 </template>
 <script>
 
-// import axios from 'axios'
 import qs from 'qs'
 
 export default {
   name: 'HomeHeader',
-  data () {
+  data: function () {
+    var checkNewPassword2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请确认密码'))
+      } else if (value !== this.ruleForm.psd) {
+        callback(new Error('两次密码输入不一致'))
+      } else {
+        callback()
+      }
+    }
+    var checkNewassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else if (value.length < 6) {
+        callback(new Error('密码程度至少为6位'))
+      } else {
+        callback()
+      }
+    }
+    var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/
+    var telrule = (rule, value, callback) => {
+      if (!reg.test(value)) {
+        callback(new Error('请输入正确格式的手机号'))
+      } else {
+        callback()
+      }
+    }
+    var regg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+    var emailrule = (rule, value, callback) => {
+      if (!regg.test(value)) {
+        callback(new Error('请输入正确格式的手机号'))
+      } else {
+        callback()
+      }
+    }
     return {
+      ruleForm: {
+        name: '',
+        tel: '',
+        email: '',
+        psd: '',
+        repsd: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        tel: [
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          {validator: telrule, trigger: 'blur'}
+        ],
+        email: [
+          {validator: emailrule, trigger: 'blur'}
+        ],
+        psd: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          {validator: checkNewassword, trigger: 'blur'}
+        ],
+        repsd: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          {validator: checkNewPassword2, trigger: 'blur'}
+        ]
+      },
       // 登录dialog
       dialogLoginVisible: false,
       registerdialogVisible: false,
@@ -132,17 +187,15 @@ export default {
       activeIndex: '1',
       activeIndex2: '1',
       username: '',
+      email: '',
+      qq: '',
       password: '',
       repassword: '',
       telephone: '',
-      namemsg: '',
-      phonemsg: '',
-      psdmsg: '',
-      repsdmsg: '',
       lnamemsg: '',
+      namemsg: '',
       lpsdmsg: '',
       localusername: JSON.parse(localStorage.getItem('localusername')),
-      // localusernamee: localusername.replace("\"", ""),
       dialogForpsdVisible: false,
       form: {
         verification: 'one'
@@ -151,6 +204,20 @@ export default {
     }
   },
   methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+          this.registermsg()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
     created () {
       console.log(this.localusername)
     },
@@ -175,53 +242,28 @@ export default {
       this.registerdialogVisible = true
     },
     registermsg () {
-      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/
-      if (this.username === '') {
-        console.log('用户名为空')
-        this.namemsg = '用户名不能为空'
-      } else if (this.telephone === '') {
-        this.namemsg = ' '
-        this.phonemsg = '电话不能为空'
-      } else if (!reg.test(this.telephone)) {
-        this.phonemsg = ''
-        this.phonemsg = '请输入正确的手机号'
-      } else if (this.password === '') {
-        this.phonemsg = ''
-        this.psdmsg = '密码不能为空'
-      } else if (this.repassword === '') {
-        this.psdmsg = ''
-        this.repsdmsg = '密码不能为空'
-      } else if (this.password !== this.repassword) {
-        this.repsdmsg = '两次密码不一致'
-        console.log('aaaa')
-      } else {
-        this.namemsg = ''
-        this.phonemsg = ''
-        this.psdmsg = ''
-        this.repsdmsg = ''
-        console.log(this.username)
-        console.log(this.password)
-        console.log(this.telephone)
-        var aa = this
-        this.$axios.post('http://192.168.1.106:3000/register',
-          qs.stringify({
-            username: this.username,
-            password: this.password,
-            phone: this.telephone})).then(function (response) {
-          console.log('注册用户')
-          console.log(response)
-          if (response.data === '用户名已存在') {
-            aa.namemsg = '用户名已存在'
-          } else {
-            alert('注册成功')
-            aa.registerdialogVisible = false
-            aa.password = ''
-          }
+      console.log('注册')
+      var aa = this
+      this.$axios.post('http://192.168.1.106:3000/register',
+        qs.stringify({
+          username: this.ruleForm.name,
+          password: this.ruleForm.psd,
+          phone: this.ruleForm.tel,
+          email: this.ruleForm.email,
+          qq: this.qq})).then(function (response) {
+        console.log('注册用户')
+        console.log(response)
+        if (response.data === '用户名已存在') {
+          aa.namemsg = '用户名已存在'
+        } else {
+          alert('注册成功')
+          aa.registerdialogVisible = false
+          aa.password = ''
+        }
+      })
+        .catch(function (error) {
+          console.log(error)
         })
-          .catch(function (error) {
-            console.log(error)
-          })
-      }
     },
     // 登录
     login () {
@@ -246,7 +288,7 @@ export default {
               alert('登录成功')
               console.log('登录')
               cc.dialogLoginVisible = false
-              localStorage.setItem('localusername', bb.username)
+              localStorage.setItem('localusername', JSON.stringify(bb.username))
             }
           })
           .catch(function (error) {
@@ -266,7 +308,7 @@ export default {
 </script>
 <style>
   .homeheader{
-    height:300px;
+    height:120px;
     background-image: linear-gradient(to top, #a3bded 0%, #346ab1 100%);
   }
   .header-container{
@@ -337,13 +379,5 @@ export default {
   .submitbtn{
     width:150px;
     margin-left: 130px;
-  }
-  .search{
-    margin-top: 100px;
-    margin-left: 380px;
-  }
-  .search-input{
-    width: 600px;
-    border-radius: 10px;
   }
 </style>
