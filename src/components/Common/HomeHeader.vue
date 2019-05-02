@@ -304,6 +304,7 @@ export default {
             console.log('登录')
             cc.dialogLoginVisible = false
             localStorage.setItem('localusername', JSON.stringify(bb.ruleForm.loginname))
+            localStorage.setItem('localpassword', JSON.stringify(bb.ruleForm.loginpsd))
             // this.getusername()
             // cc.$router.go(0)
             // cc.refresh()

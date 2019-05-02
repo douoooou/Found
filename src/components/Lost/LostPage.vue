@@ -1,6 +1,6 @@
 <template>
   <div id="lostpage">
-      <TheHeader></TheHeader>
+      <!-- <TheHeader></TheHeader> -->
       <div class="lost-one">
         <el-row>
           <el-col :span="16">

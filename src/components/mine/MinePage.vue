@@ -1,6 +1,6 @@
 <template>
   <div id="minepage">
-      <MineHeader></MineHeader>
+      <!-- <MineHeader></MineHeader> -->
       <div class="mine-one">
         <el-row>
           <el-col :span="3"><img class="headimage" :src="headimage"></el-col>
@@ -96,19 +96,20 @@
                 </el-row>
               </el-card>
             </el-timeline-item>
-            <el-timeline-item timestamp="2018/4/12" placement="top">
-              <el-card>
+            <el-timeline-item placement="top" v-for="(peoplemsg,indexx) in peoplearr" :key="indexx">
+              <el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-                    <el-col :span="15">
-                <el-row :span="24">
-                    <el-col :span="9"><h4>文件丢了，关于毕业生第三方协议的文件</h4></el-col>
-                    <el-col :span="9"><p class="mine-date"> 2019年2月14日</p></el-col>
-                </el-row>
-                <el-row><span class="mine-txt">本人的一摞文件貌似忘在了火车站的候车室，请捡到的人与我联系，万分感谢！</span></el-row>
+                    <el-col :span="13">
+                        <el-row>
+                            <el-col :span="8" class="mypost-hiddenn"><h4>{{peoplemsg.title}}</h4></el-col>
+                            <el-col :span="9"><p class="mine-date">{{peoplemsg.pubtime | formatDate}}</p></el-col>
+                        </el-row>
+                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{peoplemsg.peopcont}}</span></el-row>
                     </el-col>
-                    <el-col :span="2"><el-button class="mine-btnn">未招领</el-button></el-col>
-                    <el-col :span="2"><el-button class="mine-btn">删除信息</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
+                    <!-- <el-col :span="2"><el-button class="mine-btnn">未招领</el-button></el-col>                     -->
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,indexx)">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
@@ -137,11 +138,26 @@ export default {
     }
   },
   created () {
+    // this.$axios.get('http://192.168.1.106:3000/login?status=login&username=' + this.localusername + '&password=' + this.localpassword)
+    //   .then(function (response) {
+    //     console.log(response)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
     var aa = this
     this.$axios.get('http://192.168.1.106:3000/mypost?username=' + this.localusername)
       .then(function (response) {
         console.log(response)
         aa.mypostarr = response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    this.$axios.get('http://192.168.1.106:3000/mypeop?username=' + this.localusername)
+      .then(function (response) {
+        console.log(response.data)
+        aa.peoplearr = response.data
       })
       .catch(function (error) {
         console.log(error)
@@ -152,12 +168,15 @@ export default {
       username: '',
       msgdialogVisible: false,
       localusername: JSON.parse(localStorage.getItem('localusername')),
+      // localpassword: JSON.parse(localStorage.getItem('localpassword')),
       title: '',
+      peopletitle: '',
+      area: '',
+      telephone: '',
+      email: '',
+      qq: '',
       mypostarr: [],
-      area: '北京',
-      telephone: '13913211902',
-      email: '1182819111@qq.com',
-      qq: '1182819111',
+      peoplearr: [],
       image: '../../static/images/pretermit.png',
       headimage: '../../static/images/timg.jpg',
       dialogImageUrl: '',
@@ -184,6 +203,19 @@ export default {
         .then(function (response) {
           console.log(response)
           yy.mypostarr.splice(index, 1)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    delpeoplemsg (peoplemsg, indexx) {
+      this.peopletitle = peoplemsg.title
+      console.log(this.peopletitle)
+      let nn = this
+      this.$axios.get('http://192.168.1.106:3000/mypeop/del?title=' + this.peopletitle)
+        .then(function (response) {
+          console.log(response)
+          nn.peoplearr.splice(indexx, 1)
         })
         .catch(function (error) {
           console.log(error)

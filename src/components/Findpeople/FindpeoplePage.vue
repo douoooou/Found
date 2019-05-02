@@ -1,5 +1,5 @@
 <template>
-  <div id="lostpage">
+  <div id="findpeoplepage">
       <div class="lost-one">
         <el-row>
           <el-col :span="16">
@@ -86,7 +86,7 @@ import qs from 'qs'
 import {provinceAndCityData, CodeToText} from 'element-china-area-data'
 
 export default {
-  name: 'Lostpage',
+  name: 'findpeoplepage',
   data () {
     return {
       options: provinceAndCityData,
