@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-  <HomeHeader></HomeHeader>
+  <!-- <HomeHeader></HomeHeader> -->
   <!-- <Test></Test> -->
   <!-- <Carousel></Carousel> -->
   <TheContent></TheContent>

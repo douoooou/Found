@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <HomeHeader></HomeHeader>
     <div id="main">
      <router-view v-if="isRouterAlive"></router-view>
     </div>
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+import HomeHeader from './components/Common/HomeHeader'
 import TheFooter from './components/Common/TheFooter'
 
 export default {
@@ -32,6 +34,7 @@ export default {
     }
   },
   components: {
+    HomeHeader,
     TheFooter
   }
 }

@@ -12,9 +12,9 @@
         </el-row>
       </div>
       <el-dialog title="发布寻物启事" :visible.sync="lsdialogVisible" width="40%">
-        <el-form label-width="100px">
-          <el-form-item label="标题：">
-            <el-input  v-model="lostmsgtitle"></el-input>
+        <el-form label-width="100px" :rules="lostrules" ref="ruleForm" :model="ruleForm">
+          <el-form-item label="标题：" prop="lostmsgtitle">
+            <el-input  v-model="ruleForm.lostmsgtitle"></el-input>
           </el-form-item>
           <el-form-item label="类别：">
             <el-col :span="10">
@@ -27,8 +27,8 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="详细介绍：">
-            <el-input type="textarea"  v-model="lostinfo"></el-input>
+          <el-form-item label="详细介绍：" prop="lostinfo">
+            <el-input type="textarea"  v-model="ruleForm.lostinfo"></el-input>
           </el-form-item>
           <el-form-item label="上传照片：">
             <el-upload
@@ -42,11 +42,12 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </el-form-item>
-          <el-form-item label="省市：" prop="name">
-            <el-input :span="4" v-model="city"></el-input>
+          <el-form-item label="省市：">
+            <el-cascader style="width:530px" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
+            <!-- <el-input :span="4" v-model="city"></el-input> -->
           </el-form-item>
-          <el-form-item label="详细地点：" prop="name">
-            <el-input :span="4" v-model="losrarea"></el-input>
+          <el-form-item label="详细地点：">
+            <el-input :span="4" v-model="lostarea"></el-input>
           </el-form-item>
           <el-form-item label="丢失时间：" required>
             <el-col :span="11">
@@ -55,13 +56,13 @@
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="联系方式：" prop="name">
-            <el-input :span="4" v-model="lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
+          <el-form-item label="联系方式：" prop="lianxi">
+            <el-input :span="4" v-model="ruleForm.lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="lsdialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="submitlostmsg">提  交</el-button>
+          <el-button type="primary" @click="lostsubmitForm('ruleForm')">提  交</el-button>
         </span>
       </el-dialog>
       <div><TheCategory></TheCategory></div>
@@ -94,11 +95,14 @@ import TheHeader from '../Common/TheHeader'
 import TheCategory from '../Common/TheCategory'
 import {formatDate} from '@/assets/js/date'
 import qs from 'qs'
+import {provinceAndCityData, CodeToText} from 'element-china-area-data'
 
 export default {
   name: 'Lostpage',
   data () {
     return {
+      options: provinceAndCityData,
+      selectedOptions: [],
       lostlists: '',
       lsdialogVisible: false,
       dialogImageUrl: '',
@@ -107,14 +111,29 @@ export default {
       pubtime: '',
       lostclassify: '',
       status: '未招领',
-      lostinfo: '',
-      losrarea: '',
+      lostarea: '',
       city: '',
       losttime: '',
-      lianxi: '',
-      lostmsgtitle: '',
       picdialogVisible: false,
-      currentDate: new Date()
+      currentDate: new Date(),
+      ruleForm: {
+        lostmsgtitle: '',
+        lostinfo: '',
+        lianxi: ''
+      },
+      lostrules: {
+        lostmsgtitle: [
+          { required: true, message: '请输入标题，至少10个字', trigger: 'blur' },
+          { min: 10, max: 20, message: '10到20个字', trigger: 'blur' }
+        ],
+        lostinfo: [
+          { required: true, message: '请输入详细信息，至少10个字', trigger: 'blur' },
+          { min: 10, message: '最少10个字', trigger: 'blur' }
+        ],
+        lianxi: [
+          { required: true, message: '请输入正确的联系方式', trigger: 'blur' }
+        ]
+      }
     }
   },
   filters: {
@@ -138,6 +157,23 @@ export default {
       })
   },
   methods: {
+    lostsubmitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.submitlostmsg()
+          this.lsdialogVisible = false
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    addressChange (arr) {
+      console.log(arr)
+      console.log(CodeToText[arr[0]], CodeToText[arr[1]])
+      this.city = CodeToText[arr[0]] + CodeToText[arr[1]]
+      console.log(this.city)
+    },
     handleRemove (file, fileList) {
       console.log(file, fileList)
     },
@@ -155,17 +191,16 @@ export default {
           lookforpic: this.lostpic,
           found: this.status,
           pubtime: this.pubtime,
-          sthcont: this.lostinfo,
-          lookforplace: this.losrarea,
+          sthcont: this.ruleForm.lostinfo,
+          lookforplace: this.lostarea,
           losttime: this.losttime,
-          title: this.lostmsgtitle,
+          title: this.ruleForm.lostmsgtitle,
           classify: this.lostclassify,
           lostcity: this.city,
-          lianxi: this.lianxi
+          lianxi: this.ruleForm.lianxi
         }))
         .then(function (response) {
           console.log(response)
-          zz.lsdialogVisible = false
           zz.$axios.get('http://192.168.1.106:3000/lostthing')
             .then(function (response) {
               console.log(response)
