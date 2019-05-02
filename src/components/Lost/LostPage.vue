@@ -42,7 +42,10 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </el-form-item>
-          <el-form-item label="地点：" prop="name">
+          <el-form-item label="省市：" prop="name">
+            <el-input :span="4" v-model="city"></el-input>
+          </el-form-item>
+          <el-form-item label="详细地点：" prop="name">
             <el-input :span="4" v-model="losrarea"></el-input>
           </el-form-item>
           <el-form-item label="丢失时间：" required>
@@ -51,6 +54,9 @@
                 <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"  v-model="losttime"></el-date-picker>
               </el-form-item>
             </el-col>
+          </el-form-item>
+          <el-form-item label="联系方式：" prop="name">
+            <el-input :span="4" v-model="lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -100,10 +106,12 @@ export default {
       lostpic: '',
       pubtime: '',
       lostclassify: '',
-      status: '否',
+      status: '未招领',
       lostinfo: '',
       losrarea: '',
+      city: '',
       losttime: '',
+      lianxi: '',
       lostmsgtitle: '',
       picdialogVisible: false,
       currentDate: new Date()
@@ -151,7 +159,9 @@ export default {
           lookforplace: this.losrarea,
           losttime: this.losttime,
           title: this.lostmsgtitle,
-          classify: this.lostclassify
+          classify: this.lostclassify,
+          lostcity: this.city,
+          lianxi: this.lianxi
         }))
         .then(function (response) {
           console.log(response)

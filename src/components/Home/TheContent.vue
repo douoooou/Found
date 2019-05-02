@@ -19,7 +19,7 @@
               <el-col :span="3"><img class="content-image" :src="image"></el-col>
               <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{lostmsg.sthcont}}</span></el-col>
               <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{lostmsg.pubtime | formatDate}}</span></el-col>
-              <router-link :to="{path:'/LostDetail',name:'LostDetail',name:'LostDetail',query:{id:lostmsg.id}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
+              <router-link :to="{path:'/LostDetail',name:'LostDetail',name:'LostDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
             </el-row>
           </li>
         </ul>

@@ -128,6 +128,7 @@ export default {
   components: {
     MineHeader
   },
+  inject: ['reload'],
   filters: {
     formatDate: (time) => {
       let date = new Date(time)
@@ -173,6 +174,7 @@ export default {
     },
     exitlogin () {
       localStorage.removeItem('localusername')
+      this.reload()
     },
     delmsg (mypostmsg, index) {
       this.title = mypostmsg.title

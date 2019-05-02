@@ -19,15 +19,15 @@
       <!-- 登录框 -->
       <div class="account-login"></div>
         <el-dialog title='账号密码登录' :visible.sync="dialogLoginVisible" width="500px" center :before-close="handleClose">
-          <el-form label-width="100px">
+          <el-form label-width="100px" :model="ruleForm" :rules="loginrules" ref="ruleForm" class="demo-ruleForm">
             <!-- 账户 -->
-            <el-form-item label="用户名：">
-              <el-input auto-complete="off" placeholder="请输入用户名" v-model="username"></el-input>
+            <el-form-item label="用户名：" prop="loginname">
+              <el-input auto-complete="off" placeholder="请输入用户名" v-model="ruleForm.loginname"></el-input>
               <div class="el-form-item__error">{{lnamemsg}}</div>
             </el-form-item>
             <!-- 密码 -->
-            <el-form-item label="密码：">
-              <el-input auto-complete="off" placeholder="登录密码" type="password" v-model="password"></el-input>
+            <el-form-item label="密码：" prop="loginpsd">
+              <el-input auto-complete="off" placeholder="登录密码" type="password" v-model="ruleForm.loginpsd"></el-input>
               <div class="el-form-item__error">{{lpsdmsg}}</div>
             </el-form-item>
             <el-form-item>
@@ -36,7 +36,7 @@
             </el-form-item>
             <!-- 底部按钮 -->
             <el-form-item>
-              <el-button type="primary" @click="login" style="width:120px; margin-left:50px">登录</el-button>
+              <el-button type="primary" @click="submitloginForm('ruleForm')" style="width:120px; margin-left:50px">登录</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -116,6 +116,7 @@ import qs from 'qs'
 
 export default {
   name: 'HomeHeader',
+  inject: ['reload'],
   data: function () {
     var checkNewPassword2 = (rule, value, callback) => {
       if (value === '') {
@@ -153,6 +154,8 @@ export default {
     }
     return {
       ruleForm: {
+        loginname: '',
+        loginpsd: '',
         name: '',
         tel: '',
         email: '',
@@ -162,7 +165,7 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
         ],
         tel: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
@@ -178,6 +181,16 @@ export default {
         repsd: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           {validator: checkNewPassword2, trigger: 'blur'}
+        ]
+      },
+      loginrules: {
+        loginname: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+        ],
+        loginpsd: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          {validator: checkNewassword, trigger: 'blur'}
         ]
       },
       // 登录dialog
@@ -207,8 +220,17 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
           this.registermsg()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    submitloginForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.login()
         } else {
           console.log('error submit!!')
           return false
@@ -267,34 +289,30 @@ export default {
     },
     // 登录
     login () {
-      if (this.username === '') {
-        console.log('用户名为空')
-        this.lnamemsg = '用户名不能为空'
-      } else if (this.password === '') {
-        this.lnamemsg = ' '
-        this.lpsdmsg = '密码不能为空'
-      } else {
-        var bb = this
-        var cc = this
-        this.$axios.get('http://192.168.1.106:3000/login?status=login&username=' + this.username + '&password=' + this.password)
-          .then(function (response) {
-            console.log(response)
-            if (response.data === '用户名不存在') {
-              bb.lnamemsg = '用户名不存在'
-            } else if (response.data === '密码错误') {
-              bb.lpsdmsg = '密码错误'
-              bb.lnamemsg = ''
-            } else {
-              alert('登录成功')
-              console.log('登录')
-              cc.dialogLoginVisible = false
-              localStorage.setItem('localusername', JSON.stringify(bb.username))
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      }
+      var bb = this
+      var cc = this
+      this.$axios.get('http://192.168.1.106:3000/login?status=login&username=' + this.ruleForm.loginname + '&password=' + this.ruleForm.loginpsd)
+        .then(function (response) {
+          console.log(response)
+          if (response.data === '用户不存在') {
+            bb.lnamemsg = '用户名不存在'
+          } else if (response.data === '密码错误') {
+            bb.lpsdmsg = '密码错误'
+            bb.lnamemsg = ''
+          } else {
+            alert('登录成功')
+            console.log('登录')
+            cc.dialogLoginVisible = false
+            localStorage.setItem('localusername', JSON.stringify(bb.ruleForm.loginname))
+            // this.getusername()
+            // cc.$router.go(0)
+            // cc.refresh()
+            cc.reload()
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
     forgetpsd () {
       // 显示忘记密码框

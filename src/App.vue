@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="main">
-     <router-view></router-view>
+     <router-view v-if="isRouterAlive"></router-view>
     </div>
     <br/>
     <div id="footer"><TheFooter></TheFooter></div>
@@ -13,6 +13,24 @@ import TheFooter from './components/Common/TheFooter'
 
 export default {
   name: 'App',
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
+  data () {
+    return {
+      isRouterAlive: true
+    }
+  },
+  methods: {
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    }
+  },
   components: {
     TheFooter
   }
