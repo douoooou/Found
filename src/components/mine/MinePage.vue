@@ -105,7 +105,7 @@
                     </el-col>
                     <el-col :span="2.5">
                         <el-button class="mine-btnn" v-show="peoplemsg.found === '未找回'" @click="changepeoplestatus(peoplemsg)">未找回</el-button>
-                        <el-button class="mine-btn" v-show="peoplemsg.found === '已找回'">已找回</el-button>
+                        <el-button class="mine-btn" v-show="peoplemsg.found === '已找回'"  @click="changepeoplestatus(peoplemsg)">已找回</el-button>
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,dindex)">删除信息</el-button></el-col>
                 </el-row>
@@ -125,8 +125,8 @@
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.zhaolingcont}}</span></el-row>
                     </el-col>
                     <el-col :span="2.5">
-                        <el-button class="mine-btnn" v-show="findpetmsg.found === '未找回'">未找回</el-button>
-                        <el-button class="mine-btn" v-show="findpetmsg.found === '已找回'">已找回</el-button>
+                        <el-button class="mine-btnn" v-show="findpetmsg.found === '未找回'" @click="changefindpetstatus(findpetmsg)">未找回</el-button>
+                        <el-button class="mine-btn" v-show="findpetmsg.found === '已找回'" @click="changefindpetstatus(findpetmsg)">已找回</el-button>
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delfindpetmsg(findpetmsg,findpetindex)">删除信息</el-button></el-col>
                 </el-row>
@@ -146,8 +146,8 @@
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{zhaolingmsg.zhaolingcont}}</span></el-row>
                     </el-col>
                     <el-col :span="2.5">
-                        <el-button class="mine-btnn" v-show="zhaolingmsg.found === '未招领'">未招领</el-button>
-                        <el-button class="mine-btn" v-show="zhaolingmsg.found === '已招领'">已招领</el-button>
+                        <el-button class="mine-btnn" v-show="zhaolingmsg.found === '未招领'" @click="changefoundstatus(zhaolingmsg)">未招领</el-button>
+                        <el-button class="mine-btn" v-show="zhaolingmsg.found === '已招领'" @click="changefoundstatus(zhaolingmsg)">已招领</el-button>
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delfoundmsg(zhaolingmsg,foundindex)">删除信息</el-button></el-col>
                 </el-row>
@@ -193,7 +193,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.106:3000/mypost?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/mypost?username=' + this.localusername)
       .then(function (response) {
         // console.log(response)
         aa.mypostarr = response.data
@@ -201,7 +201,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.106:3000/mypeop?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/mypeop?username=' + this.localusername)
       .then(function (response) {
         // console.log(response.data)
         aa.peoplearr = response.data
@@ -278,7 +278,7 @@ export default {
       changelosttitle: '',
       changepeopletitle: '',
       changefoundtitle: '',
-      changeanimal: ''
+      changeanimaltitle: ''
     }
   },
   methods: {
@@ -383,9 +383,9 @@ export default {
           console.log(error)
         })
     },
-    changeloststatus (mypostmsg, index) {
+    changeloststatus (mypostmsg) {
       var zz = this
-      this.changelosttitle = mypostmsg.found
+      this.changelosttitle = mypostmsg.title
       if (mypostmsg.found === '未找回') {
         this.$axios.post('http://192.168.1.106:3000/upfound/sth',
           qs.stringify({
@@ -402,7 +402,7 @@ export default {
       } else {
         this.$axios.post('http://192.168.1.106:3000/upfound/sth',
           qs.stringify({
-            title: zz.mypostmsg.title,
+            title: zz.changelosttitle,
             found: '未找回'
           }))
           .then(function (response) {
@@ -414,11 +414,11 @@ export default {
           })
       }
     },
-    changepeoplestatus (peoplemsg, index) {
+    changepeoplestatus (peoplemsg) {
       var zz = this
-      this.changepeopletitle = peoplemsg.found
+      this.changepeopletitle = peoplemsg.title
       if (peoplemsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
           qs.stringify({
             title: zz.changepeopletitle,
             found: '已找回'
@@ -431,10 +431,72 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
           qs.stringify({
-            title: zz.peoplemsg.title,
+            title: zz.changepeopletitle,
             found: '未找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
+    changefindpetstatus (findpetmsg) {
+      var zz = this
+      this.changeanimaltitle = findpetmsg.title
+      if (findpetmsg.found === '未找回') {
+        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+          qs.stringify({
+            title: zz.changeanimaltitle,
+            found: '已找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      } else {
+        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+          qs.stringify({
+            title: zz.changeanimaltitle,
+            found: '未找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
+    changefoundstatus (zhaolingmsg) {
+      var zz = this
+      this.changefoundtitle = zhaolingmsg.title
+      if (zhaolingmsg.found === '未招领') {
+        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+          qs.stringify({
+            title: zz.changefoundtitle,
+            found: '已招领'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      } else {
+        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+          qs.stringify({
+            title: zz.changefoundtitle,
+            found: '未招领'
           }))
           .then(function (response) {
             console.log(response)
