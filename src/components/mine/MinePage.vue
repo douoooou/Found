@@ -2,33 +2,27 @@
   <div id="minepage">
       <!-- <MineHeader></MineHeader> -->
       <div class="mine-one">
-        <el-row>
+        <el-row v-for="(usermsgitem,index) in usermsg" :key="index">
           <el-col :span="3"><img class="headimage" :src="headimage"></el-col>
           <el-col :span="2"><div class="mine-username">{{localusername}}</div></el-col>
           <el-col :span="11">
             <div class="mine-msg">
                 <el-row>
-                    <el-col :span="5"><label class="label">区域：</label></el-col>
-                    <el-col :span="12">
-                        <el-input disabled :value="area"></el-input>
-                    </el-col>
-                </el-row>
-                <el-row>
                     <el-col :span="5"><label class="label">联系电话：</label></el-col>
                     <el-col :span="12">
-                        <el-input disabled :value="telephone"></el-input>
+                        <el-input disabled :value="usermsgitem.phone"></el-input>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="5"><label class="label">邮箱：</label></el-col>
                     <el-col :span="12">
-                        <el-input disabled :value="email"></el-input>
+                        <el-input disabled :value="usermsgitem.email"></el-input>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="5"><label class="label">QQ：</label></el-col>
                     <el-col :span="12">
-                        <el-input disabled :value="qq"></el-input>
+                        <el-input disabled :value="usermsgitem.qq"></el-input>
                     </el-col>
                 </el-row>
             </div>
@@ -37,16 +31,15 @@
           <el-col :span="3"><el-button class="change-msg-btn" @click="exitlogin">退出当前用户登录</el-button></el-col>
         </el-row>
       <el-dialog title="修改个人信息" :visible.sync="msgdialogVisible" width="40%">
-        <el-form label-width="100px">
-          <el-form-item label="用户名：" prop="name">
-            <el-input v-model="username"></el-input>
+        <el-form label-width="100px" :model="ruleForm" :rules="rules" ref="ruleForm">
+          <el-form-item label="用户名：">
+            <el-input v-model="localusername" disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item label="头像：">
             <el-upload
               action="https://jsonplaceholder.typicode.com/posts/"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
-              limit="1"
               :on-remove="handleRemove">
               <i class="el-icon-plus"></i>
             </el-upload>
@@ -54,22 +47,19 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </el-form-item>
-          <el-form-item label="区域：" prop="name">
-            <el-input v-model="area"></el-input>
+          <el-form-item label="联系电话：" prop="telephone">
+            <el-input v-model="ruleForm.telephone"></el-input>
           </el-form-item>
-          <el-form-item label="联系电话：" prop="name">
-            <el-input v-model="telephone"></el-input>
+          <el-form-item label="邮箱：" prop="email">
+            <el-input :span="4" v-model="ruleForm.email"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱：" prop="name">
-            <el-input :span="4" v-model="email"></el-input>
-          </el-form-item>
-          <el-form-item label="QQ：" prop="name">
+          <el-form-item label="QQ：">
             <el-input :span="4" v-model="qq"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="fddialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="fpetdialogVisible = false">提  交</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">提  交</el-button>
         </span>
       </el-dialog>
     </div>
@@ -80,6 +70,7 @@
       <hr/>
       <div class="mine-two">
         <el-timeline >
+          <div>
             <el-timeline-item placement="top" v-for="(mypostmsg,index) in mypostarr" :key="index">
               <el-card class="mypost-card">
                 <el-row class="mine-bar">
@@ -96,10 +87,12 @@
                 </el-row>
               </el-card>
             </el-timeline-item>
-            <el-timeline-item placement="top" v-for="(peoplemsg,indexx) in peoplearr" :key="indexx">
+          </div>
+          <div>
+            <el-timeline-item placement="top" v-for="(peoplemsg,dindex) in peoplearr" :key="dindex">
               <el-card class="mypost-card">
                 <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="4"><img class="mine-image" :src="imagea"></el-col>
                     <el-col :span="13">
                         <el-row>
                             <el-col :span="8" class="mypost-hiddenn"><h4>{{peoplemsg.title}}</h4></el-col>
@@ -109,10 +102,47 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
                     <!-- <el-col :span="2"><el-button class="mine-btnn">未招领</el-button></el-col>                     -->
-                    <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,indexx)">删除信息</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,dindex)">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
+          </div>
+          <div>
+            <el-timeline-item placement="top" v-for="(zhaolingmsg,index) in zhaolingarr" :key="index">
+              <el-card class="mypost-card">
+                <el-row class="mine-bar">
+                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="13">
+                        <el-row>
+                            <el-col :span="8" class="mypost-hiddenn"><h4>{{zhaolingmsg.title}}</h4></el-col>
+                            <el-col :span="9"><p class="mine-date">{{zhaolingmsg.pubtime | formatDate}}</p></el-col>
+                        </el-row>
+                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{zhaolingmsg.zhaolingcont}}</span></el-row>
+                    </el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(zhaolingmsg,index)">删除信息</el-button></el-col>
+                </el-row>
+              </el-card>
+            </el-timeline-item>
+          </div>
+          <div>
+            <el-timeline-item placement="top" v-for="(findpetmsg,index) in findpetarr" :key="index">
+              <el-card class="mypost-card">
+                <el-row class="mine-bar">
+                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="13">
+                        <el-row>
+                            <el-col :span="8" class="mypost-hiddenn"><h4>{{findpetmsg.title}}</h4></el-col>
+                            <el-col :span="9"><p class="mine-date">{{findpetmsg.pubtime | formatDate}}</p></el-col>
+                        </el-row>
+                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.zhaolingcont}}</span></el-row>
+                    </el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(findpetmsg,index)">删除信息</el-button></el-col>
+                </el-row>
+              </el-card>
+            </el-timeline-item>
+          </div>
         </el-timeline>
         <br/>
         <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
@@ -123,6 +153,7 @@
 <script>
 import MineHeader from '../Common/MineHeader'
 import {formatDate} from '@/assets/js/date'
+import qs from 'qs'
 
 export default {
   name: 'Minepage',
@@ -138,17 +169,21 @@ export default {
     }
   },
   created () {
-    // this.$axios.get('http://192.168.1.106:3000/login?status=login&username=' + this.localusername + '&password=' + this.localpassword)
-    //   .then(function (response) {
-    //     console.log(response)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   })
     var aa = this
+    this.$axios.get('http://192.168.1.106:3000/usermsg?username=' + this.localusername)
+      .then(function (response) {
+        console.log(response.data)
+        aa.usermsg = response.data
+        aa.ruleForm.telephone = response.data[0]['phone']
+        aa.qq = response.data[0]['qq']
+        aa.ruleForm.email = response.data[0]['email']
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     this.$axios.get('http://192.168.1.106:3000/mypost?username=' + this.localusername)
       .then(function (response) {
-        console.log(response)
+        // console.log(response)
         aa.mypostarr = response.data
       })
       .catch(function (error) {
@@ -156,14 +191,46 @@ export default {
       })
     this.$axios.get('http://192.168.1.106:3000/mypeop?username=' + this.localusername)
       .then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         aa.peoplearr = response.data
       })
       .catch(function (error) {
         console.log(error)
       })
+    this.$axios.get('http://192.168.1.106:3000/myzhaoling?username=' + this.localusername)
+      .then(function (response) {
+        console.log(response)
+        aa.zhaolingarr = response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    this.$axios.get('http://192.168.1.106:3000/myanimal?username=' + this.localusername)
+      .then(function (response) {
+        console.log(response)
+        aa.findpetarr = response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   },
-  data () {
+  data: function () {
+    var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/
+    var telrule = (rule, value, callback) => {
+      if (!reg.test(value)) {
+        callback(new Error('请输入正确格式的手机号'))
+      } else {
+        callback()
+      }
+    }
+    var regg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+    var emailrule = (rule, value, callback) => {
+      if (!regg.test(value)) {
+        callback(new Error('请输入正确格式的手机号'))
+      } else {
+        callback()
+      }
+    }
     return {
       username: '',
       msgdialogVisible: false,
@@ -171,13 +238,26 @@ export default {
       // localpassword: JSON.parse(localStorage.getItem('localpassword')),
       title: '',
       peopletitle: '',
-      area: '',
-      telephone: '',
-      email: '',
+      ruleForm: {
+        telephone: '',
+        email: ''
+      },
+      rules: {
+        telephone: [
+          {validator: telrule, trigger: 'blur'}
+        ],
+        email: [
+          {validator: emailrule, trigger: 'blur'}
+        ]
+      },
       qq: '',
+      usermsg: [],
       mypostarr: [],
+      zhaolingarr: [],
       peoplearr: [],
+      findpetarr: [],
       image: '../../static/images/pretermit.png',
+      imagea: '../../static/images/pretermit.png',
       headimage: '../../static/images/timg.jpg',
       dialogImageUrl: '',
       picdialogVisible: false
@@ -195,6 +275,44 @@ export default {
       localStorage.removeItem('localusername')
       this.reload()
     },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.submitusermsg()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    submitusermsg () {
+      var zz = this
+      this.$axios.post('http://192.168.1.106:3000/msgchange',
+        qs.stringify({
+          username: this.localusername,
+          phone: this.ruleForm.telephone,
+          email: this.ruleForm.email,
+          qq: this.qq
+        }))
+        .then(function (response) {
+          console.log(response)
+          zz.msgdialogVisible = false
+          zz.$axios.get('http://192.168.1.106:3000/usermsg?username=' + zz.localusername)
+            .then(function (response) {
+              console.log(response.data)
+              zz.usermsg = response.data
+              zz.ruleForm.telephone = response.data[0]['phone']
+              zz.qq = response.data[0]['qq']
+              zz.ruleForm.email = response.data[0]['email']
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     delmsg (mypostmsg, index) {
       this.title = mypostmsg.title
       console.log(this.title)
@@ -208,14 +326,14 @@ export default {
           console.log(error)
         })
     },
-    delpeoplemsg (peoplemsg, indexx) {
+    delpeoplemsg (peoplemsg, dindex) {
       this.peopletitle = peoplemsg.title
       console.log(this.peopletitle)
       let nn = this
       this.$axios.get('http://192.168.1.106:3000/mypeop/del?title=' + this.peopletitle)
         .then(function (response) {
           console.log(response)
-          nn.peoplearr.splice(indexx, 1)
+          nn.peoplearr.splice(dindex, 1)
         })
         .catch(function (error) {
           console.log(error)
@@ -263,7 +381,7 @@ ul li{
 }
 .mine-username{
     text-align: left;
-    width: 50px;
+    width: 100px;
     color: aliceblue;
     margin-left: 100px;
     margin-top: 80px;

@@ -53,10 +53,10 @@
           <el-button type="primary" @click="findpeoplesubmitForm('ruleForm')"> 提  交</el-button>
         </span>
       </el-dialog>
-      <div><TheCategory></TheCategory></div>
+      <div><TheCategoryr></TheCategoryr></div>
       <div class="lost-three">
         <el-row>
-          <el-col :span="4" v-for="(findpeoplelist, index) in findpeoplelists" :key="index" :offset="index = 0 && index ==5? 2 : 1">
+          <el-col :span="4" v-for="(findpeoplelist, index) in findpeoplelists" :key="index" :offset="index = 0 || index ==5? 2 : 1">
             <el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
                 <h4 class="hidden">{{findpeoplelist.title}}</h4>
@@ -80,7 +80,7 @@
 
 <script>
 import TheHeader from '../Common/TheHeader'
-import TheCategory from '../Common/TheCategory'
+import TheCategoryr from '../Common/TheCategoryr'
 import {formatDate} from '@/assets/js/date'
 import qs from 'qs'
 import {provinceAndCityData, CodeToText} from 'element-china-area-data'
@@ -206,7 +206,7 @@ export default {
   },
   components: {
     TheHeader,
-    TheCategory
+    TheCategoryr
   }
   // inject: ['reload']
 }

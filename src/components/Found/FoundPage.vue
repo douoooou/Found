@@ -11,10 +11,10 @@
           <el-col :span="8"><el-button class="lost-btn" @click="fddialogVisible = true">填写招领信息</el-button></el-col>
         </el-row>
       </div>
-      <el-dialog title="发布寻物启事" :visible.sync="fddialogVisible" width="40%">
+      <el-dialog title="发布招领启事" :visible.sync="fddialogVisible" width="40%">
         <el-form label-width="100px" :rules="foundrules" ref="ruleForm" :model="ruleForm">
-          <el-form-item label="标题：" prop="lostmsgtitle">
-            <el-input  v-model="ruleForm.lostmsgtitle"></el-input>
+          <el-form-item label="标题：" prop="foundtitle">
+            <el-input  v-model="ruleForm.foundtitle"></el-input>
           </el-form-item>
           <el-form-item label="类别：">
             <el-col :span="10">
@@ -49,7 +49,7 @@
           <el-form-item label="详细地点：">
             <el-input :span="4" v-model="lostarea"></el-input>
           </el-form-item>
-          <el-form-item label="丢失时间：" required>
+          <el-form-item label="拾取时间：" required>
             <el-col :span="11">
               <el-form-item prop="date1">
                 <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"  v-model="losttime"></el-date-picker>
@@ -68,8 +68,8 @@
       <div><TheCategory></TheCategory></div>
       <div class="lost-three">
         <el-row>
-          <el-col :span="4" v-for="(lostlist, index) in lostlists" :key="index" :offset="index = 0 && index ==5? 2 : 1">
-            <el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
+          <el-col :span="4" v-for="(lostlist, index) in lostlists" :key="index" :offset="index !== 0 || index !==5 ? 1 : 2">
+            <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:index}}"><el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
                 <h4 class="hidden">{{lostlist.title}}</h4>
                 <div class="bottom clearfix">
@@ -78,7 +78,7 @@
                 </div>
               <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
               </div>
-            </el-card>
+            </el-card></router-link>
           </el-col>
         </el-row>
         <br/>
@@ -117,12 +117,12 @@ export default {
       picdialogVisible: false,
       currentDate: new Date(),
       ruleForm: {
-        lostmsgtitle: '',
+        foundtitle: '',
         lostinfo: '',
         lianxi: ''
       },
       foundrules: {
-        lostmsgtitle: [
+        foundtitle: [
           { required: true, message: '请输入标题，至少10个字', trigger: 'blur' },
           { min: 10, max: 20, message: '10到20个字', trigger: 'blur' }
         ],
@@ -145,7 +145,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/lostthing')
+    this.$axios.get('http://192.168.1.106:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -185,23 +185,23 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.106:3000/loststhadd',
+      this.$axios.post('http://192.168.1.106:3000/zhaolingadd',
         qs.stringify({
           username: this.localusername,
-          lookforpic: this.lostpic,
+          zhaolingpic: this.lostpic,
           found: this.status,
           pubtime: this.pubtime,
-          sthcont: this.ruleForm.lostinfo,
-          lookforplace: this.lostarea,
-          losttime: this.losttime,
-          title: this.ruleForm.lostmsgtitle,
+          zhaolingcont: this.ruleForm.lostinfo,
+          zhaolingplace: this.lostarea,
+          zhaolingtime: this.losttime,
+          title: this.ruleForm.foundtitle,
           classify: this.lostclassify,
           lostcity: this.city,
           lianxi: this.ruleForm.lianxi
         }))
         .then(function (response) {
           console.log(response)
-          zz.$axios.get('http://192.168.1.106:3000/lostthing')
+          zz.$axios.get('http://192.168.1.106:3000/zhaoling')
             .then(function (response) {
               console.log(response)
               console.log(response.data)

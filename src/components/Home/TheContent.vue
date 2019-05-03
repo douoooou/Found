@@ -19,7 +19,7 @@
               <el-col :span="3"><img class="content-image" :src="image"></el-col>
               <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{lostmsg.sthcont}}</span></el-col>
               <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{lostmsg.pubtime | formatDate}}</span></el-col>
-              <router-link :to="{path:'/LostDetail',name:'LostDetail',name:'LostDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
+              <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
             </el-row>
           </li>
         </ul>
@@ -31,24 +31,16 @@
           <span style="font-weight:bolder; margin-left:-530px;">招领启事</span>
           <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><el-button style="float: right; padding: 3px 0" type="text">更多</el-button></router-link>
         </div>
-        <div class="zhaoling-item">
-          <img class="content-image" :src="image2">
-          <span>今天在家门口发现一只狗，看着很干净，并不像流... </span>
-          <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.15</span>
-          <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
-        </div>
-        <div class="zhaoling-item">
-          <img class="content-image" :src="image3">
-          <span>在路上捡到了一张身份证，失主看到就跟我联系吧... </span>
-          <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.14</span>
-          <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
-        </div>
-        <div class="zhaoling-item">
-          <img class="content-image" :src="image4">
-          <span>今天去西湖，景区的入口这里捡到了一个黑色钱包... </span>
-          <span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;2019.2.13</span>
-          <el-button type="text">&nbsp;&nbsp;查看详情</el-button>
-        </div>
+        <ul>
+          <li v-for="(foundmsg,index) in foundthingarr" :key="index" v-if='index< 6'>
+            <el-row class="xunwu-item">
+              <el-col :span="3"><img class="content-image" :src="image"></el-col>
+              <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{foundmsg.sthcont}}</span></el-col>
+              <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{foundmsg.pubtime | formatDate}}</span></el-col>
+              <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
+            </el-row>
+          </li>
+        </ul>
       </el-card>
     </div>
   </div>
@@ -68,6 +60,7 @@ export default {
   data () {
     return {
       lostthingarr: '',
+      foundthingarr: '',
       image: '../../static/images/pretermit.png',
       image2: '../../static/images/timg.jpg',
       image3: '../../static/images/shenfenzheng.jpeg',
@@ -82,6 +75,16 @@ export default {
         console.log(response.data)
         zz.lostthingarr = response.data
         console.log(zz.lostthingarr)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    this.$axios.get('http://192.168.1.106:3000/zhaoling')
+      .then(function (response) {
+        console.log(response)
+        console.log(response.data)
+        zz.foundthingarr = response.data
+        console.log(zz.foundthingarr)
       })
       .catch(function (error) {
         console.log(error)

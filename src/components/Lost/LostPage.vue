@@ -19,11 +19,11 @@
           <el-form-item label="类别：">
             <el-col :span="10">
               <el-select  v-model="lostclassify" placeholder="请选择种类">
-                <el-option label="ID卡" value="s"></el-option>
-                <el-option label="钱包" value="q"></el-option>
-                <el-option label="文件" value="w"></el-option>
-                <el-option label="钥匙" value="y"></el-option>
-                <el-option label="其他" value="e"></el-option>
+                <el-option label="ID卡" value="ID卡"></el-option>
+                <el-option label="钱包" value="钱包"></el-option>
+                <el-option label="文件" value="文件"></el-option>
+                <el-option label="钥匙" value="钥匙"></el-option>
+                <el-option label="其他" value="其他"></el-option>
               </el-select>
             </el-col>
           </el-form-item>
@@ -68,8 +68,8 @@
       <div><TheCategory></TheCategory></div>
       <div class="lost-three">
         <el-row>
-          <el-col :span="4" v-for="(lostlist, index) in lostlists" :key="index" :offset="index = 0 && index ==5? 2 : 1">
-            <el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
+          <el-col :span="4" v-for="(lostlist, index) in lostlists" :key="index" :offset="index !== 0 || index !==5 ? 1 : 2">
+            <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
                 <h4 class="hidden">{{lostlist.title}}</h4>
                 <div class="bottom clearfix">
@@ -78,7 +78,7 @@
                 </div>
               <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
               </div>
-            </el-card>
+            </el-card></router-link>
           </el-col>
         </el-row>
         <br/>
@@ -221,7 +221,6 @@ export default {
     TheHeader,
     TheCategory
   }
-  // inject: ['reload']
 }
 </script>
 

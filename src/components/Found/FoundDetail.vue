@@ -1,5 +1,5 @@
 <template>
-    <div class="lostdetail">
+    <div class="FoundDetail">
       <!-- <TheHeader></TheHeader> -->
       <div class="detail-div">
         <el-card :span="8" class="detail-card">
@@ -53,7 +53,7 @@ import TheHeader from '../Common/TheHeader'
 import {formatDate} from '@/assets/js/date'
 
 export default {
-  name: 'Lostdetail',
+  name: 'FoundDetail',
   components: {
     TheHeader
   },
@@ -78,7 +78,7 @@ export default {
   created () {
     // console.log(this.routeID)
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/lostthing')
+    this.$axios.get('http://192.168.1.106:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
