@@ -110,7 +110,7 @@ export default {
       lostpic: '',
       pubtime: '',
       lostclassify: '',
-      status: '未招领',
+      status: '未找回',
       lostarea: '',
       city: '',
       losttime: '',
@@ -201,6 +201,7 @@ export default {
         }))
         .then(function (response) {
           console.log(response)
+          zz.$router.go(0)
           zz.$axios.get('http://192.168.1.106:3000/lostthing')
             .then(function (response) {
               console.log(response)

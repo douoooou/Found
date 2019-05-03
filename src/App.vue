@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HomeHeader></HomeHeader>
+    <div id="head"><HomeHeader></HomeHeader></div>
     <div id="main">
      <router-view v-if="isRouterAlive"></router-view>
     </div>
@@ -49,12 +49,23 @@ export default {
   color: #2c3e50;
   height: 100vh;
 }
+#head {
+  clear: both;
+  width: 100%;
+  /* position: relative;   */
+  position: fixed;
+  z-index: 999;
+  top: 0;
+}
 #main {
+  margin-top: 150px;
   min-height: calc(100% - 290px);
 }
 #footer {
   position: relative;
   margin-bottom: 0px;
   clear: both;
+  bottom: 0;
+  width: 100%;
 }
 </style>

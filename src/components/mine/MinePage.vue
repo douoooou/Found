@@ -82,7 +82,10 @@
                         </el-row>
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{mypostmsg.sthcont}}</span></el-row>
                     </el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
+                    <el-col :span="2.5">
+                        <el-button class="mine-btnn" v-show="mypostmsg.found === '未找回'" @click="changeloststatus(mypostmsg)">未找回</el-button>
+                        <el-button class="mine-btn" v-show="mypostmsg.found === '已找回'" @click="changeloststatus(mypostmsg)">已找回</el-button>
+                    </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(mypostmsg,index)">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
@@ -100,33 +103,17 @@
                         </el-row>
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{peoplemsg.peopcont}}</span></el-row>
                     </el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
-                    <!-- <el-col :span="2"><el-button class="mine-btnn">未招领</el-button></el-col>                     -->
+                    <el-col :span="2.5">
+                        <el-button class="mine-btnn" v-show="peoplemsg.found === '未找回'" @click="changepeoplestatus(peoplemsg)">未找回</el-button>
+                        <el-button class="mine-btn" v-show="peoplemsg.found === '已找回'">已找回</el-button>
+                    </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,dindex)">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
           </div>
           <div>
-            <el-timeline-item placement="top" v-for="(zhaolingmsg,index) in zhaolingarr" :key="index">
-              <el-card class="mypost-card">
-                <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
-                    <el-col :span="13">
-                        <el-row>
-                            <el-col :span="8" class="mypost-hiddenn"><h4>{{zhaolingmsg.title}}</h4></el-col>
-                            <el-col :span="9"><p class="mine-date">{{zhaolingmsg.pubtime | formatDate}}</p></el-col>
-                        </el-row>
-                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{zhaolingmsg.zhaolingcont}}</span></el-row>
-                    </el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(zhaolingmsg,index)">删除信息</el-button></el-col>
-                </el-row>
-              </el-card>
-            </el-timeline-item>
-          </div>
-          <div>
-            <el-timeline-item placement="top" v-for="(findpetmsg,index) in findpetarr" :key="index">
+            <el-timeline-item placement="top" v-for="(findpetmsg,findpetindex) in findpetarr" :key="findpetindex">
               <el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="image"></el-col>
@@ -137,8 +124,32 @@
                         </el-row>
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.zhaolingcont}}</span></el-row>
                     </el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn">已招领</el-button></el-col>
-                    <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(findpetmsg,index)">删除信息</el-button></el-col>
+                    <el-col :span="2.5">
+                        <el-button class="mine-btnn" v-show="findpetmsg.found === '未找回'">未找回</el-button>
+                        <el-button class="mine-btn" v-show="findpetmsg.found === '已找回'">已找回</el-button>
+                    </el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delfindpetmsg(findpetmsg,findpetindex)">删除信息</el-button></el-col>
+                </el-row>
+              </el-card>
+            </el-timeline-item>
+          </div>
+          <div>
+            <el-timeline-item placement="top" v-for="(zhaolingmsg,foundindex) in zhaolingarr" :key="foundindex">
+              <el-card class="mypost-card">
+                <el-row class="mine-bar">
+                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <el-col :span="13">
+                        <el-row>
+                            <el-col :span="8" class="mypost-hiddenn"><h4>{{zhaolingmsg.title}}</h4></el-col>
+                            <el-col :span="9"><p class="mine-date">{{zhaolingmsg.pubtime | formatDate}}</p></el-col>
+                        </el-row>
+                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{zhaolingmsg.zhaolingcont}}</span></el-row>
+                    </el-col>
+                    <el-col :span="2.5">
+                        <el-button class="mine-btnn" v-show="zhaolingmsg.found === '未招领'">未招领</el-button>
+                        <el-button class="mine-btn" v-show="zhaolingmsg.found === '已招领'">已招领</el-button>
+                    </el-col>
+                    <el-col :span="2.5"><el-button class="mine-btn" @click="delfoundmsg(zhaolingmsg,foundindex)">删除信息</el-button></el-col>
                 </el-row>
               </el-card>
             </el-timeline-item>
@@ -169,6 +180,7 @@ export default {
     }
   },
   created () {
+    console.log(this.status)
     var aa = this
     this.$axios.get('http://192.168.1.106:3000/usermsg?username=' + this.localusername)
       .then(function (response) {
@@ -235,9 +247,11 @@ export default {
       username: '',
       msgdialogVisible: false,
       localusername: JSON.parse(localStorage.getItem('localusername')),
-      // localpassword: JSON.parse(localStorage.getItem('localpassword')),
+      status: '',
       title: '',
       peopletitle: '',
+      zhaolingtitle: '',
+      findpettitle: '',
       ruleForm: {
         telephone: '',
         email: ''
@@ -260,7 +274,11 @@ export default {
       imagea: '../../static/images/pretermit.png',
       headimage: '../../static/images/timg.jpg',
       dialogImageUrl: '',
-      picdialogVisible: false
+      picdialogVisible: false,
+      changelosttitle: '',
+      changepeopletitle: '',
+      changefoundtitle: '',
+      changeanimal: ''
     }
   },
   methods: {
@@ -338,6 +356,94 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    delfoundmsg (zhaolingmsg, foundindex) {
+      let nn = this
+      this.zhaolingtitle = zhaolingmsg.title
+      console.log(this.zhaolingtitle)
+      this.$axios.get('http://192.168.1.106:3000/myzhaoling/del?title=' + this.zhaolingtitle)
+        .then(function (response) {
+          console.log(response)
+          nn.zhaolingarr.splice(foundindex, 1)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    delfindpetmsg (findpetmsg, findpetindex) {
+      let nn = this
+      this.findpettitle = findpetmsg.title
+      console.log(this.findpettitle)
+      this.$axios.get('http://192.168.1.106:3000/myanimal/del?title=' + this.findpettitle)
+        .then(function (response) {
+          console.log(response)
+          nn.findpetarr.splice(findpetindex, 1)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    changeloststatus (mypostmsg, index) {
+      var zz = this
+      this.changelosttitle = mypostmsg.found
+      if (mypostmsg.found === '未找回') {
+        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+          qs.stringify({
+            title: zz.changelosttitle,
+            found: '已找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      } else {
+        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+          qs.stringify({
+            title: zz.mypostmsg.title,
+            found: '未找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
+    changepeoplestatus (peoplemsg, index) {
+      var zz = this
+      this.changepeopletitle = peoplemsg.found
+      if (peoplemsg.found === '未找回') {
+        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+          qs.stringify({
+            title: zz.changepeopletitle,
+            found: '已找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      } else {
+        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+          qs.stringify({
+            title: zz.peoplemsg.title,
+            found: '未找回'
+          }))
+          .then(function (response) {
+            console.log(response)
+            zz.$router.go(0)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     }
   }
 }
@@ -369,7 +475,7 @@ ul li{
 .mine-one{
     height: 400px;
     background-color: #c0d1f0;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 .headimage{
     text-align: right;
@@ -407,7 +513,6 @@ ul li{
     margin-right: 120px;
     margin-top: 20px;
     margin-bottom: 100px;
-    height: 450px;
 }
 .mine-bar{
     height: 90px;

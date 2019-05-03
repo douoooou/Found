@@ -200,6 +200,7 @@ export default {
           lianxi: this.ruleForm.lianxi
         }))
         .then(function (response) {
+          zz.$router.go(0)
           console.log(response)
           zz.$axios.get('http://192.168.1.106:3000/zhaoling')
             .then(function (response) {

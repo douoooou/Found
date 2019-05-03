@@ -108,7 +108,7 @@ export default {
       findpetpic: '',
       pubtime: '',
       findpetclassify: '',
-      status: '未招领',
+      status: '未找回',
       findpetarea: '',
       city: '',
       losttime: '',
