@@ -22,6 +22,7 @@
             <label class="uploadfile">
               <input type="file" style="display:none" ref="file">上传照片
             </label>
+            <input type="file" id="id" name="image" class="getImgUrl_file" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
             <!-- <button @click="getFile">获取文件</button> -->
           </el-form-item>
           <el-form-item label="省市：" prop="name">
@@ -84,12 +85,14 @@ export default {
     return {
       options: provinceAndCityData,
       selectedOptions: [],
-      findpeoplelists: '',
+      findpeoplelists: [],
       fddialogVisible: false,
       // dialogImageUrl: '',
       localusername: JSON.parse(localStorage.getItem('localusername')),
       findpeoplepic: '',
-      findpeoplepicname: '',
+      findpeoplepicfile: '',
+      name: '',
+      arr: '',
       pubtime: '',
       lostclassify: '',
       status: '未找回',
@@ -128,18 +131,41 @@ export default {
   created () {
     console.log(this.file)
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/peopsear')
+    this.$axios.get('http://192.168.43.126:3000/peopsear')
       .then(function (response) {
-        console.log(response)
         console.log(response.data)
         zz.findpeoplelists = response.data
-        console.log(zz.findpeoplearr)
+        var arr = zz.findpeoplelists
+        for (var i = 0; i < arr.length; i++) {
+          zz.findpeoplelists[i] = arr[i]
+          zz.findpeoplelists[i].peoplepic = 'http://192.168.43.126:3000/images/' + zz.findpeoplelists[i].peoplepic
+        }
+        console.log(zz.findpeoplelists)
       })
       .catch(function (error) {
         console.log(error)
       })
   },
   methods: {
+    shangc (e) {
+      let findpeoplepicfile = document.getElementById('id').files[0]
+      console.log(findpeoplepicfile)
+      let name = document.getElementById('id').files[0].name
+      // this.name = this.findpeoplepicname.name
+      console.log(name)
+      let arr = this.name.split('.')
+      console.log(arr)
+      // console.log(this.findpeoplepicname)
+      let reader = new FileReader()
+      let imgFile
+      imgFile = reader.readAsDataURL(findpeoplepicfile)
+      reader.onload = e => {
+        imgFile = e.target.result
+        console.log(imgFile)
+        this.findpeoplepic = imgFile
+        console.log(this.findpeoplepic)
+      }
+    },
     findpeoplesubmitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -157,18 +183,12 @@ export default {
       console.log(this.peoplecity)
     },
     submitlostmsg () {
-      console.log(this.$refs.file.files)
-      this.findpeoplepicname = this.$refs.file.files[0].name
-      console.log(this.findpeoplepicname)
-      this.findpeoplepic = '../assets/images/' + this.findpeoplepicname
-      console.log(this.findpeoplepic)
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.105:3000/peopsearadd',
+      this.$axios.post('http://192.168.43.126:3000/peopsearadd',
         qs.stringify({
           username: this.localusername,
-          peoplepic: this.findpeoplepic,
           found: this.status,
           pubtime: this.pubtime,
           peopcont: this.ruleForm.findpeopleinfo,
@@ -180,18 +200,20 @@ export default {
         }))
         .then(function (response) {
           console.log(response)
-          zz.$router.go(0)
-          zz.fddialogVisible = false
-          zz.$axios.get('http://192.168.1.105:3000/lostthing')
+          alert('a')
+          zz.$axios.post('http://192.168.43.126:3000/imgadd',
+            qs.stringify({
+              username: zz.localusername,
+              peoplepic: zz.findpeoplepic
+            }))
             .then(function (response) {
               console.log(response)
-              console.log(response.data)
-              zz.lostlists = response.data
-              console.log(zz.lostthingarr)
             })
             .catch(function (error) {
               console.log(error)
             })
+          // zz.$router.go(0)
+          // zz.fddialogVisible = false
         })
         .catch(function (error) {
           console.log(error)
