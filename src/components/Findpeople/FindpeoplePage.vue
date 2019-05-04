@@ -18,21 +18,14 @@
           <el-form-item label="详细介绍：" prop="findpeopleinfo">
             <el-input type="textarea"  v-model="ruleForm.findpeopleinfo"></el-input>
           </el-form-item>
-          <el-form-item label="上传照片：">
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove" v-model="findpeoplepic">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="picdialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
+          <el-form-item>
+            <label class="uploadfile">
+              <input type="file" style="display:none" ref="file">上传照片
+            </label>
+            <!-- <button @click="getFile">获取文件</button> -->
           </el-form-item>
           <el-form-item label="省市：" prop="name">
             <el-cascader style="width:540px" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
-            <!-- <el-input :span="4" v-model="city"></el-input> -->
           </el-form-item>
           <el-form-item label="详细地点：" prop="name">
             <el-input :span="4" v-model="findpeoplearea"></el-input>
@@ -93,9 +86,10 @@ export default {
       selectedOptions: [],
       findpeoplelists: '',
       fddialogVisible: false,
-      dialogImageUrl: '',
+      // dialogImageUrl: '',
       localusername: JSON.parse(localStorage.getItem('localusername')),
       findpeoplepic: '',
+      findpeoplepicname: '',
       pubtime: '',
       lostclassify: '',
       status: '未找回',
@@ -132,6 +126,7 @@ export default {
     }
   },
   created () {
+    console.log(this.file)
     var zz = this
     this.$axios.get('http://192.168.1.105:3000/peopsear')
       .then(function (response) {
@@ -161,14 +156,12 @@ export default {
       this.peoplecity = CodeToText[arr[0]] + CodeToText[arr[1]]
       console.log(this.peoplecity)
     },
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
-    },
     submitlostmsg () {
+      console.log(this.$refs.file.files)
+      this.findpeoplepicname = this.$refs.file.files[0].name
+      console.log(this.findpeoplepicname)
+      this.findpeoplepic = '../assets/images/' + this.findpeoplepicname
+      console.log(this.findpeoplepic)
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
@@ -248,6 +241,9 @@ export default {
 }
 .lost-card{
   margin-bottom:  30px;
+}
+.uploadfile{
+  margin-left: -470px;
 }
 /* 卡片 */
  .time {
