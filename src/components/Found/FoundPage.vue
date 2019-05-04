@@ -73,7 +73,7 @@
               <div style="padding: 14px;">
                 <h4 class="hidden">{{lostlist.title}}</h4>
                 <div class="bottom clearfix">
-                  <p class="hiddenn">{{lostlist.sthcont}}</p>
+                  <p class="hiddenn">{{lostlist.zhaolingcont}}</p>
                   <time class="time">{{lostlist.pubtime | formatDate}}</time>
                 </div>
               <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
@@ -145,7 +145,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/zhaoling')
+    this.$axios.get('http://192.168.1.105:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -185,7 +185,7 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.106:3000/zhaolingadd',
+      this.$axios.post('http://192.168.1.105:3000/zhaolingadd',
         qs.stringify({
           username: this.localusername,
           zhaolingpic: this.lostpic,
@@ -202,7 +202,7 @@ export default {
         .then(function (response) {
           zz.$router.go(0)
           console.log(response)
-          zz.$axios.get('http://192.168.1.106:3000/zhaoling')
+          zz.$axios.get('http://192.168.1.105:3000/zhaoling')
             .then(function (response) {
               console.log(response)
               console.log(response.data)

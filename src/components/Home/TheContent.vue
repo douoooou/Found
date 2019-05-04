@@ -17,7 +17,7 @@
           <li v-for="(lostmsg,index) in lostthingarr" :key="index" v-if='index< 6'>
             <el-row class="xunwu-item">
               <el-col :span="3"><img class="content-image" :src="image"></el-col>
-              <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{lostmsg.sthcont}}</span></el-col>
+              <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{lostmsg.title}}</span></el-col>
               <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{lostmsg.pubtime | formatDate}}</span></el-col>
               <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
             </el-row>
@@ -35,7 +35,7 @@
           <li v-for="(foundmsg,index) in foundthingarr" :key="index" v-if='index< 6'>
             <el-row class="xunwu-item">
               <el-col :span="3"><img class="content-image" :src="image"></el-col>
-              <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{foundmsg.sthcont}}</span></el-col>
+              <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{foundmsg.title}}</span></el-col>
               <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{foundmsg.pubtime | formatDate}}</span></el-col>
               <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
             </el-row>
@@ -69,7 +69,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/lostthing')
+    this.$axios.get('http://192.168.1.105:3000/lostthing')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -79,7 +79,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.106:3000/zhaoling')
+    this.$axios.get('http://192.168.1.105:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)

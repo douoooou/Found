@@ -266,7 +266,7 @@ export default {
     registermsg () {
       console.log('注册')
       var aa = this
-      this.$axios.post('http://192.168.1.106:3000/register',
+      this.$axios.post('http://192.168.1.105:3000/register',
         qs.stringify({
           username: this.ruleForm.name,
           password: this.ruleForm.psd,
@@ -291,7 +291,7 @@ export default {
     login () {
       var bb = this
       var cc = this
-      this.$axios.get('http://192.168.1.106:3000/login?status=login&username=' + this.ruleForm.loginname + '&password=' + this.ruleForm.loginpsd)
+      this.$axios.get('http://192.168.1.105:3000/login?status=login&username=' + this.ruleForm.loginname + '&password=' + this.ruleForm.loginpsd)
         .then(function (response) {
           console.log(response)
           if (response.data === '用户不存在') {

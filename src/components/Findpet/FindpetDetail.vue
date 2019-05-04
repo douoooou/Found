@@ -18,13 +18,13 @@
                 <el-col :span="9">
                     <div class="intro-div">
                         <h4>详细介绍：</h4>
-                        <p>{{detailarr.sthcont}}</p>
+                        <p>{{detailarr.animalcont}}</p>
                     </div>
                 </el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>招领状态：</h4></el-col>
-                <el-col :span="5" class="detail-txt"><p>{{detailarr.found}}</p></el-col>
+                <el-col :span="5" class="detailstatus"><p>{{detailarr.found}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>分类：</h4></el-col>
@@ -32,11 +32,11 @@
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡地点：</h4></el-col>
-                <el-col :span="7" class="detail-txt"><p>{{detailarr.lookforplace}}</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>{{detailarr.animalplace}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡时间：</h4></el-col>
-                <el-col :span="7" class="detail-txt"><p>{{detailarr.pubtime | formatDate}}</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>{{detailarr.animaltime | formatDate}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>联系方式：</h4></el-col>
@@ -78,7 +78,7 @@ export default {
   created () {
     // console.log(this.routeID)
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/animal')
+    this.$axios.get('http://192.168.1.105:3000/animal')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -138,5 +138,9 @@ export default {
 .detail-txt{
     margin-top: 6px;
     /* margin-left: -100px; */
+}
+.detailstatus{
+    margin-top: 6px;
+    color: red;
 }
 </style>

@@ -56,8 +56,8 @@
       <div><TheCategoryr></TheCategoryr></div>
       <div class="lost-three">
         <el-row>
-          <el-col :span="4" v-for="(findpeoplelist, index) in findpeoplelists" :key="index" :offset="index = 0 || index ==5? 2 : 1">
-            <el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
+          <el-col :span="4" v-for="(findpeoplelist, index) in findpeoplelists" :key="index" :offset="index !== 0 || index !==5? 1 : 2">
+            <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:index}}"><el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
                 <h4 class="hidden">{{findpeoplelist.title}}</h4>
                 <div class="bottom clearfix">
@@ -66,7 +66,7 @@
                 </div>
               <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
               </div>
-            </el-card>
+            </el-card></router-link>
           </el-col>
         </el-row>
         <br/>
@@ -133,7 +133,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/peopsear')
+    this.$axios.get('http://192.168.1.105:3000/peopsear')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -172,7 +172,7 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.106:3000/peopsearadd',
+      this.$axios.post('http://192.168.1.105:3000/peopsearadd',
         qs.stringify({
           username: this.localusername,
           peoplepic: this.findpeoplepic,
@@ -189,7 +189,7 @@ export default {
           console.log(response)
           zz.$router.go(0)
           zz.fddialogVisible = false
-          zz.$axios.get('http://192.168.1.106:3000/lostthing')
+          zz.$axios.get('http://192.168.1.105:3000/lostthing')
             .then(function (response) {
               console.log(response)
               console.log(response.data)

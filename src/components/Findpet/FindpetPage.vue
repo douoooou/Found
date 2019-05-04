@@ -66,7 +66,7 @@
       <div><TheCategoryc></TheCategoryc></div>
       <div class="lost-three">
         <el-row>
-          <el-col :span="4" v-for="(findpetlist, index) in findpetlists" :key="index" :offset="index !== 0 || index !==5 ? 1 : 2"    >
+          <el-col :span="4" v-for="(findpetlist, index) in findpetlists" :key="index" :offset="index !== 0 || index !==5 ? 1 : 2">
             <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:index}}"><el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
                 <h4 class="hidden">{{findpetlist.title}}</h4>
@@ -143,7 +143,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.106:3000/animal')
+    this.$axios.get('http://192.168.1.105:3000/animal')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -183,7 +183,7 @@ export default {
       var zzz = this
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
-      this.$axios.post('http://192.168.1.106:3000/animaladd',
+      this.$axios.post('http://192.168.1.105:3000/animaladd',
         qs.stringify({
           username: this.localusername,
           animalpic: this.findpetpic,
@@ -200,7 +200,7 @@ export default {
         .then(function (response) {
           console.log(response)
           zzz.$router.go(0)
-          zzz.$axios.get('http://192.168.1.106:3000/animal')
+          zzz.$axios.get('http://192.168.1.105:3000/animal')
             .then(function (response) {
               console.log(response)
               console.log(response.data)

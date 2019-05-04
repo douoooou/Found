@@ -72,7 +72,7 @@
         <el-timeline >
           <div>
             <el-timeline-item placement="top" v-for="(mypostmsg,index) in mypostarr" :key="index">
-              <el-card class="mypost-card">
+              <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="image"></el-col>
                     <el-col :span="13">
@@ -88,12 +88,12 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(mypostmsg,index)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card>
+              </el-card></router-link>
             </el-timeline-item>
           </div>
           <div>
             <el-timeline-item placement="top" v-for="(peoplemsg,dindex) in peoplearr" :key="dindex">
-              <el-card class="mypost-card">
+              <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:dindex}}"><el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="imagea"></el-col>
                     <el-col :span="13">
@@ -109,12 +109,12 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,dindex)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card>
+              </el-card></router-link>
             </el-timeline-item>
           </div>
           <div>
             <el-timeline-item placement="top" v-for="(findpetmsg,findpetindex) in findpetarr" :key="findpetindex">
-              <el-card class="mypost-card">
+              <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:findpetindex}}"><el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="image"></el-col>
                     <el-col :span="13">
@@ -122,7 +122,7 @@
                             <el-col :span="8" class="mypost-hiddenn"><h4>{{findpetmsg.title}}</h4></el-col>
                             <el-col :span="9"><p class="mine-date">{{findpetmsg.pubtime | formatDate}}</p></el-col>
                         </el-row>
-                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.zhaolingcont}}</span></el-row>
+                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.animalcont}}</span></el-row>
                     </el-col>
                     <el-col :span="2.5">
                         <el-button class="mine-btnn" v-show="findpetmsg.found === '未找回'" @click="changefindpetstatus(findpetmsg)">未找回</el-button>
@@ -130,12 +130,12 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delfindpetmsg(findpetmsg,findpetindex)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card>
+              </el-card></router-link>
             </el-timeline-item>
           </div>
           <div>
             <el-timeline-item placement="top" v-for="(zhaolingmsg,foundindex) in zhaolingarr" :key="foundindex">
-              <el-card class="mypost-card">
+              <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:foundindex}}"><el-card class="mypost-card">
                 <el-row class="mine-bar">
                     <el-col :span="4"><img class="mine-image" :src="image"></el-col>
                     <el-col :span="13">
@@ -151,7 +151,7 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delfoundmsg(zhaolingmsg,foundindex)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card>
+              </el-card></router-link>
             </el-timeline-item>
           </div>
         </el-timeline>
@@ -182,7 +182,7 @@ export default {
   created () {
     console.log(this.status)
     var aa = this
-    this.$axios.get('http://192.168.1.106:3000/usermsg?username=' + this.localusername)
+    this.$axios.get('http://192.168.1.105:3000/usermsg?username=' + this.localusername)
       .then(function (response) {
         console.log(response.data)
         aa.usermsg = response.data
@@ -193,7 +193,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.43.126:3000/mypost?username=' + this.localusername)
+    this.$axios.get('http://192.168.1.105:3000/mypost?username=' + this.localusername)
       .then(function (response) {
         // console.log(response)
         aa.mypostarr = response.data
@@ -201,7 +201,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.43.126:3000/mypeop?username=' + this.localusername)
+    this.$axios.get('http://192.168.1.105:3000/mypeop?username=' + this.localusername)
       .then(function (response) {
         // console.log(response.data)
         aa.peoplearr = response.data
@@ -209,7 +209,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.106:3000/myzhaoling?username=' + this.localusername)
+    this.$axios.get('http://192.168.1.105:3000/myzhaoling?username=' + this.localusername)
       .then(function (response) {
         console.log(response)
         aa.zhaolingarr = response.data
@@ -217,7 +217,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.106:3000/myanimal?username=' + this.localusername)
+    this.$axios.get('http://192.168.1.105:3000/myanimal?username=' + this.localusername)
       .then(function (response) {
         console.log(response)
         aa.findpetarr = response.data
@@ -305,7 +305,7 @@ export default {
     },
     submitusermsg () {
       var zz = this
-      this.$axios.post('http://192.168.1.106:3000/msgchange',
+      this.$axios.post('http://192.168.1.105:3000/msgchange',
         qs.stringify({
           username: this.localusername,
           phone: this.ruleForm.telephone,
@@ -315,7 +315,7 @@ export default {
         .then(function (response) {
           console.log(response)
           zz.msgdialogVisible = false
-          zz.$axios.get('http://192.168.1.106:3000/usermsg?username=' + zz.localusername)
+          zz.$axios.get('http://192.168.1.105:3000/usermsg?username=' + zz.localusername)
             .then(function (response) {
               console.log(response.data)
               zz.usermsg = response.data
@@ -335,7 +335,7 @@ export default {
       this.title = mypostmsg.title
       console.log(this.title)
       let yy = this
-      this.$axios.get('http://192.168.1.106:3000/mypost/del?title=' + this.title)
+      this.$axios.get('http://192.168.1.105:3000/mypost/del?title=' + this.title)
         .then(function (response) {
           console.log(response)
           yy.mypostarr.splice(index, 1)
@@ -348,7 +348,7 @@ export default {
       this.peopletitle = peoplemsg.title
       console.log(this.peopletitle)
       let nn = this
-      this.$axios.get('http://192.168.1.106:3000/mypeop/del?title=' + this.peopletitle)
+      this.$axios.get('http://192.168.1.105:3000/mypeop/del?title=' + this.peopletitle)
         .then(function (response) {
           console.log(response)
           nn.peoplearr.splice(dindex, 1)
@@ -361,7 +361,7 @@ export default {
       let nn = this
       this.zhaolingtitle = zhaolingmsg.title
       console.log(this.zhaolingtitle)
-      this.$axios.get('http://192.168.1.106:3000/myzhaoling/del?title=' + this.zhaolingtitle)
+      this.$axios.get('http://192.168.1.105:3000/myzhaoling/del?title=' + this.zhaolingtitle)
         .then(function (response) {
           console.log(response)
           nn.zhaolingarr.splice(foundindex, 1)
@@ -374,7 +374,7 @@ export default {
       let nn = this
       this.findpettitle = findpetmsg.title
       console.log(this.findpettitle)
-      this.$axios.get('http://192.168.1.106:3000/myanimal/del?title=' + this.findpettitle)
+      this.$axios.get('http://192.168.1.105:3000/myanimal/del?title=' + this.findpettitle)
         .then(function (response) {
           console.log(response)
           nn.findpetarr.splice(findpetindex, 1)
@@ -387,7 +387,7 @@ export default {
       var zz = this
       this.changelosttitle = mypostmsg.title
       if (mypostmsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+        this.$axios.post('http://192.168.1.105:3000/upfound/sth',
           qs.stringify({
             title: zz.changelosttitle,
             found: '已找回'
@@ -400,7 +400,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.106:3000/upfound/sth',
+        this.$axios.post('http://192.168.1.105:3000/upfound/sth',
           qs.stringify({
             title: zz.changelosttitle,
             found: '未找回'
@@ -418,7 +418,7 @@ export default {
       var zz = this
       this.changepeopletitle = peoplemsg.title
       if (peoplemsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+        this.$axios.post('http://192.168.1.105:3000/upfound/peop',
           qs.stringify({
             title: zz.changepeopletitle,
             found: '已找回'
@@ -431,7 +431,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+        this.$axios.post('http://192.168.1.105:3000/upfound/peop',
           qs.stringify({
             title: zz.changepeopletitle,
             found: '未找回'
@@ -449,7 +449,7 @@ export default {
       var zz = this
       this.changeanimaltitle = findpetmsg.title
       if (findpetmsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+        this.$axios.post('http://192.168.1.105:3000/upfound/animal',
           qs.stringify({
             title: zz.changeanimaltitle,
             found: '已找回'
@@ -462,7 +462,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+        this.$axios.post('http://192.168.1.105:3000/upfound/animal',
           qs.stringify({
             title: zz.changeanimaltitle,
             found: '未找回'
@@ -480,7 +480,7 @@ export default {
       var zz = this
       this.changefoundtitle = zhaolingmsg.title
       if (zhaolingmsg.found === '未招领') {
-        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+        this.$axios.post('http://192.168.1.105:3000/upfound/zhaoling',
           qs.stringify({
             title: zz.changefoundtitle,
             found: '已招领'
@@ -493,7 +493,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.106:3000/upfound/peop',
+        this.$axios.post('http://192.168.1.105:3000/upfound/zhaoling',
           qs.stringify({
             title: zz.changefoundtitle,
             found: '未招领'

@@ -10,6 +10,7 @@ import MinePage from '@/components/Mine/MinePage'
 import LostDetail from '@/components/Lost/LostDetail'
 import FindpetDetail from '@/components/Findpet/FindpetDetail'
 import FoundDetail from '@/components/Found/FoundDetail'
+import FindpeopleDetail from '@/components/Findpeople/FindpeopleDetail'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/FoundDetail',
       name: 'FoundDetail',
       component: FoundDetail
+    },
+    {
+      path: '/FindpeopleDetail',
+      name: 'FindpeopleDetail',
+      component: FindpeopleDetail
     }
   ]
 })
