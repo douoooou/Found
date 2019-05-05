@@ -16,6 +16,19 @@
           <el-form-item label="标题：" prop="lostmsgtitle">
             <el-input  v-model="ruleForm.lostmsgtitle"></el-input>
           </el-form-item>
+          <el-form-item label="详细介绍：" prop="lostinfo">
+            <el-input type="textarea"  v-model="ruleForm.lostinfo"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <label class="uploadfile">
+              <input type="file" id="id" name="image" style="display:none" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
+              上传照片
+            </label>
+            <!-- <button @click="getFile">获取文件</button> -->
+          </el-form-item>
+          <el-form-item label="联系方式：" prop="lianxi">
+            <el-input :span="4" v-model="ruleForm.lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
+          </el-form-item>
           <el-form-item label="类别：">
             <el-col :span="10">
               <el-select  v-model="lostclassify" placeholder="请选择种类">
@@ -27,20 +40,7 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="详细介绍：" prop="lostinfo">
-            <el-input type="textarea"  v-model="ruleForm.lostinfo"></el-input>
-          </el-form-item>
           <el-form-item label="上传照片：">
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove" v-model="lostpic">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="picdialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
           </el-form-item>
           <el-form-item label="省市：">
             <el-cascader style="width:530px" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
@@ -55,9 +55,6 @@
                 <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"  v-model="losttime"></el-date-picker>
               </el-form-item>
             </el-col>
-          </el-form-item>
-          <el-form-item label="联系方式：" prop="lianxi">
-            <el-input :span="4" v-model="ruleForm.lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -157,6 +154,29 @@ export default {
       })
   },
   methods: {
+    shangc (e) {
+      let lostpicfile = document.getElementById('id').files[0]
+      let reader = new FileReader()
+      let imgFile
+      imgFile = reader.readAsDataURL(lostpicfile)
+      reader.onload = e => {
+        imgFile = e.target.result
+        console.log(imgFile)
+        this.lostpic = imgFile
+        console.log(this.findpeoplepic)
+        this.$axios.post('http://192.168.1.105:3000/imgadd',
+          qs.stringify({
+            peoptitle: this.ruleForm.findpeopletitle,
+            peoplepic: this.findpeoplepic
+          }))
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
     lostsubmitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -173,13 +193,6 @@ export default {
       console.log(CodeToText[arr[0]], CodeToText[arr[1]])
       this.city = CodeToText[arr[0]] + CodeToText[arr[1]]
       console.log(this.city)
-    },
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
     },
     submitlostmsg () {
       var myDate = new Date()

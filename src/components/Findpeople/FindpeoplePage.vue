@@ -18,11 +18,14 @@
           <el-form-item label="详细介绍：" prop="findpeopleinfo">
             <el-input type="textarea"  v-model="ruleForm.findpeopleinfo"></el-input>
           </el-form-item>
+          <el-form-item label="联系方式：" prop="peoplelianxi">
+            <el-input :span="4" v-model="ruleForm.peoplelianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
+          </el-form-item>
           <el-form-item>
             <label class="uploadfile">
-              <input type="file" style="display:none" ref="file">上传照片
+              <input type="file" id="id" name="image" style="display:none" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
+              上传照片
             </label>
-            <input type="file" id="id" name="image" class="getImgUrl_file" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
             <!-- <button @click="getFile">获取文件</button> -->
           </el-form-item>
           <el-form-item label="省市：" prop="name">
@@ -38,9 +41,6 @@
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="联系方式：" prop="peoplelianxi">
-            <el-input :span="4" v-model="ruleForm.peoplelianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
-          </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="fddialogVisible = false">取 消</el-button>
@@ -53,21 +53,18 @@
           <el-col :span="4" v-for="(findpeoplelist, index) in findpeoplelists" :key="index" :offset="index !== 0 || index !==5? 1 : 2">
             <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:index}}"><el-card :body-style="{ padding: '0px' }"  shadow="hover" class="lost-card">
               <div style="padding: 14px;">
-                <h4 class="hidden">{{findpeoplelist.title}}</h4>
+                <h4 class="hidden">{{findpeoplelist.peoptitle}}</h4>
                 <div class="bottom clearfix">
                   <p class="hiddenn">{{findpeoplelist.peopcont}}</p>
-                  <time class="time">{{findpeoplelist.pubtime | formatDate}}</time>
+                  <time class="time">{{findpeoplelist.peoppubtime | formatDate}}</time>
                 </div>
-              <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                  <img :src="findpeoplelist.peoplepic" class="image">
               </div>
             </el-card></router-link>
           </el-col>
         </el-row>
         <br/>
         <br/>
-        <el-pagination background layout="prev, pager, next" :total="800" :page-size="8"></el-pagination>
-<!-- <el-pagination class="page" @current-change="handleCurrentChange" :current-page="currentPage" :total="totalPages" :page-size="10" v-if="totalPages > 10"> -->
-      <!-- </el-pagination>-->
       </div>
   </div>
 </template>
@@ -131,14 +128,14 @@ export default {
   created () {
     console.log(this.file)
     var zz = this
-    this.$axios.get('http://192.168.43.126:3000/peopsear')
+    this.$axios.get('http://192.168.1.105:3000/peopsear')
       .then(function (response) {
         console.log(response.data)
         zz.findpeoplelists = response.data
         var arr = zz.findpeoplelists
         for (var i = 0; i < arr.length; i++) {
           zz.findpeoplelists[i] = arr[i]
-          zz.findpeoplelists[i].peoplepic = 'http://192.168.43.126:3000/images/' + zz.findpeoplelists[i].peoplepic
+          zz.findpeoplelists[i].peoplepic = 'http://192.168.1.105:3000/images/' + zz.findpeoplelists[i].peoplepic
         }
         console.log(zz.findpeoplelists)
       })
@@ -164,6 +161,17 @@ export default {
         console.log(imgFile)
         this.findpeoplepic = imgFile
         console.log(this.findpeoplepic)
+        this.$axios.post('http://192.168.1.105:3000/imgadd',
+          qs.stringify({
+            peoptitle: this.ruleForm.findpeopletitle,
+            peoplepic: this.findpeoplepic
+          }))
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       }
     },
     findpeoplesubmitForm (formName) {
@@ -186,34 +194,22 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.43.126:3000/peopsearadd',
+      this.$axios.post('http://192.168.1.105:3000/peopsearadd',
         qs.stringify({
+          peoptitle: this.ruleForm.findpeopletitle,
           username: this.localusername,
-          found: this.status,
-          pubtime: this.pubtime,
+          peopfound: this.status,
+          peoppubtime: this.pubtime,
           peopcont: this.ruleForm.findpeopleinfo,
           peoplesearplace: this.findpeoplearea,
-          losttime: this.findpeoplelosttime,
-          title: this.ruleForm.findpeopletitle,
-          lostcity: this.peoplecity,
-          lianxi: this.ruleForm.peoplelianxi
+          peoplosttime: this.findpeoplelosttime,
+          peoplostcity: this.peoplecity,
+          peoplianxi: this.ruleForm.peoplelianxi
         }))
         .then(function (response) {
           console.log(response)
-          alert('a')
-          zz.$axios.post('http://192.168.43.126:3000/imgadd',
-            qs.stringify({
-              username: zz.localusername,
-              peoplepic: zz.findpeoplepic
-            }))
-            .then(function (response) {
-              console.log(response)
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
-          // zz.$router.go(0)
-          // zz.fddialogVisible = false
+          zz.$router.go(0)
+          zz.fddialogVisible = false
         })
         .catch(function (error) {
           console.log(error)

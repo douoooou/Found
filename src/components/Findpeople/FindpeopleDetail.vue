@@ -3,19 +3,13 @@
       <!-- <TheHeader></TheHeader> -->
       <div class="detail-div">
         <el-card :span="8" class="detail-card">
-            <el-row><el-col :span="24"><h3>{{detailarr.title}}</h3></el-col></el-row>
-            <el-row><el-col :span="24" class="detail-date"><p>{{detailarr.pubtime  | formatDate}}</p></el-col></el-row>
+            <el-row><el-col :span="24"><h2>{{detailarr.peoptitle}}</h2></el-col></el-row>
+            <el-row><el-col :span="24" class="detail-date"><p>{{detailarr.peoppubtime  | formatDate}}</p></el-col></el-row>
             <el-row>
-                <el-col :span="11">
-                    <div class="block">
-                        <el-carousel height="250px">
-                        <el-carousel-item v-for="item in 4" :key="item">
-                            <h3>{{ item }}</h3>
-                        </el-carousel-item>
-                        </el-carousel>
-                    </div>
+                <el-col :span="8">
+                  <img :src="detailarr.peoplepic" class="detailimage">
                 </el-col>
-                <el-col :span="9">
+                <el-col :span="10">
                     <div class="intro-div">
                         <h4>详细介绍：</h4>
                         <p>{{detailarr.peopcont}}</p>
@@ -24,19 +18,19 @@
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>招领状态：</h4></el-col>
-                <el-col :span="5" class="detailstatus"><p>{{detailarr.found}}</p></el-col>
+                <el-col :span="5" class="detailstatus"><p>{{detailarr.peopfound}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡地点：</h4></el-col>
-                <el-col :span="7" class="detail-txt"><p>{{detailarr.lostcity}}{{detailarr.peoplesearplace}}</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>{{detailarr.peoplostcity}}{{detailarr.peoplesearplace}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>拾捡时间：</h4></el-col>
-                <el-col :span="7" class="detail-txt"><p>{{detailarr.losttime | formatDate}}</p></el-col>
+                <el-col :span="7" class="detail-txt"><p>{{detailarr.peoplosttime | formatDate}}</p></el-col>
             </el-row>
             <el-row class="detail-class">
                 <el-col :span="2"><h4>联系方式：</h4></el-col>
-                <el-col :span="5" class="detail-txt"><p>{{detailarr.lianxi}}</p></el-col>
+                <el-col :span="5" class="detail-txt"><p>{{detailarr.peoplianxi}}</p></el-col>
             </el-row>
         </el-card>
       </div>
@@ -64,8 +58,7 @@ export default {
     return {
       detailarr: [],
       id: '',
-      index: this.$route.query.index,
-      image: '../../static/images/pretermit.png'
+      index: this.$route.query.index
     }
   },
   created () {
@@ -73,10 +66,11 @@ export default {
     var zz = this
     this.$axios.get('http://192.168.1.105:3000/peopsear')
       .then(function (response) {
-        console.log(response)
         console.log(response.data)
-        console.log(response.data[zz.index])
         zz.detailarr = response.data[zz.index]
+        console.log(zz.detailarr)
+        zz.detailarr.peoplepic = 'http://192.168.1.105:3000/images/' + zz.detailarr.peoplepic
+        console.log(zz.detailarr)
       })
       .catch(function (error) {
         console.log(error)
@@ -93,7 +87,6 @@ export default {
     line-height: 150px;
     margin: 0;
 }
-
 .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
 }
@@ -111,9 +104,15 @@ export default {
 .detail-date{
     margin-left: 370px;
 }
+.detailimage{
+    margin-top: 10px;
+    width: 100%;
+    margin-left: 40px;
+    display: block;
+}
 .intro-div{
     width: 700px;
-    margin-left: 10px;
+    margin-left: 100px;
 }
 .intro-div h4{
     text-align: left;
@@ -125,6 +124,7 @@ export default {
     line-height: 30px;
 }
 .detail-class{
+    margin-top: 20px;
     text-align: left;
     margin-left: 200px;
 }
