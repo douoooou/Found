@@ -1,7 +1,6 @@
 <template>
 <div class="main">
-  <!-- <HomeHeader></HomeHeader> -->
-  <!-- <Test></Test> -->
+  <br/><br/><br/><br/>
   <Carousel></Carousel>
   <TheContent></TheContent>
 </div>

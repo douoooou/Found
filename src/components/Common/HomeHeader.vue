@@ -6,10 +6,10 @@
         <el-col :span="12">
           <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" :router="true" text-color="#333" :default-active="this.$route.path">
             <el-menu-item class="el-menu-txt" index="/">网站首页</el-menu-item>
-            <el-menu-item index="/FindpeoplePage">寻人启事</el-menu-item>
-            <el-menu-item index="/LostPage">寻物启事</el-menu-item>
-            <el-menu-item index="/FoundPage">招领启事</el-menu-item>
-            <el-menu-item index="/FindpetPage">找宠物启事</el-menu-item>
+            <el-menu-item class="el-menu-txt" index="/FindpeoplePage">寻人启事</el-menu-item>
+            <el-menu-item class="el-menu-txt" index="/LostPage">寻物启事</el-menu-item>
+            <el-menu-item class="el-menu-txt" index="/FoundPage">招领启事</el-menu-item>
+            <el-menu-item class="el-menu-txt" index="/FindpetPage">找宠物启事</el-menu-item>
           </el-menu>
           <div class="line"></div>
         </el-col>

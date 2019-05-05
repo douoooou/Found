@@ -38,7 +38,6 @@ export default {
 </script>
 <style>
   #carousel{
-    margin-top: 20px;
     margin-left: 100px;
     width: 1400px;
     margin: 0 auto;

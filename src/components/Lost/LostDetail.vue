@@ -3,7 +3,7 @@
       <!-- <TheHeader></TheHeader> -->
       <div class="detail-div">
         <el-card :span="8" class="detail-card">
-            <el-row><el-col :span="24"><h3>{{detailarr.title}}</h3></el-col></el-row>
+            <el-row><el-col :span="24"><h2>{{detailarr.title}}</h2></el-col></el-row>
             <el-row><el-col :span="24" class="detail-date"><p>{{detailarr.pubtime  | formatDate}}</p></el-col></el-row>
             <hr/>
             <br/>

@@ -3,9 +3,9 @@
       <!-- <MineHeader></MineHeader> -->
       <div class="mine-one">
         <el-row v-for="(usermsgitem,index) in usermsg" :key="index">
-          <el-col :span="3"><img class="headimage" :src="headimage"></el-col>
-          <el-col :span="2"><div class="mine-username">{{localusername}}</div></el-col>
-          <el-col :span="11">
+          <el-col :span="3"></el-col>
+          <!-- <el-col :span="5"><div class="mine-username">用户名：{{localusername}}</div></el-col> -->
+          <el-col :span="14">
             <div class="mine-msg">
                 <el-row>
                     <el-col :span="5"><label class="label">联系电话：</label></el-col>
@@ -72,15 +72,15 @@
         <el-timeline >
           <div>
             <el-timeline-item placement="top" v-for="(mypostmsg,index) in mypostarr" :key="index">
-              <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-card class="mypost-card">
+              <el-card class="mypost-card">
                 <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-col :span="4"><img class="mine-image" :src="mypostmsg.lookforpic"></el-col></router-link>
                     <el-col :span="13">
                         <el-row>
-                            <el-col :span="8" class="mypost-hiddenn"><h4>{{mypostmsg.title}}</h4></el-col>
+                            <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-col :span="8" class="mypost-hiddenn"><h4>{{mypostmsg.title}}</h4></el-col></router-link>
                             <el-col :span="9"><p class="mine-date">{{mypostmsg.pubtime | formatDate}}</p></el-col>
                         </el-row>
-                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{mypostmsg.sthcont}}</span></el-row>
+                        <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{mypostmsg.sthcont}}</span></el-row></router-link>
                     </el-col>
                     <el-col :span="2.5">
                         <el-button class="mine-btnn" v-show="mypostmsg.found === '未找回'" @click="changeloststatus(mypostmsg)">未找回</el-button>
@@ -88,20 +88,20 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delmsg(mypostmsg,index)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card></router-link>
+              </el-card>
             </el-timeline-item>
           </div>
           <div>
             <el-timeline-item placement="top" v-for="(peoplemsg,dindex) in peoplearr" :key="dindex">
-              <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:dindex}}"><el-card class="mypost-card">
+              <el-card class="mypost-card">
                 <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="imagea"></el-col>
+                    <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:dindex}}"><el-col :span="4"><img class="mine-image" :src="peoplemsg.peoplepic"></el-col></router-link>
                     <el-col :span="13">
                         <el-row>
-                            <el-col :span="8" class="mypost-hiddenn"><h4>{{peoplemsg.peoptitle}}</h4></el-col>
+                            <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:dindex}}"><el-col :span="8" class="mypost-hiddenn"><h4>{{peoplemsg.peoptitle}}</h4></el-col></router-link>
                             <el-col :span="9"><p class="mine-date">{{peoplemsg.peoppubtime | formatDate}}</p></el-col>
                         </el-row>
-                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{peoplemsg.peopcont}}</span></el-row>
+                        <router-link :to="{path:'/FindpeopleDetail',name:'FindpeopleDetail',query:{index:dindex}}"><el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{peoplemsg.peopcont}}</span></el-row></router-link>
                     </el-col>
                     <el-col :span="2.5">
                         <el-button class="mine-btnn" v-show="peoplemsg.peopfound === '未找回'" @click="changepeoplestatus(peoplemsg)">未找回</el-button>
@@ -109,20 +109,20 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,dindex)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card></router-link>
+              </el-card>
             </el-timeline-item>
           </div>
           <div>
             <el-timeline-item placement="top" v-for="(findpetmsg,findpetindex) in findpetarr" :key="findpetindex">
-              <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:findpetindex}}"><el-card class="mypost-card">
+              <el-card class="mypost-card">
                 <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:findpetindex}}"><el-col :span="4"><img class="mine-image" :src="findpetmsg.animalpic"></el-col></router-link>
                     <el-col :span="13">
                         <el-row>
-                            <el-col :span="8" class="mypost-hiddenn"><h4>{{findpetmsg.title}}</h4></el-col>
+                            <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:findpetindex}}"><el-col :span="8" class="mypost-hiddenn"><h4>{{findpetmsg.title}}</h4></el-col></router-link>
                             <el-col :span="9"><p class="mine-date">{{findpetmsg.pubtime | formatDate}}</p></el-col>
                         </el-row>
-                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.animalcont}}</span></el-row>
+                        <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:findpetindex}}"><el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{findpetmsg.animalcont}}</span></el-row></router-link>
                     </el-col>
                     <el-col :span="2.5">
                         <el-button class="mine-btnn" v-show="findpetmsg.found === '未找回'" @click="changefindpetstatus(findpetmsg)">未找回</el-button>
@@ -130,20 +130,20 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delfindpetmsg(findpetmsg,findpetindex)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card></router-link>
+              </el-card>
             </el-timeline-item>
           </div>
           <div>
             <el-timeline-item placement="top" v-for="(zhaolingmsg,foundindex) in zhaolingarr" :key="foundindex">
-              <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:foundindex}}"><el-card class="mypost-card">
+              <el-card class="mypost-card">
                 <el-row class="mine-bar">
-                    <el-col :span="4"><img class="mine-image" :src="image"></el-col>
+                    <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:foundindex}}"><el-col :span="4"><img class="mine-image" :src="zhaolingmsg.zhaolingpic"></el-col></router-link>
                     <el-col :span="13">
                         <el-row>
-                            <el-col :span="8" class="mypost-hiddenn"><h4>{{zhaolingmsg.title}}</h4></el-col>
+                            <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:foundindex}}"><el-col :span="8" class="mypost-hiddenn"><h4>{{zhaolingmsg.title}}</h4></el-col></router-link>
                             <el-col :span="9"><p class="mine-date">{{zhaolingmsg.pubtime | formatDate}}</p></el-col>
                         </el-row>
-                        <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{zhaolingmsg.zhaolingcont}}</span></el-row>
+                        <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:foundindex}}"><el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{zhaolingmsg.zhaolingcont}}</span></el-row></router-link>
                     </el-col>
                     <el-col :span="2.5">
                         <el-button class="mine-btnn" v-show="zhaolingmsg.found === '未招领'" @click="changefoundstatus(zhaolingmsg)">未招领</el-button>
@@ -151,7 +151,7 @@
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delfoundmsg(zhaolingmsg,foundindex)">删除信息</el-button></el-col>
                 </el-row>
-              </el-card></router-link>
+              </el-card>
             </el-timeline-item>
           </div>
         </el-timeline>
@@ -195,6 +195,11 @@ export default {
       .then(function (response) {
         // console.log(response)
         aa.mypostarr = response.data
+        var arr = aa.mypostarr
+        for (var i = 0; i < arr.length; i++) {
+          aa.mypostarr[i] = arr[i]
+          aa.mypostarr[i].lookforpic = 'http://192.168.1.105:3000/images/' + aa.mypostarr[i].lookforpic
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -203,6 +208,12 @@ export default {
       .then(function (response) {
         // console.log(response.data)
         aa.peoplearr = response.data
+        console.log(aa.peoplearr)
+        var arr = aa.peoplearr
+        for (var i = 0; i < arr.length; i++) {
+          aa.peoplearr[i] = arr[i]
+          aa.peoplearr[i].peoplepic = 'http://192.168.1.105:3000/images/' + aa.peoplearr[i].peoplepic
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -211,6 +222,11 @@ export default {
       .then(function (response) {
         console.log(response)
         aa.zhaolingarr = response.data
+        var arr = aa.zhaolingarr
+        for (var i = 0; i < arr.length; i++) {
+          aa.zhaolingarr[i] = arr[i]
+          aa.zhaolingarr[i].zhaolingpic = 'http://192.168.1.105:3000/images/' + aa.zhaolingarr[i].zhaolingpic
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -219,6 +235,11 @@ export default {
       .then(function (response) {
         console.log(response)
         aa.findpetarr = response.data
+        var arr = aa.findpetarr
+        for (var i = 0; i < arr.length; i++) {
+          aa.findpetarr[i] = arr[i]
+          aa.findpetarr[i].animalpic = 'http://192.168.1.105:3000/images/' + aa.findpetarr[i].animalpic
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -270,7 +291,6 @@ export default {
       findpetarr: [],
       image: '../../static/images/pretermit.png',
       imagea: '../../static/images/pretermit.png',
-      headimage: '../../static/images/timg.jpg',
       dialogImageUrl: '',
       picdialogVisible: false,
       changelosttitle: '',
@@ -537,21 +557,13 @@ ul li{
     background-color: #c0d1f0;
     /* margin-top: 20px; */
 }
-.headimage{
-    text-align: right;
-    margin-left: 200px;
-    border-radius: 50%;
-    margin-top: 50px;
-    width: 80px;
-    height: 80px;
-}
 .mine-username{
     text-align: left;
-    width: 100px;
+    width: 400px;
     color: aliceblue;
     margin-left: 100px;
     margin-top: 80px;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 600;
 }
 .mine-msg{
@@ -562,6 +574,7 @@ ul li{
 }
 .label{
     line-height: 60px;
+    font-weight: bolder;
 }
 .change-msg-btn{
     margin-top: 300px;

@@ -111,6 +111,7 @@ export default {
   width: 130px;
   height: 70px;
   background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
+  opacity: 0.9;
   border-radius: 50%;
 }
 .slide1:hover{
