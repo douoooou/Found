@@ -7,7 +7,12 @@
               <el-breadcrumb-item>>>寻人启事信息</el-breadcrumb-item>
             </el-breadcrumb>
           </el-col>
-          <el-col :span="8"><el-button class="lost-btn" @click="fddialogVisible = true">填写找人信息</el-button></el-col>
+          <el-col :span="8">
+            <el-button class="lost-btn" v-show="this.localusername !== null" @click="fddialogVisible = true">填写找人信息</el-button>
+            <el-tooltip content="登录后发布信息" placement="top">
+              <el-button class="lost-btn" v-show="this.localusername === null">填写找人信息</el-button>
+           </el-tooltip>
+          </el-col>
         </el-row>
       </div>
       <el-dialog title="发布寻人启事" :visible.sync="fddialogVisible" width="40%">
@@ -26,7 +31,6 @@
               <input type="file" id="id" name="image" style="display:none" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
               上传照片
             </label>
-            <!-- <button @click="getFile">获取文件</button> -->
           </el-form-item>
           <el-form-item label="省市：" prop="name">
             <el-cascader style="width:540px" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
@@ -63,7 +67,6 @@
             </el-card></router-link>
           </el-col>
         </el-row>
-        <br/>
         <br/>
       </div>
   </div>
@@ -126,6 +129,7 @@ export default {
     }
   },
   created () {
+    console.log(this.localusername)
     console.log(this.file)
     var zz = this
     this.$axios.get('http://192.168.1.105:3000/peopsear')
@@ -147,12 +151,6 @@ export default {
     shangc (e) {
       let findpeoplepicfile = document.getElementById('id').files[0]
       console.log(findpeoplepicfile)
-      let name = document.getElementById('id').files[0].name
-      // this.name = this.findpeoplepicname.name
-      console.log(name)
-      let arr = this.name.split('.')
-      console.log(arr)
-      // console.log(this.findpeoplepicname)
       let reader = new FileReader()
       let imgFile
       imgFile = reader.readAsDataURL(findpeoplepicfile)
@@ -258,6 +256,7 @@ export default {
   margin-left: 150px;
 }
 .lost-card{
+  height: 300px;
   margin-bottom:  30px;
 }
 .uploadfile{
@@ -278,7 +277,9 @@ export default {
     float: right;
   }
   .image {
+    border: 0.5px solid #777777;
     margin-top: 10px;
+    height: 150px;
     width: 100%;
     display: block;
   }

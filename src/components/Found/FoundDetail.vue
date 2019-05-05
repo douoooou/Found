@@ -5,15 +5,16 @@
         <el-card :span="8" class="detail-card">
             <el-row><el-col :span="24"><h3>{{detailarr.title}}</h3></el-col></el-row>
             <el-row><el-col :span="24" class="detail-date"><p>{{detailarr.pubtime  | formatDate}}</p></el-col></el-row>
+            <hr/>
+            <br/>
+            <el-row style="margin-left:600px;">
+                <el-tag type="warning" style="width:140px;height:45px;padding-top:5px;font-weight: bolder;font-size:17px" closable>{{detailarr.lostcity}}</el-tag>
+                <el-tag style="width:150px;height:45px;padding-top:5px;font-weight: bolder;font-size:17px" closable>{{detailarr.classify}}</el-tag>
+                <el-tag type="danger" style="width:150px;height:45px;padding-top:5px;font-weight: bolder;font-size:17px" closable>{{detailarr.zhaolingtime  | formatDate}}</el-tag>
+            </el-row>
             <el-row>
                 <el-col :span="11">
-                    <div class="block">
-                        <el-carousel height="250px">
-                        <el-carousel-item v-for="item in 4" :key="item">
-                            <h3>{{ item }}</h3>
-                        </el-carousel-item>
-                        </el-carousel>
-                    </div>
+                  <img :src="detailarr.zhaolingpic" class="foundimage">
                 </el-col>
                 <el-col :span="9">
                     <div class="intro-div">
@@ -80,10 +81,11 @@ export default {
     var zz = this
     this.$axios.get('http://192.168.1.105:3000/zhaoling')
       .then(function (response) {
-        console.log(response)
         console.log(response.data)
         console.log(response.data[zz.index])
         zz.detailarr = response.data[zz.index]
+        console.log(response.data[zz.index])
+        zz.detailarr.zhaolingpic = 'http://192.168.1.105:3000/images/' + zz.detailarr.zhaolingpic
       })
       .catch(function (error) {
         console.log(error)
@@ -118,6 +120,14 @@ export default {
 .detail-date{
     margin-left: 370px;
 }
+.foundimage{
+    box-shadow: 2px 4px 6px #777777;
+    height: 300px;
+    margin-top: 10px;
+    width: 550px;
+    margin-left: 40px;
+    display: block;
+}
 .intro-div{
     width: 700px;
     margin-left: 10px;
@@ -140,6 +150,7 @@ export default {
     /* margin-left: -100px; */
 }
 .detailstatus{
+    font-weight: bolder;
     margin-top: 6px;
     color: red;
 }

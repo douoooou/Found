@@ -8,13 +8,30 @@
               <el-breadcrumb-item>>>宠物信息</el-breadcrumb-item>
             </el-breadcrumb>
           </el-col>
-          <el-col :span="8"><el-button class="lost-btn" @click="fpdialogVisible = true">填写失宠信息</el-button></el-col>
+          <el-col :span="8">
+            <el-button class="lost-btn" v-show="this.localusername !== null" @click="fpdialogVisible = true">填写宠物信息</el-button>
+            <el-tooltip content="登录后发布信息" placement="top">
+              <el-button class="lost-btn" v-show="this.localusername === null">填写宠物信息</el-button>
+           </el-tooltip>
+          </el-col>
         </el-row>
       </div>
       <el-dialog title="发布找宠启事" :visible.sync="fpdialogVisible" width="40%">
         <el-form label-width="100px" :rules="findpetrules" ref="ruleForm" :model="ruleForm">
           <el-form-item label="标题：" prop="findpettitle">
             <el-input  v-model="ruleForm.findpettitle"></el-input>
+          </el-form-item>
+          <el-form-item label="详细介绍：" prop="findpetinfo">
+            <el-input type="textarea"  v-model="ruleForm.findpetinfo"></el-input>
+          </el-form-item>
+          <el-form-item label="联系方式：" prop="lianxi">
+            <el-input :span="4" v-model="ruleForm.lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <label class="uploadfile">
+              <input type="file" id="id" name="image" style="display:none" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
+              上传照片
+            </label>
           </el-form-item>
           <el-form-item label="类别：">
             <el-col :span="10">
@@ -25,24 +42,8 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="详细介绍：" prop="findpetinfo">
-            <el-input type="textarea"  v-model="ruleForm.findpetinfo"></el-input>
-          </el-form-item>
-          <el-form-item label="上传照片：">
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove" v-model="findpetpic">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="picdialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
-          </el-form-item>
           <el-form-item label="省市：">
-            <el-cascader style="width:530px" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
-            <!-- <el-input :span="4" v-model="city"></el-input> -->
+            <el-cascader style="width:99%" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
           </el-form-item>
           <el-form-item label="详细地点：">
             <el-input :span="4" v-model="findpetarea"></el-input>
@@ -53,9 +54,6 @@
                 <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"  v-model="losttime"></el-date-picker>
               </el-form-item>
             </el-col>
-          </el-form-item>
-          <el-form-item label="联系方式：" prop="lianxi">
-            <el-input :span="4" v-model="ruleForm.lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -74,16 +72,12 @@
                   <p class="hiddenn">{{findpetlist.animalcont}}</p>
                   <time class="time">{{findpetlist.pubtime | formatDate}}</time>
                 </div>
-              <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                <img :src="findpetlist.animalpic" class="image">
               </div>
             </el-card></router-link>
           </el-col>
         </el-row>
         <br/>
-        <br/>
-        <el-pagination background layout="prev, pager, next" :total="800" :page-size="8"></el-pagination>
-<!-- <el-pagination class="page" @current-change="handleCurrentChange" :current-page="currentPage" :total="totalPages" :page-size="10" v-if="totalPages > 10"> -->
-      <!-- </el-pagination>-->
       </div>
   </div>
 </template>
@@ -149,17 +143,44 @@ export default {
         console.log(response.data)
         zz.findpetlists = response.data
         console.log(zz.lostthingarr)
+        var arr = zz.findpetlists
+        for (var i = 0; i < arr.length; i++) {
+          zz.findpetlists[i] = arr[i]
+          zz.findpetlists[i].animalpic = 'http://192.168.1.105:3000/images/' + zz.findpetlists[i].animalpic
+        }
       })
       .catch(function (error) {
         console.log(error)
       })
   },
   methods: {
+    shangc (e) {
+      let findpetpicfile = document.getElementById('id').files[0]
+      let reader = new FileReader()
+      let imgFile
+      imgFile = reader.readAsDataURL(findpetpicfile)
+      reader.onload = e => {
+        imgFile = e.target.result
+        console.log(imgFile)
+        this.findpetpic = imgFile
+        console.log(this.foundpic)
+        this.$axios.post('http://192.168.1.105:3000/imgaddanimal',
+          qs.stringify({
+            title: this.ruleForm.findpettitle,
+            animalpic: this.findpetpic
+          }))
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
     lostsubmitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.submitlostmsg()
-          this.fpdialogVisible = false
         } else {
           console.log('error submit!!')
           return false
@@ -172,13 +193,6 @@ export default {
       this.city = CodeToText[arr[0]] + CodeToText[arr[1]]
       console.log(this.city)
     },
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
-    },
     submitlostmsg () {
       var zzz = this
       var myDate = new Date()
@@ -186,7 +200,6 @@ export default {
       this.$axios.post('http://192.168.1.105:3000/animaladd',
         qs.stringify({
           username: this.localusername,
-          animalpic: this.findpetpic,
           found: this.status,
           pubtime: this.pubtime,
           animalcont: this.ruleForm.findpetinfo,
@@ -200,15 +213,7 @@ export default {
         .then(function (response) {
           console.log(response)
           zzz.$router.go(0)
-          zzz.$axios.get('http://192.168.1.105:3000/animal')
-            .then(function (response) {
-              console.log(response)
-              console.log(response.data)
-              zzz.findpetlists = response.data
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
+          this.fpdialogVisible = false
         })
         .catch(function (error) {
           console.log(error)

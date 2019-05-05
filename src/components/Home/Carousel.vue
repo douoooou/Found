@@ -1,9 +1,9 @@
 <template>
   <div id="carousel">
-    <el-carousel :interval="4000" type="card" height="300px" loop="true">
-        <el-carousel-item v-for="item in list" :key="item">
-        <img class="carousel-image" :src="item.image">
-        <div class="carousel-info"><span>{{item.info}}</span></div>
+    <el-carousel :interval="4000" type="card" height="300px">
+        <el-carousel-item v-for="(carouselilist,index) in carouselarr" :key="index">
+        <img class="carousel-image" :src="carouselilist.lookforpic">
+        <div class="carousel-info"><span>{{carouselilist.title}}</span></div>
         </el-carousel-item>
     </el-carousel>
   </div>
@@ -13,21 +13,26 @@ export default {
   name: 'carousel',
   data () {
     return {
-      list: [
-        {
-          info: '今天在家门口发现一只狗，看着很干净，并不像流浪狗，所以请狗狗的主人赶快与我联系',
-          image: '../../static/images/timg.jpg'
-        },
-        {
-          info: '本人的一摞文件貌似忘在了火车站的候车室，哪个好心人看到，请与我联系，万分感谢！',
-          image: '../../static/images/pretermit.png'
-        },
-        {
-          info: '地点：农安县。本人的身份证在今天丢失了，真的非常着急，如果看到这条失物消息，请与我联系，谢谢！！！',
-          image: '../../static/images/shenfenzheng.jpeg'
-        }
-      ]
+      carouselarr: [],
+      loop: true
     }
+  },
+  created () {
+    var zz = this
+    this.$axios.get('http://192.168.1.105:3000/lostthing')
+      .then(function (response) {
+        console.log(response)
+        console.log(response.data)
+        zz.carouselarr = response.data
+        var arr = zz.carouselarr
+        for (var i = 0; i < arr.length; i++) {
+          zz.carouselarr[i] = arr[i]
+          zz.carouselarr[i].lookforpic = 'http://192.168.1.105:3000/images/' + zz.carouselarr[i].lookforpic
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 </script>
@@ -72,7 +77,7 @@ export default {
     padding-top: 30px;
     position:absolute;
     top:0;
-    opacity:0.5;
+    opacity:0.4;
     height: 90px;
   }
 </style>

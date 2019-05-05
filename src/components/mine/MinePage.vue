@@ -98,14 +98,14 @@
                     <el-col :span="4"><img class="mine-image" :src="imagea"></el-col>
                     <el-col :span="13">
                         <el-row>
-                            <el-col :span="8" class="mypost-hiddenn"><h4>{{peoplemsg.title}}</h4></el-col>
-                            <el-col :span="9"><p class="mine-date">{{peoplemsg.pubtime | formatDate}}</p></el-col>
+                            <el-col :span="8" class="mypost-hiddenn"><h4>{{peoplemsg.peoptitle}}</h4></el-col>
+                            <el-col :span="9"><p class="mine-date">{{peoplemsg.peoppubtime | formatDate}}</p></el-col>
                         </el-row>
                         <el-row class="mypost-hidden"><span :span="8" class="mine-txt">{{peoplemsg.peopcont}}</span></el-row>
                     </el-col>
                     <el-col :span="2.5">
-                        <el-button class="mine-btnn" v-show="peoplemsg.found === '未找回'" @click="changepeoplestatus(peoplemsg)">未找回</el-button>
-                        <el-button class="mine-btn" v-show="peoplemsg.found === '已找回'"  @click="changepeoplestatus(peoplemsg)">已找回</el-button>
+                        <el-button class="mine-btnn" v-show="peoplemsg.peopfound === '未找回'" @click="changepeoplestatus(peoplemsg)">未找回</el-button>
+                        <el-button class="mine-btn" v-show="peoplemsg.peopfound === '已找回'"  @click="changepeoplestatus(peoplemsg)">已找回</el-button>
                     </el-col>
                     <el-col :span="2.5"><el-button class="mine-btn" @click="delpeoplemsg(peoplemsg,dindex)">删除信息</el-button></el-col>
                 </el-row>
@@ -155,8 +155,6 @@
             </el-timeline-item>
           </div>
         </el-timeline>
-        <br/>
-        <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
     </div>
   </div>
 </template>
@@ -345,10 +343,10 @@ export default {
         })
     },
     delpeoplemsg (peoplemsg, dindex) {
-      this.peopletitle = peoplemsg.title
+      this.peopletitle = peoplemsg.peoptitle
       console.log(this.peopletitle)
       let nn = this
-      this.$axios.get('http://192.168.1.105:3000/mypeop/del?title=' + this.peopletitle)
+      this.$axios.get('http://192.168.1.105:3000/mypeop/del?peoptitle=' + this.peopletitle)
         .then(function (response) {
           console.log(response)
           nn.peoplearr.splice(dindex, 1)

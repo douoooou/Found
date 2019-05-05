@@ -8,7 +8,12 @@
               <el-breadcrumb-item>>>失物信息</el-breadcrumb-item>
             </el-breadcrumb>
           </el-col>
-          <el-col :span="8"><el-button class="lost-btn" @click="lsdialogVisible = true">填写失物信息</el-button></el-col>
+          <el-col :span="8">
+            <el-button class="lost-btn" v-show="this.localusername !== null" @click="lsdialogVisible = true">填写失物信息</el-button>
+            <el-tooltip content="登录后发布信息" placement="top">
+              <el-button class="lost-btn" v-show="this.localusername === null">填写失物信息</el-button>
+           </el-tooltip>
+          </el-col>
         </el-row>
       </div>
       <el-dialog title="发布寻物启事" :visible.sync="lsdialogVisible" width="40%">
@@ -24,7 +29,6 @@
               <input type="file" id="id" name="image" style="display:none" @change="shangc($event)" accept="image/jpg,image/jpeg,image/png">
               上传照片
             </label>
-            <!-- <button @click="getFile">获取文件</button> -->
           </el-form-item>
           <el-form-item label="联系方式：" prop="lianxi">
             <el-input :span="4" v-model="ruleForm.lianxi" placeholder="手机号 / 邮箱 / QQ"></el-input>
@@ -40,11 +44,8 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="上传照片：">
-          </el-form-item>
           <el-form-item label="省市：">
-            <el-cascader style="width:530px" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
-            <!-- <el-input :span="4" v-model="city"></el-input> -->
+            <el-cascader style="width:99%" :options="options" v-model="selectedOptions" @change="addressChange"></el-cascader>
           </el-form-item>
           <el-form-item label="详细地点：">
             <el-input :span="4" v-model="lostarea"></el-input>
@@ -73,16 +74,12 @@
                   <p class="hiddenn">{{lostlist.sthcont}}</p>
                   <time class="time">{{lostlist.pubtime | formatDate}}</time>
                 </div>
-              <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-              </div>
+                  <img :src="lostlist.lookforpic" class="image">
+                </div>
             </el-card></router-link>
           </el-col>
         </el-row>
         <br/>
-        <br/>
-        <el-pagination background layout="prev, pager, next" :total="800" :page-size="8"></el-pagination>
-<!-- <el-pagination class="page" @current-change="handleCurrentChange" :current-page="currentPage" :total="totalPages" :page-size="10" v-if="totalPages > 10"> -->
-      <!-- </el-pagination>-->
       </div>
   </div>
 </template>
@@ -147,7 +144,11 @@ export default {
         console.log(response)
         console.log(response.data)
         zz.lostlists = response.data
-        console.log(zz.lostthingarr)
+        var arr = zz.lostlists
+        for (var i = 0; i < arr.length; i++) {
+          zz.lostlists[i] = arr[i]
+          zz.lostlists[i].lookforpic = 'http://192.168.1.105:3000/images/' + zz.lostlists[i].lookforpic
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -164,10 +165,10 @@ export default {
         console.log(imgFile)
         this.lostpic = imgFile
         console.log(this.findpeoplepic)
-        this.$axios.post('http://192.168.1.105:3000/imgadd',
+        this.$axios.post('http://192.168.1.105:3000/imgaddsth',
           qs.stringify({
-            peoptitle: this.ruleForm.findpeopletitle,
-            peoplepic: this.findpeoplepic
+            title: this.ruleForm.lostmsgtitle,
+            lookforpic: this.lostpic
           }))
           .then(function (response) {
             console.log(response)
@@ -181,7 +182,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.submitlostmsg()
-          this.lsdialogVisible = false
         } else {
           console.log('error submit!!')
           return false
@@ -201,7 +201,6 @@ export default {
       this.$axios.post('http://192.168.1.105:3000/loststhadd',
         qs.stringify({
           username: this.localusername,
-          lookforpic: this.lostpic,
           found: this.status,
           pubtime: this.pubtime,
           sthcont: this.ruleForm.lostinfo,
@@ -214,17 +213,8 @@ export default {
         }))
         .then(function (response) {
           console.log(response)
+          zz.lsdialogVisible = false
           zz.$router.go(0)
-          zz.$axios.get('http://192.168.1.105:3000/lostthing')
-            .then(function (response) {
-              console.log(response)
-              console.log(response.data)
-              zz.lostlists = response.data
-              console.log(zz.lostthingarr)
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
         })
         .catch(function (error) {
           console.log(error)
@@ -273,6 +263,7 @@ export default {
 }
 .lost-card{
   margin-bottom:  30px;
+  height: 300px;
 }
 /* 卡片 */
  .time {
@@ -289,6 +280,7 @@ export default {
     float: right;
   }
   .image {
+    height: 150px;
     margin-top: 10px;
     width: 100%;
     display: block;

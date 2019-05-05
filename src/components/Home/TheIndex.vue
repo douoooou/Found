@@ -2,7 +2,7 @@
 <div class="main">
   <!-- <HomeHeader></HomeHeader> -->
   <!-- <Test></Test> -->
-  <!-- <Carousel></Carousel> -->
+  <Carousel></Carousel>
   <TheContent></TheContent>
 </div>
 </template>
@@ -11,7 +11,7 @@
 import HomeHeader from '../Common/HomeHeader.vue'
 // import Test from '../Common/Test.vue'
 
-// import Carousel from './Carousel.vue'
+import Carousel from './Carousel.vue'
 import TheContent from './TheContent.vue'
 
 export default{
@@ -19,7 +19,7 @@ export default{
   components: {
     HomeHeader,
     // Test,
-    // Carousel,
+    Carousel,
     TheContent
   },
   data () {

@@ -16,7 +16,7 @@
         <ul>
           <li v-for="(lostmsg,index) in lostthingarr" :key="index" v-if='index< 6'>
             <el-row class="xunwu-item">
-              <el-col :span="3"><img class="content-image" :src="image"></el-col>
+              <el-col :span="3"><img class="content-image" :src="lostmsg.lookforpic"></el-col>
               <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{lostmsg.title}}</span></el-col>
               <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{lostmsg.pubtime | formatDate}}</span></el-col>
               <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
@@ -34,7 +34,7 @@
         <ul>
           <li v-for="(foundmsg,index) in foundthingarr" :key="index" v-if='index< 6'>
             <el-row class="xunwu-item">
-              <el-col :span="3"><img class="content-image" :src="image"></el-col>
+              <el-col :span="3"><img class="content-image" :src="foundmsg.zhaolingpic"></el-col>
               <el-col :span="10" class="xunwu-item-txt"><span :span="5">{{foundmsg.title}}</span></el-col>
               <el-col :span="5" class="xunwu-item-txt"><span class="content-date">&nbsp;&nbsp;&nbsp;&nbsp;{{foundmsg.pubtime | formatDate}}</span></el-col>
               <router-link :to="{path:'/FoundDetail',name:'FoundDetail',query:{index:index}}"><el-button type="text">&nbsp;&nbsp;查看详情</el-button></router-link>
@@ -71,10 +71,14 @@ export default {
     var zz = this
     this.$axios.get('http://192.168.1.105:3000/lostthing')
       .then(function (response) {
-        console.log(response)
         console.log(response.data)
         zz.lostthingarr = response.data
         console.log(zz.lostthingarr)
+        var arr = zz.lostthingarr
+        for (var i = 0; i < arr.length; i++) {
+          zz.lostthingarr[i] = arr[i]
+          zz.lostthingarr[i].lookforpic = 'http://192.168.1.105:3000/images/' + zz.lostthingarr[i].lookforpic
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -85,6 +89,11 @@ export default {
         console.log(response.data)
         zz.foundthingarr = response.data
         console.log(zz.foundthingarr)
+        var arr = zz.foundthingarr
+        for (var i = 0; i < arr.length; i++) {
+          zz.foundthingarr[i] = arr[i]
+          zz.foundthingarr[i].zhaolingpic = 'http://192.168.1.105:3000/images/' + zz.foundthingarr[i].zhaolingpic
+        }
       })
       .catch(function (error) {
         console.log(error)
