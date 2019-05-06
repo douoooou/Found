@@ -261,6 +261,7 @@ export default {
 }
 .lost-card{
   margin-bottom:  30px;
+  height: 300px;
 }
 /* 卡片 */
  .time {
@@ -279,6 +280,7 @@ export default {
   .image {
     margin-top: 10px;
     width: 100%;
+    height: 150px;
     display: block;
   }
   .clearfix:before,

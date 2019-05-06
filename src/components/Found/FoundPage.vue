@@ -265,6 +265,7 @@ export default {
   margin-left: 150px;
 }
 .lost-card{
+  height: 300px;
   margin-bottom:  30px;
 }
 /* 卡片 */
@@ -282,6 +283,7 @@ export default {
     float: right;
   }
   .image {
+    height: 150px;
     margin-top: 10px;
     width: 100%;
     display: block;

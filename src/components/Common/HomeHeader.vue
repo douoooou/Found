@@ -306,9 +306,7 @@ export default {
             localStorage.setItem('localusername', JSON.stringify(bb.ruleForm.loginname))
             localStorage.setItem('localpassword', JSON.stringify(bb.ruleForm.loginpsd))
             // this.getusername()
-            // cc.$router.go(0)
-            // cc.refresh()
-            cc.reload()
+            cc.$router.go(0)
           }
         })
         .catch(function (error) {
