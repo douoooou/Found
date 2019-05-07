@@ -139,7 +139,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/zhaoling')
+    this.$axios.get('http://192.168.1.110:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -148,7 +148,7 @@ export default {
         var arr = zz.foundlists
         for (var i = 0; i < arr.length; i++) {
           zz.foundlists[i] = arr[i]
-          zz.foundlists[i].zhaolingpic = 'http://192.168.1.105:3000/images/' + zz.foundlists[i].zhaolingpic
+          zz.foundlists[i].zhaolingpic = 'http://192.168.1.110:3000/images/' + zz.foundlists[i].zhaolingpic
         }
       })
       .catch(function (error) {
@@ -166,7 +166,7 @@ export default {
         console.log(imgFile)
         this.foundpic = imgFile
         console.log(this.foundpic)
-        this.$axios.post('http://192.168.1.105:3000/imgaddzhaoling',
+        this.$axios.post('http://192.168.1.110:3000/imgaddzhaoling',
           qs.stringify({
             title: this.ruleForm.foundtitle,
             zhaolingpic: this.foundpic
@@ -200,7 +200,7 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.105:3000/zhaolingadd',
+      this.$axios.post('http://192.168.1.110:3000/zhaolingadd',
         qs.stringify({
           username: this.localusername,
           found: this.status,

@@ -1,9 +1,9 @@
 <template>
   <div id="carousel">
-    <el-carousel :interval="4000" type="card" height="300px">
+    <el-carousel :interval="4000" type="card" height="260px">
         <el-carousel-item v-for="(carouselilist,index) in carouselarr" :key="index">
         <img class="carousel-image" :src="carouselilist.lookforpic">
-        <div class="carousel-info"><span>{{carouselilist.title}}</span></div>
+        <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><div class="carousel-info"><span>{{carouselilist.title}}{{carouselilist.sthcont}}</span></div></router-link>
         </el-carousel-item>
     </el-carousel>
   </div>
@@ -19,7 +19,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/lostthing')
+    this.$axios.get('http://192.168.1.110:3000/lostthing')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -27,7 +27,7 @@ export default {
         var arr = zz.carouselarr
         for (var i = 0; i < arr.length; i++) {
           zz.carouselarr[i] = arr[i]
-          zz.carouselarr[i].lookforpic = 'http://192.168.1.105:3000/images/' + zz.carouselarr[i].lookforpic
+          zz.carouselarr[i].lookforpic = 'http://192.168.1.110:3000/images/' + zz.carouselarr[i].lookforpic
         }
       })
       .catch(function (error) {
@@ -39,11 +39,11 @@ export default {
 <style>
   #carousel{
     margin-left: 100px;
-    width: 1400px;
+    width: 1000px;
     margin: 0 auto;
   }
   .el-carousel__item{
-    width: 700px;
+    width: 500px;
   }
   .el-carousel__item h3 {
     color: #475669;
@@ -66,13 +66,14 @@ export default {
     background-size:cover;
   }
   .carousel-info{
-    padding-left: 30px;
+    padding-left: 25px;
     padding-right: 50px;
     color:black;
-    font-weight:bold;
+    font-weight:bolder;
     background-color: aliceblue;
-    width: 620px;
-    margin-top: 200px;
+    width:470px;
+    font-size: 17px;
+    margin-top: 160px;
     padding-top: 30px;
     position:absolute;
     top:0;

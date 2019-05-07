@@ -1,12 +1,14 @@
 <template>
   <div class="contentpage">
-    <div class="content-one">
-      <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div class="slides slide1">找人</div></router-link>
-      <router-link :to="{path:'/LostPage',name:'LostPage'}"><div class="slides slide2"><span>找物</span></div></router-link>
-      <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><div class="slides slide3"><span>招领</span></div></router-link>
-      <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div class="slides slide4"><span>找宠物</span></div></router-link>
-    </div>
+    <br/><br/><br/>
     <hr/>
+    <br/><br/><br/>
+    <div class="content-one">
+      <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div><img :src='image' class="slides"></div></router-link>
+      <router-link :to="{path:'/LostPage',name:'LostPage'}"><div><img :src='image2' class="slides"></div></router-link>
+      <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><div><img :src='image3' class="slides"></div></router-link>
+      <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div><img :src='image4' class="slides"></div></router-link>
+    </div>
     <div class="content-two">
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
@@ -42,6 +44,7 @@
           </li>
         </ul>
       </el-card>
+
     </div>
   </div>
 </template>
@@ -61,15 +64,15 @@ export default {
     return {
       lostthingarr: '',
       foundthingarr: '',
-      image: '../../static/images/pretermit.png',
-      image2: '../../static/images/timg.jpg',
-      image3: '../../static/images/shenfenzheng.jpeg',
-      image4: '../../static/images/wal.jpg'
+      image: '../../static/images/findpeople.jpg',
+      image2: '../../static/images/4da7063707d1575ddeb10bd4b7178125.jpg',
+      image3: '../../static/images/d48cba30681fb2785f0ca9914b6fdcc0.jpg',
+      image4: '../../static/images/5b1d53895d52f4d1d745fb1d18ff03d0.jpg'
     }
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/lostthing')
+    this.$axios.get('http://192.168.1.110:3000/lostthing')
       .then(function (response) {
         console.log(response.data)
         zz.lostthingarr = response.data
@@ -77,13 +80,13 @@ export default {
         var arr = zz.lostthingarr
         for (var i = 0; i < arr.length; i++) {
           zz.lostthingarr[i] = arr[i]
-          zz.lostthingarr[i].lookforpic = 'http://192.168.1.105:3000/images/' + zz.lostthingarr[i].lookforpic
+          zz.lostthingarr[i].lookforpic = 'http://192.168.1.110:3000/images/' + zz.lostthingarr[i].lookforpic
         }
       })
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.105:3000/zhaoling')
+    this.$axios.get('http://192.168.1.110:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -92,7 +95,7 @@ export default {
         var arr = zz.foundthingarr
         for (var i = 0; i < arr.length; i++) {
           zz.foundthingarr[i] = arr[i]
-          zz.foundthingarr[i].zhaolingpic = 'http://192.168.1.105:3000/images/' + zz.foundthingarr[i].zhaolingpic
+          zz.foundthingarr[i].zhaolingpic = 'http://192.168.1.110:3000/images/' + zz.foundthingarr[i].zhaolingpic
         }
       })
       .catch(function (error) {
@@ -103,39 +106,20 @@ export default {
 </script>
 <style>
 .slides{
+  border: 0.7px solid #777777;
+  background-size: 100% 100%;
   float: left;
-  font-weight: bolder;
-  margin-top: 50px;
-  margin-left: 220px;
-  padding-top: 50px;
-  width: 130px;
-  height: 70px;
-  background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
+  margin-left: 139px;
+  width: 230px;
+  height: 130px;
+  border-radius: 30%;
   opacity: 0.9;
-  border-radius: 50%;
-}
-.slide1:hover{
-  background: url(../../../static/images/findpeople.jpg) no-repeat;
-  background-size: 100% 100%;
-}
-.slide2:hover{
-  background: url(../../../static/images/lost.jpg) no-repeat;
-  background-size: 100% 100%;
-}
-.slide3:hover{
-  background: url(../../../static/images/found.jpg) no-repeat;
-  background-size: 100% 100%;
-}
-.slide4:hover{
-  background: url(../../../static/images/findpet.jpg) no-repeat;
-  background-size: 100% 100%;
 }
 .contentpage{
   margin-bottom: 400px;
 }
 .content-one{
-  height: 200px;
-  margin-bottom: 20px;
+  height: 170px;
 }
 .content-two{
   float: left;
