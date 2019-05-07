@@ -11,7 +11,7 @@
           <el-col :span="8">
             <el-button class="lost-btn" v-show="this.localusername !== null" @click="fpdialogVisible = true">填写宠物信息</el-button>
             <el-tooltip content="登录后发布信息" placement="top">
-              <el-button class="lost-btn" v-show="this.localusername === null">填写宠物信息</el-button>
+              <el-button class="lost-btn" v-show="this.localusername === null" @click="open">填写宠物信息</el-button>
            </el-tooltip>
           </el-col>
         </el-row>
@@ -154,6 +154,9 @@ export default {
       })
   },
   methods: {
+    open () {
+      this.$message('登录后填写信息')
+    },
     getValueFromChild (title) {
       console.log(title)
       var zz = this

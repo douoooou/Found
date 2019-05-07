@@ -229,7 +229,7 @@ export default {
 }
 .categoryy {
   border-bottom: 1px solid #eee;
-  margin-left: -970px;
+  margin-left: -980px;
   font-size: 14px;
 }
 .categoryboxx{

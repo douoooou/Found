@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-  <br/><br/>
+  <img :src="image" class="tupian">
   <Carousel></Carousel>
   <TheContent></TheContent>
 </div>
@@ -23,11 +23,18 @@ export default{
   },
   data () {
     return {
+      image: '../../static/images/QQ截图20190508004445.jpg'
     }
   }
 }
 </script>
 
 <style>
-
+.tupian{
+  width: 90%;
+  margin-bottom: 30px;
+  box-shadow: 3px 3px 5px 3px #777777;
+  height: 500px;
+  margin-top: -50px;
+}
 </style>

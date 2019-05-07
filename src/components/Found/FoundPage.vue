@@ -11,7 +11,7 @@
           <el-col :span="8">
             <el-button class="lost-btn" v-show="this.localusername !== null" @click="fddialogVisible = true">填写招领信息</el-button>
             <el-tooltip content="登录后发布信息" placement="top">
-              <el-button class="lost-btn" v-show="this.localusername === null">填写招领信息</el-button>
+              <el-button class="lost-btn" v-show="this.localusername === null" @click="open">填写招领信息</el-button>
            </el-tooltip>
           </el-col>
         </el-row>
@@ -156,6 +156,9 @@ export default {
       })
   },
   methods: {
+    open () {
+      this.$message('登录后填写信息')
+    },
     shangc (e) {
       let foundpicfile = document.getElementById('id').files[0]
       let reader = new FileReader()

@@ -45,7 +45,53 @@
             </el-row>
         </el-card>
       </div>
-      <div></div>
+      <div class="comment">
+         <el-card>
+             <el-row v-for="(comment, index) in commentarr" :key="index">
+                 <el-col :span="3" class="yonghuming">{{comment.ming}}</el-col>
+                 <el-col :span="13" style="text-align: left;"><el-rate v-model="star" :colors="colors"></el-rate></el-col>
+                 <el-col :span="6">2019.5.8</el-col>
+             </el-row>
+             <div>
+             <el-row v-for="(comment, index) in commentarr" :key="index">
+                 <el-col class="pinglun">{{comment.content}}</el-col>
+                 <hr/>
+             </el-row>
+             <el-row>
+                 <el-col :span="3" class="yonghuming">wzb</el-col>
+                 <el-col :span="13" style="text-align: left;"><el-rate v-model="starvalue" :colors="colors"></el-rate></el-col>
+                 <el-col :span="6">2019.3.5</el-col>
+             </el-row>
+             <el-row>
+                 <el-col class="pinglun">我好像看到一个差不多的，不知道是不是你的</el-col>
+             </el-row>
+             <hr/>
+             <el-row>
+                 <el-col :span="3" class="yonghuming">东南西北</el-col>
+                 <el-col :span="13" style="text-align: left;"><el-rate v-model="starvalue2" :colors="colors"></el-rate></el-col>
+                 <el-col :span="6">2019.1.2</el-col>
+             </el-row>
+             <el-row>
+                 <el-col class="pinglun">这个平台还蛮好用的</el-col>
+             </el-row>
+             </div>
+         </el-card>
+         <br/>
+         <el-card>
+             <el-form>
+                <el-form-item label="发表评论：" prop="desc">
+                    <el-input type="textarea" v-model="mycom" :rows="5"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-rate style="margin-left:-900px" v-model="star" :colors="colors"></el-rate>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" style="margin-left:70%" @click="fabiao()">立即发表</el-button>
+                </el-form-item>
+             </el-form>
+         </el-card>
+         <br/>
+      </div>
     </div>
 </template>
 
@@ -67,6 +113,12 @@ export default {
   },
   data () {
     return {
+      mycom: '',
+      starvalue: 3.5,
+      starvalue2: 5,
+      commentarr: [],
+      star: null,
+      colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       title: '',
       area: '',
       name: 'aaa',
@@ -74,6 +126,11 @@ export default {
       id: '',
       index: this.$route.query.index,
       image: '../../static/images/pretermit.png'
+    }
+  },
+  methods: {
+    fabiao () {
+      this.commentarr = [{star: this.star, ming: 'dxr', content: this.mycom}]
     }
   },
   created () {
