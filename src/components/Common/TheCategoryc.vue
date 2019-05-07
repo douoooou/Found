@@ -5,9 +5,9 @@
       <el-col :span="2" v-for="item in sort" :key="item.id" :value="item.id">{{item.title}}</el-col>
     </div>
   </el-row>
-  <el-row class="category">
-    <div class="categorybox">
-      <el-col :span="2" v-for="item in sort2" :key="item.id" :value="item.id">{{item.title}}</el-col>
+  <el-row class="categoryy">
+    <div class="categoryboxx">
+      <div class="item" v-for="(item,index) in sort2" :key="index"  @click="animalclass(item.title,index)">{{item.title}}</div>
     </div>
   </el-row>
   <el-row class="category2">
@@ -25,9 +25,7 @@ export default {
   },
   data () {
     return {
-      tops: [],
-      seconds: [],
-      categoryData: [],
+      animalarr: [],
       sort: [{
         title: '全部',
         id: '0'
@@ -212,41 +210,9 @@ export default {
     }
   },
   methods: {
-    // getData () {
-    //   // 一级分类
-    //   this.$axios.get(apiPath.outlines.tops).then((res) => {
-    //     this.tops = res.data
-    //   });
-    //   // 二级分类
-    //   this.$axios.get(apiPath.outlines.seconds).then((res) => {
-    //     this.seconds = res.data
-    //   })
-    // },
-    // getTopID (id) {
-    //   console.log(id)
-    //   // let ID = id;
-    //   this.$axios.get(apiPath.outlines.seconds, {
-    //     params: {
-    //       top: id
-    //     }
-    //   }).then((res) => {
-    //     this.seconds = res.data;
-    //     console.log(res.data)
-    //   });
-    //   // console.log(id)
-    //   this.$emit('aaa', id)
-    // },
-    // getSecondID (id) {
-    //   this.$axios.get(apiPath.courses.courses, {
-    //     params: {
-    //       itemId: id
-    //     }
-    //   }).then(response => {
-    //     this.categoryData = response.data.content;
-    //     this.$emit('categoryData', this.categoryData)
-    //     console.log(response.data.content)
-    //   })
-    // }
+    animalclass (title) {
+      this.$emit('sendValueToParent', title)
+    }
   }
 }
 </script>
@@ -260,10 +226,20 @@ export default {
 }
 .category {
   border-bottom: 1px solid #eee;
-  /* .el-col:hover{
-    color: #29A3E9;
-    cursor: pointer;
-  } */
+}
+.categoryy {
+  border-bottom: 1px solid #eee;
+  margin-left: -970px;
+  font-size: 14px;
+}
+.categoryboxx{
+  border-bottom: 1px solid #eee;
+  padding:20px;
+}
+.categoryboxx :active{
+  background-color: rgba(41,163,233,0.2);
+  color: #29A3E9;
+  cursor: pointer;
 }
 .category2 {
   /* .el-col:hover{
@@ -289,6 +265,11 @@ export default {
   margin-top: 40px;
   color: #FF3B3B;
   font-size:12px;
+}
+.item{
+  padding: 0 0px;
+  display: inline-block;
+  margin-left: 100px;
 }
 .category{
   position: relative;

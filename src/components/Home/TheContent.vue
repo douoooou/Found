@@ -1,19 +1,18 @@
 <template>
   <div class="contentpage">
-    <br/><br/><br/>
-    <hr/>
-    <br/><br/><br/>
-    <div class="content-one">
+    <br/><br/>
+    <!-- <hr/> -->
+    <!-- <div class="content-one">
       <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div><img :src='image' class="slides"></div></router-link>
       <router-link :to="{path:'/LostPage',name:'LostPage'}"><div><img :src='image2' class="slides"></div></router-link>
       <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><div><img :src='image3' class="slides"></div></router-link>
       <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div><img :src='image4' class="slides"></div></router-link>
-    </div>
+    </div> -->
     <div class="content-two">
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
           <span style="font-weight:bolder; margin-left:-530px;">寻物启事</span>
-           <router-link :to="{path:'/LostPage',name:'LostPage'}"><el-button style="float: right; padding: 3px 0" type="text">更多</el-button></router-link>
+           <router-link :to="{path:'/LostPage',name:'LostPage'}"><el-button style="float: right; padding: 3px 0" type="text">查看更多</el-button></router-link>
         </div>
         <ul>
           <li v-for="(lostmsg,index) in lostthingarr" :key="index" v-if='index< 6'>
@@ -31,7 +30,7 @@
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
           <span style="font-weight:bolder; margin-left:-530px;">招领启事</span>
-          <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><el-button style="float: right; padding: 3px 0" type="text">更多</el-button></router-link>
+          <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><el-button style="float: right; padding: 3px 0" type="text">查看更多</el-button></router-link>
         </div>
         <ul>
           <li v-for="(foundmsg,index) in foundthingarr" :key="index" v-if='index< 6'>
@@ -107,6 +106,7 @@ export default {
 <style>
 .slides{
   border: 0.7px solid #777777;
+  box-shadow: 2px 4px 6px #777777;
   background-size: 100% 100%;
   float: left;
   margin-left: 139px;

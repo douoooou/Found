@@ -1,11 +1,19 @@
 <template>
   <div id="carousel">
-    <el-carousel :interval="4000" type="card" height="260px">
+    <el-carousel :interval="4000"  height="370px">
         <el-carousel-item v-for="(carouselilist,index) in carouselarr" :key="index">
         <img class="carousel-image" :src="carouselilist.lookforpic">
-        <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><div class="carousel-info"><span>{{carouselilist.title}}{{carouselilist.sthcont}}</span></div></router-link>
+        <!-- <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><div class="carousel-info"><span>{{carouselilist.title}}{{carouselilist.sthcont}}</span></div></router-link> -->
         </el-carousel-item>
     </el-carousel>
+    <div class="container">
+    <ul class="aside-items">
+        <li v-for="(item, index) in carouselarr" :key="index" v-if="carouselarr.length < 4" class="lunboitem">
+          <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><p class="wenzi">{{item.title}}</p></router-link>
+        </li>
+        <!-- <li v-if="items.length > 6" @click="more">更多</li> -->
+    </ul>
+  </div>
   </div>
 </template>
 <script>
@@ -41,9 +49,10 @@ export default {
     margin-left: 100px;
     width: 1000px;
     margin: 0 auto;
+    position: relative;
   }
   .el-carousel__item{
-    width: 500px;
+    width: 1000px;
   }
   .el-carousel__item h3 {
     color: #475669;
@@ -59,9 +68,10 @@ export default {
     background-color: #d3dce6;
   }
   .carousel-image{
+    border: 1px solid #777777;
+    width: 100%;
     position: relative;
     height:100%;
-    width:100%;
     overflow: hidden;
     background-size:cover;
   }
@@ -79,5 +89,38 @@ export default {
     top:0;
     opacity:0.4;
     height: 90px;
+  }
+  .aside-items{
+    margin-top: -3px;
+    /* color: #777777; */
+    background: rgba(0,0,0,0.6);
+    width: 208px;
+    height: 372px;
+    position: absolute;
+    z-index: 777;
+    top:0;
+  }
+  .wenzi{
+    color: gray;
+    font-weight: bolder;
+  }
+  .lunboitem{
+    line-height: 60px;
+    margin-left: -41px;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    /* &:first-child{
+      margin-top: 30px;
+    } */
+  }
+  .wenzi :hover{
+    color: #fff;
+  }
+  .lunboitem :hover{
+    background-color: rgba(0,0,0,0.2);
+    cursor: pointer;
   }
 </style>
