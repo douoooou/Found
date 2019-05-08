@@ -135,12 +135,12 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/lostthing')
+    this.$axios.get('http://192.168.43.126:3000/lostthing')
       .then(function (response) {
         console.log(response.data)
         zz.detailarr = response.data[zz.index]
         console.log(response.data[zz.index])
-        zz.detailarr.lookforpic = 'http://192.168.1.105:3000/images/' + zz.detailarr.lookforpic
+        zz.detailarr.lookforpic = 'http://192.168.43.126:3000/images/' + zz.detailarr.lookforpic
       })
       .catch(function (error) {
         console.log(error)

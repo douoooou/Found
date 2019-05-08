@@ -139,7 +139,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/lostthing')
+    this.$axios.get('http://192.168.43.126:3000/lostthing')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -147,7 +147,7 @@ export default {
         var arr = zz.lostlists
         for (var i = 0; i < arr.length; i++) {
           zz.lostlists[i] = arr[i]
-          zz.lostlists[i].lookforpic = 'http://192.168.1.105:3000/images/' + zz.lostlists[i].lookforpic
+          zz.lostlists[i].lookforpic = 'http://192.168.43.126:3000/images/' + zz.lostlists[i].lookforpic
         }
       })
       .catch(function (error) {
@@ -168,7 +168,7 @@ export default {
         console.log(imgFile)
         this.lostpic = imgFile
         console.log(this.findpeoplepic)
-        this.$axios.post('http://192.168.1.105:3000/imgaddsth',
+        this.$axios.post('http://192.168.43.126:3000/imgaddsth',
           qs.stringify({
             title: this.ruleForm.lostmsgtitle,
             lookforpic: this.lostpic
@@ -201,7 +201,7 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.105:3000/loststhadd',
+      this.$axios.post('http://192.168.43.126:3000/loststhadd',
         qs.stringify({
           username: this.localusername,
           found: this.status,

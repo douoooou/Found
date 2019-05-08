@@ -180,7 +180,7 @@ export default {
   created () {
     console.log(this.status)
     var aa = this
-    this.$axios.get('http://192.168.1.105:3000/usermsg?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/usermsg?username=' + this.localusername)
       .then(function (response) {
         console.log(response.data)
         aa.usermsg = response.data
@@ -191,20 +191,20 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.105:3000/mypost?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/mypost?username=' + this.localusername)
       .then(function (response) {
         // console.log(response)
         aa.mypostarr = response.data
         var arr = aa.mypostarr
         for (var i = 0; i < arr.length; i++) {
           aa.mypostarr[i] = arr[i]
-          aa.mypostarr[i].lookforpic = 'http://192.168.1.105:3000/images/' + aa.mypostarr[i].lookforpic
+          aa.mypostarr[i].lookforpic = 'http://192.168.43.126:3000/images/' + aa.mypostarr[i].lookforpic
         }
       })
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.105:3000/mypeop?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/mypeop?username=' + this.localusername)
       .then(function (response) {
         // console.log(response.data)
         aa.peoplearr = response.data
@@ -212,33 +212,33 @@ export default {
         var arr = aa.peoplearr
         for (var i = 0; i < arr.length; i++) {
           aa.peoplearr[i] = arr[i]
-          aa.peoplearr[i].peoplepic = 'http://192.168.1.105:3000/images/' + aa.peoplearr[i].peoplepic
+          aa.peoplearr[i].peoplepic = 'http://192.168.43.126:3000/images/' + aa.peoplearr[i].peoplepic
         }
       })
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.105:3000/myzhaoling?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/myzhaoling?username=' + this.localusername)
       .then(function (response) {
         console.log(response)
         aa.zhaolingarr = response.data
         var arr = aa.zhaolingarr
         for (var i = 0; i < arr.length; i++) {
           aa.zhaolingarr[i] = arr[i]
-          aa.zhaolingarr[i].zhaolingpic = 'http://192.168.1.105:3000/images/' + aa.zhaolingarr[i].zhaolingpic
+          aa.zhaolingarr[i].zhaolingpic = 'http://192.168.43.126:3000/images/' + aa.zhaolingarr[i].zhaolingpic
         }
       })
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.105:3000/myanimal?username=' + this.localusername)
+    this.$axios.get('http://192.168.43.126:3000/myanimal?username=' + this.localusername)
       .then(function (response) {
         console.log(response)
         aa.findpetarr = response.data
         var arr = aa.findpetarr
         for (var i = 0; i < arr.length; i++) {
           aa.findpetarr[i] = arr[i]
-          aa.findpetarr[i].animalpic = 'http://192.168.1.105:3000/images/' + aa.findpetarr[i].animalpic
+          aa.findpetarr[i].animalpic = 'http://192.168.43.126:3000/images/' + aa.findpetarr[i].animalpic
         }
       })
       .catch(function (error) {
@@ -309,7 +309,8 @@ export default {
     },
     exitlogin () {
       localStorage.removeItem('localusername')
-      this.reload()
+      // this.reload()
+      this.$router.go(0)
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -323,7 +324,7 @@ export default {
     },
     submitusermsg () {
       var zz = this
-      this.$axios.post('http://192.168.1.105:3000/msgchange',
+      this.$axios.post('http://192.168.43.126:3000/msgchange',
         qs.stringify({
           username: this.localusername,
           phone: this.ruleForm.telephone,
@@ -333,7 +334,7 @@ export default {
         .then(function (response) {
           console.log(response)
           zz.msgdialogVisible = false
-          zz.$axios.get('http://192.168.1.105:3000/usermsg?username=' + zz.localusername)
+          zz.$axios.get('http://192.168.43.126:3000/usermsg?username=' + zz.localusername)
             .then(function (response) {
               console.log(response.data)
               zz.usermsg = response.data
@@ -353,7 +354,7 @@ export default {
       this.title = mypostmsg.title
       console.log(this.title)
       let yy = this
-      this.$axios.get('http://192.168.1.105:3000/mypost/del?title=' + this.title)
+      this.$axios.get('http://192.168.43.126:3000/mypost/del?title=' + this.title)
         .then(function (response) {
           console.log(response)
           yy.mypostarr.splice(index, 1)
@@ -366,7 +367,7 @@ export default {
       this.peopletitle = peoplemsg.peoptitle
       console.log(this.peopletitle)
       let nn = this
-      this.$axios.get('http://192.168.1.105:3000/mypeop/del?peoptitle=' + this.peopletitle)
+      this.$axios.get('http://192.168.43.126:3000/mypeop/del?peoptitle=' + this.peopletitle)
         .then(function (response) {
           console.log(response)
           nn.peoplearr.splice(dindex, 1)
@@ -379,7 +380,7 @@ export default {
       let nn = this
       this.zhaolingtitle = zhaolingmsg.title
       console.log(this.zhaolingtitle)
-      this.$axios.get('http://192.168.1.105:3000/myzhaoling/del?title=' + this.zhaolingtitle)
+      this.$axios.get('http://192.168.43.126:3000/myzhaoling/del?title=' + this.zhaolingtitle)
         .then(function (response) {
           console.log(response)
           nn.zhaolingarr.splice(foundindex, 1)
@@ -392,7 +393,7 @@ export default {
       let nn = this
       this.findpettitle = findpetmsg.title
       console.log(this.findpettitle)
-      this.$axios.get('http://192.168.1.105:3000/myanimal/del?title=' + this.findpettitle)
+      this.$axios.get('http://192.168.43.126:3000/myanimal/del?title=' + this.findpettitle)
         .then(function (response) {
           console.log(response)
           nn.findpetarr.splice(findpetindex, 1)
@@ -405,7 +406,7 @@ export default {
       var zz = this
       this.changelosttitle = mypostmsg.title
       if (mypostmsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.105:3000/upfound/sth',
+        this.$axios.post('http://192.168.43.126:3000/upfound/sth',
           qs.stringify({
             title: zz.changelosttitle,
             found: '已找回'
@@ -418,7 +419,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.105:3000/upfound/sth',
+        this.$axios.post('http://192.168.43.126:3000/upfound/sth',
           qs.stringify({
             title: zz.changelosttitle,
             found: '未找回'
@@ -436,7 +437,7 @@ export default {
       var zz = this
       this.changepeopletitle = peoplemsg.title
       if (peoplemsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.105:3000/upfound/peop',
+        this.$axios.post('http://192.168.43.126:3000/upfound/peop',
           qs.stringify({
             title: zz.changepeopletitle,
             found: '已找回'
@@ -449,7 +450,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.105:3000/upfound/peop',
+        this.$axios.post('http://192.168.43.126:3000/upfound/peop',
           qs.stringify({
             title: zz.changepeopletitle,
             found: '未找回'
@@ -467,7 +468,7 @@ export default {
       var zz = this
       this.changeanimaltitle = findpetmsg.title
       if (findpetmsg.found === '未找回') {
-        this.$axios.post('http://192.168.1.105:3000/upfound/animal',
+        this.$axios.post('http://192.168.43.126:3000/upfound/animal',
           qs.stringify({
             title: zz.changeanimaltitle,
             found: '已找回'
@@ -480,7 +481,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.105:3000/upfound/animal',
+        this.$axios.post('http://192.168.43.126:3000/upfound/animal',
           qs.stringify({
             title: zz.changeanimaltitle,
             found: '未找回'
@@ -498,7 +499,7 @@ export default {
       var zz = this
       this.changefoundtitle = zhaolingmsg.title
       if (zhaolingmsg.found === '未招领') {
-        this.$axios.post('http://192.168.1.105:3000/upfound/zhaoling',
+        this.$axios.post('http://192.168.43.126:3000/upfound/zhaoling',
           qs.stringify({
             title: zz.changefoundtitle,
             found: '已招领'
@@ -511,7 +512,7 @@ export default {
             console.log(error)
           })
       } else {
-        this.$axios.post('http://192.168.1.105:3000/upfound/zhaoling',
+        this.$axios.post('http://192.168.43.126:3000/upfound/zhaoling',
           qs.stringify({
             title: zz.changefoundtitle,
             found: '未招领'

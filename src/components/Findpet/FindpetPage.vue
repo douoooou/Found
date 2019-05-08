@@ -137,7 +137,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.110:3000/animal')
+    this.$axios.get('http://192.168.43.126:3000/animal')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -146,7 +146,7 @@ export default {
         var arr = zz.findpetlists
         for (var i = 0; i < arr.length; i++) {
           zz.findpetlists[i] = arr[i]
-          zz.findpetlists[i].animalpic = 'http://192.168.1.110:3000/images/' + zz.findpetlists[i].animalpic
+          zz.findpetlists[i].animalpic = 'http://192.168.43.126:3000/images/' + zz.findpetlists[i].animalpic
         }
       })
       .catch(function (error) {
@@ -161,7 +161,7 @@ export default {
       console.log(title)
       var zz = this
       if (title === '全部') {
-        this.$axios.get('http://192.168.1.110:3000/animal')
+        this.$axios.get('http://192.168.43.126:3000/animal')
           .then(function (response) {
             console.log(response)
             console.log(response.data)
@@ -170,14 +170,14 @@ export default {
             var arr = zz.findpetlists
             for (var i = 0; i < arr.length; i++) {
               zz.findpetlists[i] = arr[i]
-              zz.findpetlists[i].animalpic = 'http://192.168.1.110:3000/images/' + zz.findpetlists[i].animalpic
+              zz.findpetlists[i].animalpic = 'http://192.168.43.126:3000/images/' + zz.findpetlists[i].animalpic
             }
           })
           .catch(function (error) {
             console.log(error)
           })
       } else {
-        this.$axios.get('http://192.168.1.110:3000/animalclass?classify=' + title)
+        this.$axios.get('http://192.168.43.126:3000/animalclass?classify=' + title)
           .then(function (response) {
             console.log(response)
             console.log(response.data)
@@ -186,7 +186,7 @@ export default {
             var arr = zz.findpetlists
             for (var i = 0; i < arr.length; i++) {
               zz.findpetlists[i] = arr[i]
-              zz.findpetlists[i].animalpic = 'http://192.168.1.110:3000/images/' + zz.findpetlists[i].animalpic
+              zz.findpetlists[i].animalpic = 'http://192.168.43.126:3000/images/' + zz.findpetlists[i].animalpic
             }
           })
           .catch(function (error) {
@@ -204,7 +204,7 @@ export default {
         console.log(imgFile)
         this.findpetpic = imgFile
         console.log(this.foundpic)
-        this.$axios.post('http://192.168.1.110:3000/imgaddanimal',
+        this.$axios.post('http://192.168.43.126:3000/imgaddanimal',
           qs.stringify({
             title: this.ruleForm.findpettitle,
             animalpic: this.findpetpic
@@ -237,7 +237,7 @@ export default {
       var zzz = this
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
-      this.$axios.post('http://192.168.1.110:3000/animaladd',
+      this.$axios.post('http://192.168.43.126:3000/animaladd',
         qs.stringify({
           username: this.localusername,
           found: this.status,

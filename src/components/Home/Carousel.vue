@@ -1,15 +1,15 @@
 <template>
   <div id="carousel">
-    <el-carousel :interval="4000"  height="370px">
+    <el-carousel :interval="4000"  height="500px">
         <el-carousel-item v-for="(carouselilist,index) in carouselarr" :key="index">
-        <img class="carousel-image" :src="carouselilist.lookforpic">
+        <img class="carousel-image" :src="carouselilist.animalpic">
         <!-- <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><div class="carousel-info"><span>{{carouselilist.title}}{{carouselilist.sthcont}}</span></div></router-link> -->
         </el-carousel-item>
     </el-carousel>
     <div class="container">
     <ul class="aside-items">
-        <li v-for="(item, index) in carouselarr" :key="index" v-if="carouselarr.length < 4" class="lunboitem">
-          <router-link :to="{path:'/LostDetail',name:'LostDetail',query:{index:index}}"><p class="wenzi">{{item.title}}</p></router-link>
+        <li v-for="(item, index) in carouselarr" :key="index"  class="lunboitem">
+          <router-link :to="{path:'/FindpetDetail',name:'FindpetDetail',query:{index:index}}"><p class="wenzi">{{item.title}}</p></router-link>
         </li>
         <!-- <li v-if="items.length > 6" @click="more">更多</li> -->
     </ul>
@@ -27,7 +27,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.110:3000/lostthing')
+    this.$axios.get('http://192.168.43.126:3000/animal')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -35,7 +35,7 @@ export default {
         var arr = zz.carouselarr
         for (var i = 0; i < arr.length; i++) {
           zz.carouselarr[i] = arr[i]
-          zz.carouselarr[i].lookforpic = 'http://192.168.1.110:3000/images/' + zz.carouselarr[i].lookforpic
+          zz.carouselarr[i].animalpic = 'http://192.168.43.126:3000/images/' + zz.carouselarr[i].animalpic
         }
       })
       .catch(function (error) {
@@ -47,12 +47,12 @@ export default {
 <style>
   #carousel{
     margin-left: 100px;
-    width: 1000px;
+    width: 100%;
     margin: 0 auto;
     position: relative;
   }
   .el-carousel__item{
-    width: 1000px;
+    width: 100%;
   }
   .el-carousel__item h3 {
     color: #475669;
@@ -91,12 +91,13 @@ export default {
     height: 90px;
   }
   .aside-items{
-    margin-top: -3px;
+    margin-top: -10px;
     /* color: #777777; */
     background: rgba(0,0,0,0.6);
-    width: 208px;
-    height: 372px;
+    width: 308px;
+    height: 522px;
     position: absolute;
+    margin-left: 100px;
     z-index: 777;
     top:0;
   }
@@ -105,7 +106,7 @@ export default {
     font-weight: bolder;
   }
   .lunboitem{
-    line-height: 60px;
+    line-height: 40px;
     margin-left: -41px;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;

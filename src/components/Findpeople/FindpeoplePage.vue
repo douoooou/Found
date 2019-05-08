@@ -132,14 +132,14 @@ export default {
     console.log(this.localusername)
     console.log(this.file)
     var zz = this
-    this.$axios.get('http://192.168.1.110:3000/peopsear')
+    this.$axios.get('http://192.168.43.126:3000/peopsear')
       .then(function (response) {
         console.log(response.data)
         zz.findpeoplelists = response.data
         var arr = zz.findpeoplelists
         for (var i = 0; i < arr.length; i++) {
           zz.findpeoplelists[i] = arr[i]
-          zz.findpeoplelists[i].peoplepic = 'http://192.168.1.110:3000/images/' + zz.findpeoplelists[i].peoplepic
+          zz.findpeoplelists[i].peoplepic = 'http://192.168.43.126:3000/images/' + zz.findpeoplelists[i].peoplepic
         }
         console.log(zz.findpeoplelists)
       })
@@ -162,7 +162,7 @@ export default {
         console.log(imgFile)
         this.findpeoplepic = imgFile
         console.log(this.findpeoplepic)
-        this.$axios.post('http://192.168.1.110:3000/imgadd',
+        this.$axios.post('http://192.168.43.126:3000/imgadd',
           qs.stringify({
             peoptitle: this.ruleForm.findpeopletitle,
             peoplepic: this.findpeoplepic
@@ -195,7 +195,7 @@ export default {
       var myDate = new Date()
       this.pubtime = myDate.toLocaleDateString()
       var zz = this
-      this.$axios.post('http://192.168.1.110:3000/peopsearadd',
+      this.$axios.post('http://192.168.43.126:3000/peopsearadd',
         qs.stringify({
           peoptitle: this.ruleForm.findpeopletitle,
           username: this.localusername,

@@ -136,13 +136,13 @@ export default {
   created () {
     // console.log(this.routeID)
     var zz = this
-    this.$axios.get('http://192.168.1.105:3000/zhaoling')
+    this.$axios.get('http://192.168.43.126:3000/zhaoling')
       .then(function (response) {
         console.log(response.data)
         console.log(response.data[zz.index])
         zz.detailarr = response.data[zz.index]
         console.log(response.data[zz.index])
-        zz.detailarr.zhaolingpic = 'http://192.168.1.105:3000/images/' + zz.detailarr.zhaolingpic
+        zz.detailarr.zhaolingpic = 'http://192.168.43.126:3000/images/' + zz.detailarr.zhaolingpic
       })
       .catch(function (error) {
         console.log(error)
@@ -152,6 +152,24 @@ export default {
 </script>
 
 <style>
+.comment{
+    /* height: 500px; */
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 50px;
+}
+.yonghuming{
+    text-align: left;
+    font-size: 20px;
+    margin-left: 70px;
+    font-weight: bolder;
+}
+.pinglun{
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    text-align: left;
+}
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;

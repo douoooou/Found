@@ -2,12 +2,14 @@
   <div class="contentpage">
     <br/><br/>
     <!-- <hr/> -->
-    <!-- <div class="content-one">
-      <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div><img :src='image' class="slides"></div></router-link>
-      <router-link :to="{path:'/LostPage',name:'LostPage'}"><div><img :src='image2' class="slides"></div></router-link>
+    <div class="content-one">
+      <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div class="hhh"><p>东西丢了？别着急</p></div></router-link>
+      <router-link :to="{path:'/LostPage',name:'LostPage'}"><div class="hhh"><p>捡到东西？感谢您</p></div></router-link>
+      <!-- <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div><img :src='image' class="slides"></div></router-link> -->
+      <!-- <router-link :to="{path:'/LostPage',name:'LostPage'}"><div><img :src='image2' class="slides"></div></router-link>
       <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><div><img :src='image3' class="slides"></div></router-link>
-      <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div><img :src='image4' class="slides"></div></router-link>
-    </div> -->
+      <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div><img :src='image4' class="slides"></div></router-link> -->
+    </div>
     <div class="content-two">
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
@@ -71,7 +73,7 @@ export default {
   },
   created () {
     var zz = this
-    this.$axios.get('http://192.168.1.110:3000/lostthing')
+    this.$axios.get('http://192.168.43.126:3000/lostthing')
       .then(function (response) {
         console.log(response.data)
         zz.lostthingarr = response.data
@@ -79,13 +81,13 @@ export default {
         var arr = zz.lostthingarr
         for (var i = 0; i < arr.length; i++) {
           zz.lostthingarr[i] = arr[i]
-          zz.lostthingarr[i].lookforpic = 'http://192.168.1.110:3000/images/' + zz.lostthingarr[i].lookforpic
+          zz.lostthingarr[i].lookforpic = 'http://192.168.43.126:3000/images/' + zz.lostthingarr[i].lookforpic
         }
       })
       .catch(function (error) {
         console.log(error)
       })
-    this.$axios.get('http://192.168.1.110:3000/zhaoling')
+    this.$axios.get('http://192.168.43.126:3000/zhaoling')
       .then(function (response) {
         console.log(response)
         console.log(response.data)
@@ -94,7 +96,7 @@ export default {
         var arr = zz.foundthingarr
         for (var i = 0; i < arr.length; i++) {
           zz.foundthingarr[i] = arr[i]
-          zz.foundthingarr[i].zhaolingpic = 'http://192.168.1.110:3000/images/' + zz.foundthingarr[i].zhaolingpic
+          zz.foundthingarr[i].zhaolingpic = 'http://192.168.43.126:3000/images/' + zz.foundthingarr[i].zhaolingpic
         }
       })
       .catch(function (error) {
@@ -104,6 +106,17 @@ export default {
 }
 </script>
 <style>
+.hhh{
+  width: 37%;
+  font-size: 25px;
+  color: white;
+  font-weight: bolder;
+  padding-top: 45px;
+  float: left;
+  height: 120px;
+  background-color: #E0E0E0;
+  margin-left: 130px;
+}
 .slides{
   border: 0.7px solid #777777;
   box-shadow: 2px 4px 6px #777777;
@@ -123,6 +136,7 @@ export default {
 }
 .content-two{
   float: left;
+  margin-left: 33px;
 }
 ul li{
   list-style: none;

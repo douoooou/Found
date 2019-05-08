@@ -18,7 +18,7 @@
       </el-row>
       <!-- 登录框 -->
       <div class="account-login"></div>
-        <el-dialog title='账号密码登录' :visible.sync="dialogLoginVisible" width="500px" center :before-close="handleClose">
+        <el-dialog title='账号密码登录' :visible.sync="dialogLoginVisible" width="500px" center>
           <el-form label-width="100px" :model="ruleForm" :rules="loginrules" ref="ruleForm" class="demo-ruleForm">
             <!-- 账户 -->
             <el-form-item label="用户名：" prop="loginname">
@@ -32,7 +32,7 @@
             </el-form-item>
             <el-form-item>
               <p class="forgetpsd" @click="register">注册用户</p>
-              <p class="forgetpsd" @click="forgetpsd">忘记密码?</p>
+              <!-- <p class="forgetpsd" @click="forgetpsd">忘记密码?</p> -->
             </el-form-item>
             <!-- 底部按钮 -->
             <el-form-item>
@@ -266,7 +266,7 @@ export default {
     registermsg () {
       console.log('注册')
       var aa = this
-      this.$axios.post('http://192.168.1.105:3000/register',
+      this.$axios.post('http://192.168.43.126:3000/register',
         qs.stringify({
           username: this.ruleForm.name,
           password: this.ruleForm.psd,
@@ -291,7 +291,7 @@ export default {
     login () {
       var bb = this
       var cc = this
-      this.$axios.get('http://192.168.1.105:3000/login?status=login&username=' + this.ruleForm.loginname + '&password=' + this.ruleForm.loginpsd)
+      this.$axios.get('http://192.168.43.126:3000/login?status=login&username=' + this.ruleForm.loginname + '&password=' + this.ruleForm.loginpsd)
         .then(function (response) {
           console.log(response)
           if (response.data === '用户不存在') {
