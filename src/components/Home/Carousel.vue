@@ -47,12 +47,12 @@ export default {
 <style>
   #carousel{
     margin-left: 100px;
-    width: 100%;
+    width: 75%;
     margin: 0 auto;
     position: relative;
   }
   .el-carousel__item{
-    width: 100%;
+    /* width: 90%; */
   }
   .el-carousel__item h3 {
     color: #475669;

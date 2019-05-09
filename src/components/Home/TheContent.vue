@@ -2,14 +2,14 @@
   <div class="contentpage">
     <br/><br/>
     <!-- <hr/> -->
-    <div class="content-one">
-      <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div class="hhh"><p>东西丢了？别着急</p></div></router-link>
-      <router-link :to="{path:'/LostPage',name:'LostPage'}"><div class="hhh"><p>捡到东西？感谢您</p></div></router-link>
+    <!-- <div class="content-one"> -->
+      <!-- <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div class="hhh"><p>东西丢了？别着急</p></div></router-link> -->
+      <!-- <router-link :to="{path:'/LostPage',name:'LostPage'}"><div class="hhh"><p>捡到东西？感谢您</p></div></router-link> -->
       <!-- <router-link :to="{path:'/FindpeoplePage',name:'FindpeoplePage'}"><div><img :src='image' class="slides"></div></router-link> -->
       <!-- <router-link :to="{path:'/LostPage',name:'LostPage'}"><div><img :src='image2' class="slides"></div></router-link>
       <router-link :to="{path:'/FoundPage',name:'FoundPage'}"><div><img :src='image3' class="slides"></div></router-link>
       <router-link :to="{path:'/FindpetPage',name:'FindpetPage'}"><div><img :src='image4' class="slides"></div></router-link> -->
-    </div>
+    <!-- </div> -->
     <div class="content-two">
       <el-card class="box-card1">
         <div slot="header" class="clearfix">
